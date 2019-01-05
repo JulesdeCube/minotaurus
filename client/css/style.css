@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    background-color: #2f3640;
+    color: white;
+    font-size: 55px;
+}
+div{
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+
+}
+h1 {
+    font-weight: 100;
+    line-height: 0;
+}
+h2{
+
+    font-size: 1.1em;
+    
+
+}
+canvas {
+
+    background-color: #16191f;
+
+}
