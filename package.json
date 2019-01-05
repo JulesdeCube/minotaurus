@@ -1,0 +1,26 @@
+{
+  "name": "minotaurus",
+  "version": "1.0.0",
+  "description": "ISN Project 2018/2019",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:JulesdeCube/minotaurus.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "Jules Lefebvre <juleslefebvre.pro@outlook.fr>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulesdeCube/minotaurus/issues"
+  },
+  "homepage": "https://github.com/JulesdeCube/minotaurus#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}
