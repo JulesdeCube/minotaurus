@@ -1,8 +1,12 @@
-let express = require('express');
-let http = require('http')
+const express = require('express');
+const http = require('http');
+const socket_io = require('socket.io');
 
-let app = express();
-let serv = http.Server(app);
+const app = express();
+const serv = http.Server(app);
+const io = socket_io(serv);
+
+const serverPort = 2000;
 
 
 app.get('/', (req, res) => {
@@ -15,4 +19,17 @@ app.get('/game', (req, res) => {
 
 app.use('/', express.static(__dirname + '/client'));
 
-serv.listen(2000);
+io.sockets.on('connection', (socket) => {
+    console.log('user connected');
+
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+
+});
+
+
+serv.listen(serverPort, () => {
+    console.log('Server started.');
+});
