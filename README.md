@@ -89,10 +89,6 @@ get your local ip with [mon-ip.com](http://www.mon-ip.com/adresse-ip-locale.php)
 ## contribution
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
 * **Jules Lefebvre** - *Initial work* - [JulesDeCube](https://github.com/JulesDeCube)
@@ -103,4 +99,7 @@ See also the list of [contributors](https://github.com/JulesDeCube/Minotaurus/co
 
 This project is licensed under the **GNU GENERAL PUBLIC LICENSE** - see the [LICENSE.md](LICENSE.md) file for details
 
+
 ## Version
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags) and see the [CHANGELOG.md](CHANGELOG.md)
