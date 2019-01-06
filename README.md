@@ -1,21 +1,27 @@
-<!---
-This file is part of the minotaurus game (https://github.com/JulesdeCube/minotaurus).
-Copyright (c) 2019 Jules Lefebvre.
+<!--
+@file README.md
+@author Jules Lefebvre <juleslefebvre.10@outlook.fr>
+@date 2019/01/06
+@project minotaurus (https://github.com/JulesdeCube/minotaurus).
+@copyright Copyright (c) 2019 Jules Lefebvre.
+
+@license GNU-GPL
+ This file is part of minotaurus (https://github.com/JulesdeCube/minotaurus).
+ Copyright (c) 2019 Jules Lefebvre.
+ minotaurus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
  
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with minotaurus.  If not, see <https://www.gnu.org/licenses/>.
+-->
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
---->
 # Minotaurus
 developed for the ISN project of 2018/2019
 
@@ -28,7 +34,7 @@ shoot from the eponime game of [LEGO®](https://shop.lego.com/fr-FR/Minotaurus-3
 
 Minautorus is a board game turn per turn. Wich is played with a dice.
 
-the aim of the game is to be the first th have take all is heros in the center of the bord inthis color case without be eated by the minotaurus . [see the rule](/RULE.md)
+the aim of the game is to be the first th have take all is heros in the center of the bord inthis color case without be eated by the minotaurus . [see the rule](doc/RULE.md)
 <p align="center">
   <img alt="VS Code in action" width="750" src="https://sh-s7-live-s.legocdn.com/is/image/LEGO/3841?fit=constrain,1&wid=1000&hei=2000&fmt=png">
 </p>
