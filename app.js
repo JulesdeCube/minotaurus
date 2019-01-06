@@ -7,6 +7,8 @@ const serv = http.Server(app);
 const io = socket_io(serv);
 
 const serverPort = 2000;
+const mapPath = '/server/map/';
+const map = 'defautMap.json';
 
 
 app.get('/', (req, res) => {
