@@ -26,6 +26,8 @@ const express = require('express');
 const http = require('http');
 const socket_io = require('socket.io');
 
+const Minautorus= require('./server/js/Minautorus.js');
+
 const app = express();
 const serv = http.Server(app);
 const io = socket_io(serv);

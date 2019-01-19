@@ -3,9 +3,8 @@
  * @author Jules Lefebvre <juleslefebvre.10@outlook.fr>
  * @date 2019/01/06
  * @project minotaurus (https://github.com/JulesdeCube/minotaurus).
- * @copyright Copyright (c) 2019 Jules Lefebvre.
  * 
- * @license GNU-GPL
+ * @license
  *  This file is part of minotaurus (https://github.com/JulesdeCube/minotaurus).
  *  Copyright (c) 2019 Jules Lefebvre.
  *  minotaurus is free software: you can redistribute it and/or modify
@@ -24,46 +23,58 @@
 
 import { PlayerServer } from "./PlayerServer";
 
-/**
-* class represent a collection of player
-*/
+
 export class PlayerColectionServer {
 
-  /**
-   * creat a player colection for the server
-   */
   constructor () {
     this.players = [];
   }
   
   /**
-   * adding a new player to the colection
-   * 
-   * @return {void}
+   * @description adding a new player to the colection
    */
   addNewPlayer () {
-    const player = new PlayerServer(newId()); 
-    this.players.push(player);
+    playerId = newId();
+    if (playerId !== null) {
+      //create a new player with a no use id
+      const player = new PlayerServer(playerId); 
+      //added to the array
+      this.players.push(player);
+    }
+    else{
+      
+      
+      
+    }
     
   }
   
   /**
-   * generate a id for a player witch didnt have been already signed
+   * @description generate a new player id witch didnt have been already asigned
    */
   newId () {
-    let id;
-    do {
-      // generate a random id number map in the max player
-      id = (Math.random() * this.maxPlayer);
-    } while (getPlayerById(id) !== null);
-    //cheek if it be takes
-    return id;
+    //if we have place we generate new id
+    if (this.players.length < this.maxPlayer) { 
+      let id;
+      do {
+        // generate a random id number map in the max player
+        id = (Math.random() * this.maxPlayer);
+      } while (getPlayerById(id) !== null);
+      //cheek if it be takes
+      return id;
+    }
+    // if there his no place send an heror
   }
 
+  /**
+   * @description ge the player by his personal id
+   * 
+   * @param {number} id 
+   */
   getPlayerById (id) {
     //cheek all the player
     this.players.forEach(player => {
-      //if the player's id corespondmatch the search 
+      //if the player's id match the search 
       if (player.id == id) {
         //return it
         return player;
