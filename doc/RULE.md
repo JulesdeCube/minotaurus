@@ -23,11 +23,11 @@
 -->
 
 ## the aim of the game
-- **2 players** : be the first of both to have take 2 of is heros in the center of the bord in his color cases 
+- **2 players** : To be the first to bring 2 of their heroes to their colored cases in the center of the board 
 - **3 or 4 players** : be the first of both to have take all of is heros in the center of the bord in his color cases 
 
-## The dice
-it is a 6 dice face wo got: 
+## The die
+it is a 6 faces die wo got: 
 - numbered face (beteewn 1 and 6)
 - wall
 - THE MINOTAURUS
