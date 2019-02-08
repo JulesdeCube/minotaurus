@@ -21,5 +21,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with minotaurus.  If not, see <https://www.gnu.org/licenses/>.
  */
-soket = io();
-soket.emit('hello', 'commet sa vas');
+/*soket = io();
+soket.emit('hello', 'commet sa vas');/*  */
+
+console.log("test");
