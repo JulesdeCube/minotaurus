@@ -26,6 +26,7 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+var fs = require("fs");
 
 //init module
 const application = express();
@@ -34,44 +35,69 @@ const sockets = socketIo(server);
 
 //parameter
 const serverPort = 8080;
+configFile = './server/map/defautMap.json';
 
 //express config
 application.use('/', express.static(__dirname + '/client'));
 
 //soket.io config
 sockets.on('connection', function(socket){
-  console.log('a user connected');
+  console.log(clientLogHeader(socket) + 'connected');
 
   socket.on('game', function(request){
     if (request.type == 'get') {
       switch (request.message) {
         case 'map':
-          console.log('map rewf');
+          fs.readFile(configFile,(error, data) => {
+            if(!error){
+              data = JSON.parse(data);
+            } else {
+              serverError(error);
+              data = {};
+            }
+            socket.emit('game', {
+              type: 'post',
+              request: request,
+              message:data
+            });
+          });
           
         break;
       
         default:
-          error('Error: invalide message', socket, request);
+          clientError('Error: invalide message', socket, request);
         break;
       }
     } else {
-      error('Error: invalide message\'s type', socket, request);
+      clientError('Error: invalide message\'s type', socket, request);
     }  
   });
 
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    console.log(clientLogHeader(socket) + 'user disconnected');
   });
 });
 
-function error(message, senderSocket, sendedRequest){
+function serverLogHeader() {
+  return  'Server: '; 
+}
+
+function serverError(message){
+  console.error(serverLogHeader() + message + '\n');
+}
+
+function clientLogHeader(inputSocket) {
+  return inputSocket.id + ' - ' + inputSocket.conn.remoteAddress + ': '; 
+}
+
+function clientError(message, senderSocket, sendedRequest){
   senderSocket.emit('game',
     {
       type: 'Error',
       message: message
     }
   );
-  console.error(message, senderSocket, sendedRequest);
+  console.error(clientLogHeader(senderSocket) + message , sendedRequest, '\n');
 }
 
 

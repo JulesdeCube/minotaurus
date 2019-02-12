@@ -1,47 +1,7 @@
 var socket = io();
 
-socket.on('game', function(msg){
-  console.log(msg);
-});
-socket.emit('game',{
-  type:'get',
-  message:'map'
-});
       
-var inputMap = [
-  "████████████████████████████████",
-  "█BB                          YY█",
-  "█B                            Y█",
-  "█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █",
-  "█       ▓   ▓      ▓   ▓       █",
-  "█       ▓   ▓      ▓   ▓       █",
-  "█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █",
-  "█  ▓                        ▓  █",
-  "█  ▓                        ▓  █",
-  "█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █",
-  "█     ▓  ▒  ▓      ▓  ▒  ▓     █",
-  "█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █",
-  "█  ▓        ▓  ▓▓  ▓        ▓  █",
-  "█  ▓     ▓            ▓     ▓  █",
-  "█  ▓   ▓▓▓    bbyy    ▓▓▓   ▓  █",
-  "█           ▓ bMMy ▓           █",
-  "█           ▓ rMMg ▓           █",
-  "█  ▓   ▓▓▓    rrgg    ▓▓▓   ▓  █",
-  "█  ▓     ▓            ▓     ▓  █",
-  "█  ▓        ▓  ▓▓  ▓        ▓  █",
-  "█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █",
-  "█     ▓  ▒  ▓      ▓  ▒  ▓     █",
-  "█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █",
-  "█  ▓                        ▓  █",
-  "█  ▓                        ▓  █",
-  "█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █",
-  "█       ▓   ▓      ▓   ▓       █",
-  "█       ▓   ▓      ▓   ▓       █",
-  "█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █",
-  "█R                            G█",
-  "█RR                          GG█",
-  "████████████████████████████████"
-];
+var inputMap = [];
 
 var players = [
   {
@@ -78,9 +38,24 @@ var players = [
   }
 ]
 
-var caseWidth = 15;
+var caseWidth = 25;
 
 function setup() {
+
+  socket.on('game', function(msg){
+    if (msg.request.message === 'map') {
+      inputMap = msg.message.data;
+      resizeCanvas(maxDimentionMap(inputMap).x * caseWidth, maxDimentionMap(inputMap).y * caseWidth);
+    }
+    else {
+      console.log(msg);
+    }
+  });
+  socket.emit('game',{
+    type:'get',
+    message:'map'
+  });
+  
   createCanvas(maxDimentionMap(inputMap).x * caseWidth, maxDimentionMap(inputMap).y * caseWidth);
 }
 
