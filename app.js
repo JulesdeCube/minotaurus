@@ -22,16 +22,28 @@
  *  along with ninotaurus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+ //module
 const express = require('express');
 const http = require('http');
+const socketIo = require('socket.io');
 
-const app = express();
-const serv = http.Server(app);
+//init module
+const application = express();
+const server = http.Server(application);
+const sockets = socketIo(server);
 
+//parameter
 const serverPort = 8080;
 
-app.use('/', express.static(__dirname + '/client'));
+//express config
+application.use('/', express.static(__dirname + '/client'));
 
-serv.listen(serverPort, () => {
+//soket.io config
+sockets.on('connection', function(socket){
+    console.log('a user connected');
+});
+
+//run server
+server.listen(serverPort, () => {
     console.log('Server started on port: ' + serverPort);
 });
