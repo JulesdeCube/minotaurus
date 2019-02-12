@@ -25,30 +25,13 @@
 const express = require('express');
 const http = require('http');
 
-
-const Minautorus = require('./server/js/Minautorus.js');
-
 const app = express();
 const serv = http.Server(app);
 
-const minautorus = new Minautorus(serv);
-
 const serverPort = 8080;
-const mapPath = '/server/map/';
-const map = 'defautMap.json';
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/client/index.html'); 
-});
-
-app.get('/game', (req, res) => {
-    res.sendFile(__dirname + '/client/game/game.html'); 
-});
 
 app.use('/', express.static(__dirname + '/client'));
 
-
-
 serv.listen(serverPort, () => {
-    console.log('Server started.');
+    console.log('Server started on port: ' + serverPort);
 });
