@@ -1,3 +1,13 @@
+var socket = io();
+
+socket.on('game', function(msg){
+  console.log(msg);
+});
+socket.emit('game',{
+  type:'get',
+  message:'map'
+});
+      
 var inputMap = [
   "████████████████████████████████",
   "█BB                          YY█",
