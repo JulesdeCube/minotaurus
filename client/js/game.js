@@ -1,70 +1,54 @@
 var socket = io();
 
-      
-var inputMap = [];
+var config = {
+  map: [],
+  players: []
+};
 
-var players = [
-  {
-    color: '#226ea0',
-    caracters: [
-      {x: 1, y:1},
-      {x: 2, y:1},
-      {x: 1, y:2}
-    ]
-  },
-  {
-    color: '#ae0c13',
-    caracters: [
-      {x: 30, y:1},
-      {x: 29, y:1},
-      {x: 30, y:2}
-    ]
-  },
-  {
-    color: '#008b6e',
-    caracters: [
-      {x: 30, y:30},
-      {x: 29, y:30},
-      {x: 30, y:29}
-    ]
-  },
-  {
-    color: '#ba9400',
-    caracters: [
-      {x: 1, y:30},
-      {x: 2, y:30},
-      {x: 1, y:29}
-    ]
-  }
-]
 
 var caseWidth = 25;
 
 function setup() {
 
   socket.on('game', function(msg){
-    if (msg.request.message === 'map') {
-      inputMap = msg.message.data;
-      resizeCanvas(maxDimentionMap(inputMap).x * caseWidth, maxDimentionMap(inputMap).y * caseWidth);
-    }
-    else {
-      console.log(msg);
+    switch (msg.request.message) {
+      case 'config':
+        config = msg.message;
+        autoResize(config.map);
+      break;
+    
+      case 'map':
+        config.map = msg.message;
+        autoResize(config.map);
+      break;
+
+      default:
+        console.log(msg);
+      break;
     }
   });
+
   socket.emit('game',{
     type:'get',
-    message:'map'
+    message:'config'
   });
   
-  createCanvas(maxDimentionMap(inputMap).x * caseWidth, maxDimentionMap(inputMap).y * caseWidth);
+  createCanvas(0, 0);
+  autoResize(config.map);
 }
 
 
 function draw() {
   clear();
-  drawMap(inputMap);
-  drawCaracters(players);
+  drawMap(config.map);
+  drawSpawns(config.players);
+  drawArrives(config.players);
   drawCursor();
+}
+
+function autoResize(map) {
+  let mapDimention = maxDimentionMap(map);
+  resizeCanvas(mapDimention.x * caseWidth, mapDimention.y * caseWidth);
 }
 
 function maxDimentionMap (map) {
@@ -97,29 +81,13 @@ function drawMap (map) {
         case 'M':
         fill('#162029');
         break;
-        case 'R':
-        case 'r':
-        fill('#e74c3c');
-        break;
-        case 'G':
-        case 'g':
-        fill('#1abc9c');
-        break;
-        case 'B':
-        case 'b':
-        fill('#3498db');
-        break;
-        case 'Y':
-        case 'y':
-        fill('#f1c40f');
-        break;
         default:
         stroke(51, 20);
         strokeWeight(1);
         fill(0, 0);
         break;
       }
-      rect(l * caseWidth, c * caseWidth, caseWidth, caseWidth);
+      rect(c * caseWidth, l * caseWidth, caseWidth, caseWidth);
     }
   }
 }
@@ -140,9 +108,31 @@ function drawCursor () {
 function drawCaracters (playerList) {
   playerList.forEach(player => {
     player.caracters.forEach(caracter => {
-      drawCaracter(caracter.x, caracter.y, player.color)
+      drawCaracter(caracter.x, caracter.y, player.color);
     });
   });
+}
+
+function drawSpawns (playerList) {
+  playerList.forEach(player => {
+    player.spawns.forEach(spawn => {
+      drawCase(spawn.x, spawn.y, player.color);
+    });
+  });
+}
+
+function drawArrives (playerList) {
+  playerList.forEach(player => {
+    player.arrives.forEach(arrive => {
+      drawCase(arrive.x, arrive.y, player.color);
+    });
+  });
+}
+
+function drawCase (x, y, color) {
+  noStroke();
+  fill(color);
+  rect(caseWidth * x , caseWidth * y, caseWidth, caseWidth);
 }
 
 function drawCaracter (x, y, color) {

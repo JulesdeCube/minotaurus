@@ -35,47 +35,58 @@ const sockets = socketIo(server);
 
 //parameter
 const serverPort = 8080;
-configFile = './server/map/defautMap.json';
+const configFilePath = './server/map/defautMap.json';
 
 //express config
 application.use('/', express.static(__dirname + '/client'));
 
 //soket.io config
-sockets.on('connection', function(socket){
-  console.log(clientLogHeader(socket) + 'connected');
-
-  socket.on('game', function(request){
-    if (request.type == 'get') {
-      switch (request.message) {
-        case 'map':
-          fs.readFile(configFile,(error, data) => {
-            if(!error){
-              data = JSON.parse(data);
-            } else {
-              serverError(error);
-              data = {};
-            }
-            socket.emit('game', {
-              type: 'post',
-              request: request,
-              message:data
-            });
-          });
-          
-        break;
+fs.readFile(configFilePath,(error, configFile) => {
+  if(!error){
+    configFile = JSON.parse(configFile);
+    sockets.on('connection', function(socket){
+      console.log(clientLogHeader(socket) + 'connected');
       
-        default:
-          clientError('Error: invalide message', socket, request);
-        break;
-      }
-    } else {
-      clientError('Error: invalide message\'s type', socket, request);
-    }  
-  });
+      socket.on('game', function(request){
+        if (request.type == 'get') {
+          switch (request.message) {
+            case 'config':
+              socket.emit('game', {
+                type: 'post',
+                request: request,
+                message:configFile
+              });
+            break;
 
-  socket.on('disconnect', function(){
-    console.log(clientLogHeader(socket) + 'user disconnected');
-  });
+            case 'map':
+              socket.emit('game', {
+                type: 'post',
+                request: request,
+                message:configFile.map
+              });
+            break;
+            
+            default:
+              clientError('Error: invalide message', socket, request);
+            break;
+          }
+        } else {
+          clientError('Error: invalide message\'s type', socket, request);
+        }  
+      });
+      
+      socket.on('disconnect', function(){
+        console.log(clientLogHeader(socket) + 'user disconnected');
+      });
+    });
+    
+    //run server
+    server.listen(serverPort, () => {
+      console.log('Server started on port: ' + serverPort);
+    });
+  } else {
+    serverError('config file can\'t be charge\n' + error);
+  }
 });
 
 function serverLogHeader() {
@@ -92,17 +103,10 @@ function clientLogHeader(inputSocket) {
 
 function clientError(message, senderSocket, sendedRequest){
   senderSocket.emit('game',
-    {
-      type: 'Error',
-      message: message
-    }
+  {
+    type: 'Error',
+    message: message
+  }
   );
   console.error(clientLogHeader(senderSocket) + message , sendedRequest, '\n');
 }
-
-
-
-//run server
-server.listen(serverPort, () => {
-  console.log('Server started on port: ' + serverPort);
-});
