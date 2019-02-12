@@ -33,7 +33,7 @@ const serv = http.Server(app);
 
 const minautorus = new Minautorus(serv);
 
-const serverPort = 2000;
+const serverPort = 8080;
 const mapPath = '/server/map/';
 const map = 'defautMap.json';
 
