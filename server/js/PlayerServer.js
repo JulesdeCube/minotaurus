@@ -25,14 +25,10 @@
 /**
  * 
  */
-export class PlayerServer {
+module.exports = class PlayerServer {
 
-    /**
-     *  
-     * @param {number} id unnique id wo definit the player
-     */
-    constructor (id) {
-        this.id = id;
+    constructor (socket) {
+        this.socket = socket;
     }
 
 }

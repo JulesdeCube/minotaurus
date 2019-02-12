@@ -21,68 +21,30 @@
  *  along with minotaurus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { PlayerServer } from "./PlayerServer";
+const PlayerServer = require("./PlayerServer")
 
 
-export class PlayerColectionServer {
+module.exports = class PlayerColectionServer {
 
-  constructor () {
+  /**
+   * 
+   * @param {number} maxPlayer take to 0 for no 
+   */
+  constructor (maxPlayer) {
     this.players = [];
+    this.maxPlayer = maxPlayer;
   }
   
   /**
    * @description adding a new player to the colection
    */
-  addNewPlayer () {
-    playerId = newId();
-    if (playerId !== null) {
-      //create a new player with a no use id
-      const player = new PlayerServer(playerId); 
-      //added to the array
-      this.players.push(player);
-    }
-    else{
-      
-      
-      
-    }
+  addNewPlayer (socket) {
+    
+    this.players.push(new PlayerServer(socket));
     
   }
   
-  /**
-   * @description generate a new player id witch didnt have been already asigned
-   */
-  newId () {
-    //if we have place we generate new id
-    if (this.players.length < this.maxPlayer) { 
-      let id;
-      do {
-        // generate a random id number map in the max player
-        id = (Math.random() * this.maxPlayer);
-      } while (getPlayerById(id) !== null);
-      //cheek if it be takes
-      return id;
-    }
-    // if there his no place send an heror
-  }
 
-  /**
-   * @description ge the player by his personal id
-   * 
-   * @param {number} id 
-   */
-  getPlayerById (id) {
-    //cheek all the player
-    this.players.forEach(player => {
-      //if the player's id match the search 
-      if (player.id == id) {
-        //return it
-        return player;
-      }
-    });
-    //else we return null
-    return null;
-  }  
 
   
   
