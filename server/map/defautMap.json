@@ -1,6 +1,7 @@
 {
   "version": 1.0,
   "name": "default Map",
+  "caracterPerPlayer":3,
   "players":[
     {
       "color": "#3498db",

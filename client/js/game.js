@@ -1,9 +1,6 @@
 var socket = io();
 
-var config = {
-  map: [],
-  players: []
-};
+var config;
 
 
 var caseWidth = 25;
@@ -14,11 +11,6 @@ function setup() {
     switch (msg.request.message) {
       case 'config':
         config = msg.message;
-        autoResize(config.map);
-      break;
-    
-      case 'map':
-        config.map = msg.message;
         autoResize(config.map);
       break;
 
@@ -39,12 +31,17 @@ function setup() {
 
 
 function draw() {
+if (config) {
+  
   clear();
   drawMap(config.map);
   drawSpawns(config.players);
   drawArrives(config.players);
+  drawCaracters(config.players);
   drawCursor();
 }
+}
+
 
 function autoResize(map) {
   let mapDimention = maxDimentionMap(map);
@@ -106,9 +103,11 @@ function drawCursor () {
 }
 
 function drawCaracters (playerList) {
+  console.log(config);
+  
   playerList.forEach(player => {
     player.caracters.forEach(caracter => {
-      drawCaracter(caracter.x, caracter.y, player.color);
+      drawCase(caracter.x, caracter.y, "#000");
     });
   });
 }

@@ -36,14 +36,22 @@ const sockets = socketIo(server);
 //parameter
 const serverPort = 8080;
 const configFilePath = './server/map/defautMap.json';
-
+var configFile;
 //express config
 application.use('/', express.static(__dirname + '/client'));
 
 //soket.io config
 fs.readFile(configFilePath,(error, configFile) => {
   if(!error){
-    configFile = JSON.parse(configFile);
+    try {
+      configFile = JSON.parse(configFile);
+      console.log(configFile);
+      
+      refreshSpawn();
+    } catch (error) {
+      serverError('invalide config File: ' + error)
+    }
+
     sockets.on('connection', function(socket){
       console.log(clientLogHeader(socket) + 'connected');
       
@@ -55,14 +63,6 @@ fs.readFile(configFilePath,(error, configFile) => {
                 type: 'post',
                 request: request,
                 message:configFile
-              });
-            break;
-
-            case 'map':
-              socket.emit('game', {
-                type: 'post',
-                request: request,
-                message:configFile.map
               });
             break;
             
@@ -109,4 +109,24 @@ function clientError(message, senderSocket, sendedRequest){
   }
   );
   console.error(clientLogHeader(senderSocket) + message , sendedRequest, '\n');
+}
+
+function refreshSpawn(){
+  configFile.players.forEach(player => {
+    if (!player.hasOwnProperty('caracters')) {
+      player.caracters = [];
+      player.spawns.forEach(spawn => {
+
+        console.log(configFile);
+        if (player.caracters.length < configFile.caracterPerPlayer) {
+          player.caracters.push({
+            x: spawn.x,
+            y: spawn.y,
+          });
+        }
+      });
+    } else {
+
+    }
+  });
 }
