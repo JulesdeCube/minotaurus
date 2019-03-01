@@ -3,12 +3,13 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const fs = require("fs");
+const minotaurus = require("./minotaurus/minotaurus");
 
 //init module
 const application = express();
 const server = http.Server(application);
 const sockets = socketIo(server);
-
+const minotaurusServ = minotaurus.Server(sockets);
 //parameter
 const serverPort = 8080;
 
@@ -16,7 +17,7 @@ const serverPort = 8080;
 //express config
 application.use('/', express.static(__dirname + '/client'));
 
-//soket.io config
+/* //soket.io config
 sockets.on('connection', function(socket){
   console.log('connected');
 
@@ -24,7 +25,7 @@ sockets.on('connection', function(socket){
     console.log('disconnect');
   });
 });
-
+ */
 //run server
 server.listen(serverPort, () => {
   console.log('Server started on port: ' + serverPort);
