@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minautorus The Game</title>
+    <!-- CSS -->
+      <link rel="stylesheet" href="css/style.css">
+
+    <!-- JS -->
+      <!-- socket.io -->
+        <script src="/socket.io/socket.io.js"></script>
+      <!-- game -->
+        <script src="/minotaurus/lobby.js"></script>
+  </head>
+  <body>
+    <div id="gameBrower">
+      <div id="navbar">
+        <div id="research ">
+          <input type="text">
+          <button>research</button>
+        </div>
+      </div>
+      <table id="games">
+          <thead>
+              <tr>
+                  <th>name</th>
+                  <th>type</th>
+                  <th>nb of player</th>
+              </tr>
+          </thead>
+          <tbody id="gamesTable">
+          </tbody>
+      </table>
+      <details id="addGame">
+        <summary>add Game</summary>
+        <form id="addGameForm">
+          <table id="addGameTable">
+            <tr>
+              <td>
+                <label>name :</label>
+              </td>
+              <td>
+                <input id="addGameName" type="text">
+              </td>
+            </tr>
+            <tr>
+                <td>
+                  <label>number of personne: </label>
+                </td>
+                <td>
+                  <input type="number" id="addGameMaxPlayers">
+                </td>
+              </tr>
+          </table>
+          <input type="submit" value="create Game">
+
+        </form>
+      </details>
+    </div>
+  </body>
+</html>
