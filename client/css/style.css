@@ -58,10 +58,13 @@ input[type='submit'] {
   border: none;
 }
 
-#addGameTable tr{
+.configTable tr{
   border: none;
-  text-align: right;
 }
-#addGameTable td{
+.configTable td{
   padding: 0.25em 0.5em;
+}
+.configTable tr:first-child{
+  text-align: right;
+
 }

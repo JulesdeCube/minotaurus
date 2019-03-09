@@ -1,21 +1,20 @@
 window.onload = () => {
-
-  var socket = io('/minotaurus/lobby');
-  var games = [];
-
+  gameID = (new URL(window.location.href)).searchParams.get("gameId");
+  gameInfo = {
+    name: '',
+    maxPlayers: 0
+  };
+  var socket = io('/minotaurus/games/'+ gameID + '/lobby');
+ 
   socket.on('connect', function () {
-    socket.emit('get', 'games');
+    socket.emit('get', 'gameInfo');
   });
   socket.on('post', (response) => {
     console.log(response);
     switch (response.request) {
-      case 'games':
-        games = response.container;
-        updateGamesTable();
-      break;
-      case 'addGame':
-        games.push(response.container);
-        updateGamesTable();
+      case 'gameInfo':
+        gameInfo = response.container;
+        updateGamesInfo();
       break;
     
       default:
@@ -23,42 +22,12 @@ window.onload = () => {
     }
   }); 
 
-  function updateGamesTable() {
-    let gamesTable = document.getElementById('gamesTable');
-
-    gamesTable.innerHTML = '';
-    
-    for (let game = 0; game < games.length; game++) {
-
-      let line = document.createElement('tr');
-
-  /*     for (const information in games[game]) {
-        informationBalise = document.createElement('td');
-        informationBalise.innerText = games[game][information];
-        ligne.appendChild(informationBalise);
-      } */
-      nameBalise = document.createElement('td');
-      typeBalise = document.createElement('td');
-      playersBalise = document.createElement('td');
-
-      nameBalise.innerText = games[game].name;
-      typeBalise.innerText = 'FFA';
-      playersBalise.innerText = games[game].nbPlayers + ' / ' + games[game].maxPlayers;
-      line.onclick = () => {joinGame(games[game].id)} ;
-      
-      line.appendChild(nameBalise);
-      line.appendChild(typeBalise);
-      line.appendChild(playersBalise);
-      gamesTable.appendChild(line);
-      
-    }
+  function updateGamesInfo(){
+    document.getElementById('gameName').value = gameInfo.name;
+    document.getElementById('gameMaxplayers').value = gameInfo.maxPlayers;
   }
 
-  function joinGame(id) {
-    window.location = './game.html?gameId=' + id;
-  }
-
-  document.getElementById('addGameForm').onsubmit = (event) => {
+ /*  document.getElementById('addGameForm').onsubmit = (event) => {
     event.preventDefault();
     
     
@@ -68,7 +37,7 @@ window.onload = () => {
         maxPlayers: document.getElementById('addGameMaxPlayers').value
       }
     });
-  };
+  }; */
 }
 //socket.on('game', function(msg){});
 

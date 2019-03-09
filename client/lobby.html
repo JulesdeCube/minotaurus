@@ -14,49 +14,33 @@
         <script src="/minotaurus/lobby.js"></script>
   </head>
   <body>
-    <div id="gameBrower">
-      <div id="navbar">
-        <div id="research ">
-          <input type="text">
-          <button>research</button>
+      <div id="gameBrower">
+        <div id="players">
+
         </div>
-      </div>
-      <table id="games">
-          <thead>
-              <tr>
-                  <th>name</th>
-                  <th>type</th>
-                  <th>nb of player</th>
-              </tr>
-          </thead>
-          <tbody id="gamesTable">
-          </tbody>
-      </table>
-      <details id="addGame">
-        <summary>add Game</summary>
-        <form id="addGameForm">
-          <table id="addGameTable">
+        <div id="gameinfo">
+          <table class="configTable">
             <tr>
-              <td>
-                <label>name :</label>
-              </td>
-              <td>
-                <input id="addGameName" type="text">
-              </td>
+              <td><label>name :</label></td>
+              <td><input type="text" id="gameName"></td>
             </tr>
             <tr>
-                <td>
-                  <label>number of personne: </label>
-                </td>
-                <td>
-                  <input type="number" id="addGameMaxPlayers">
-                </td>
-              </tr>
+              <td><label>max players :</label></td>
+              <td><input type="number" id="gameMaxplayers"></td>
+            </tr>
           </table>
-          <input type="submit" value="create Game">
+        </div>
+        <div id="gamechat">
+          <div id="messages">
 
-        </form>
-      </details>
-    </div>
+          </div>
+          <div id="gameMessageBar">
+            <form  id="gameMesssageForm">
+              <input type="text" id="gameMessageContainer">
+              <input type="submit" value="send">
+            </form>
+          </div>
+        </div>
+      </div>
   </body>
 </html>

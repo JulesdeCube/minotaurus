@@ -8,16 +8,21 @@ class Server {
      this.games.push(new Game(io, 1,'test game server', 5));
      this.games.push(new Game(io, 3,'partie de jules', 2));
 
-     this.ioLobby = this.io.of('/minotaurus/lobby')
-     this.ioLobby.on('connection', (socket) => {
+     this.ioGameBrower = this.io.of('/minotaurus/gameBrower')
+     this.ioGameBrower.on('connection', (socket) => {
       console.log('some people come to the lobby');
+
+
+
+
+
       socket.on('get', (request) => {
         
         switch (request) {
           case 'games':
             let response = [];
             this.games.forEach(game => {
-              response.push(game.lobbyInfo());
+              response.push(game.gameInfo());
             });
             socket.emit('post', {
               request: 'games',
@@ -29,6 +34,11 @@ class Server {
             break;
         }
       });
+
+
+
+
+
       socket.on('post', (request) => {
         console.log(request.request);
         
@@ -36,9 +46,9 @@ class Server {
           case 'addGame':
             let newGame = new Game(io, 10, request.container.name, request.container.maxPlayers);
             this.games.push(newGame);
-            this.ioLobby.emit('post', {
+            this.ioGameBrower.emit('post', {
               request: 'addGame',
-              container: newGame.lobbyInfo()
+              container: newGame.gameInfo()
             });
             console.log('senmd');
             
@@ -48,23 +58,50 @@ class Server {
             break;
         }
       });
+
+
+
+
+
       /* socket.emit('item', { news: 'item' }); */
     });
     console.log(this);
   }
+  
 
 }
 
 class Game {
   constructor(io, id, name, maxPlayers){
-    this.io = io;
+    this.io = io.of('/minotaurus/games/' + id + '/lobby');
     this.id = id;
     this.name = name;
     this.maxPlayers = maxPlayers;
     this.players = [];
+
+    this.io.on('connection', (socket) => {
+
+      socket.on('get', (response) => {
+        console.log(response);
+        
+        switch (response) {
+          case 'gameInfo':
+            socket.emit('post', {
+              request: 'gameInfo',
+              container: this.gameInfo()
+            });
+          break;
+        
+          default:
+            break;
+        }
+      });
+
+    });
+
   }
 
-  lobbyInfo() {
+  gameInfo() {
     return {
       name: this.name,
       id: this.id,
