@@ -16,10 +16,11 @@
   <body>
     <div id="gameBrower">
       <div id="navbar">
-        <div id="research ">
+        <button>Create a Game</button>
+        <span id="research ">
           <input type="text">
           <button>research</button>
-        </div>
+        </span>
       </div>
       <table id="games">
           <thead>
@@ -32,31 +33,6 @@
           <tbody id="gamesTable">
           </tbody>
       </table>
-      <details id="addGame">
-        <summary>add Game</summary>
-        <form id="addGameForm">
-          <table class="configTable">
-            <tr>
-              <td>
-                <label>name :</label>
-              </td>
-              <td>
-                <input id="addGameName" type="text">
-              </td>
-            </tr>
-            <tr>
-                <td>
-                  <label>number of personne: </label>
-                </td>
-                <td>
-                  <input type="number" id="addGameMaxPlayers">
-                </td>
-              </tr>
-          </table>
-          <input type="submit" value="create Game">
-
-        </form>
-      </details>
     </div>
   </body>
 </html>
