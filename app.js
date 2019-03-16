@@ -11,7 +11,11 @@ const application = express();
 const server = http.Server(application);
 const sockets = socketIo(server);
 
-
+sockets.of('/sign').on('connection',(socket) => {
+  socket.on('post',(msg) => {
+    console.log(msg);
+  })
+});
 //express config
 application.use('/', express.static(__dirname + '/client'));
 

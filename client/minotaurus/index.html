@@ -1,22 +1,64 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minautorus The Game</title>
-    <!-- CSS -->
-      <link rel="stylesheet" href="style.css">
-
-    <!-- JS -->
-      <!-- socket.io -->
-        <script src="/socket.io/socket.io.js"></script>
-      <!-- p5 -->
-        <script src="/p5/p5.js"></script>
-        <script src="/p5/addons/p5.dom.js"></script>
-        <script src="/p5/addons/p5.sound.js"></script>
-      <!-- game -->
-        <script src="/minotaurus/game.js"></script>
-  </head>
-  <body>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minautorus</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- JS -->
+  <!-- socket.io -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- p5 -->
+  <script src="/p5/p5.js"></script>
+  <script src="/p5/addons/p5.dom.js"></script>
+  <script src="/p5/addons/p5.sound.js"></script>
+  <!-- game -->
+  <script src="/minotaurus/index.js"></script>
+</head>
+<body>
+  <header>
+    
+  </header>
+  
+  <main>
+    <div id="signIn">
+      <form name="signIn" id="signIn-form">
+        <h1>Sign in</h1>
+        <div class="vSpacer"></div>
+        <input type="text" name="username" id="signIn-username" class="champMono fillLine" placeholder="Username"><br>
+        <div class="vSpacer"></div>
+        <input type="password" name="password" id="signIn-password" class="champMono fillLine" placeholder="Password"><br>
+        <div class="vSpacer"></div>
+        <button type="button" class="button light display-SignUp">Create a accout</button>
+        <div class="hSpacer"></div>
+        <button type="submit" name="submit" id="signIn-submit" class="button">Sign in</button>
+      </form>
+    </div>
+    
+    <div id="signUp">
+      <form name="signUp" id="signUp-form">
+        <h1>Sign up</h1>
+        <div class="vSpacer"></div>
+        <input type="text" name="username" id="signUp-username" class="champMono fillLine" placeholder="Username"><br>
+        <div class="vSpacer"></div>
+        <input type="email" name="email" id="signUp-email" class="champMono fillLine" placeholder="E-mail"><br>
+        <div class="vSpacer"></div>
+        <input type="password" name="password" id="signUp-password" class="champMono fillLine" placeholder="Password"><br>
+        <div class="vSpacer"></div>
+        <input type="password" name="passwordRepeat" id="signUp-passwordRepeat" class="champMono fillLine" placeholder="Repeat password"><br>
+        <div class="vSpacer"></div>
+        <button type="button" class="button light display-SignIn">Sign in instead</button>
+        <div class="hSpacer"></div>
+        <button type="submit" name="submit" id="signUp-submit" class="button">Sign up</button>
+      </form>
+    </div>
+  </main>
+  
+  <footer>
+    
+  </footer>
+</body>
 </html>
+

@@ -3,66 +3,103 @@
   border: none;
   padding: 0;
   box-sizing: border-box;
+  line-height: 1;
 }
 
 body {
-  background: linear-gradient(50deg,slateblue 0,darkturquoise 100%);
+  background: #fff;
   min-height: 100vh;
   font-family: roboto;
+  font-size: 16px;
+  color: #202124; 
 }
 
-#gameBrower {
+
+#signIn,
+#signUp{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  max-width: 80vw;
+  max-height: 80vh;
   background-color: #fff;
-  position: absolute; /* postulat de départ */
-  top: 50%; left: 50%; /* à 50%/50% du parent référent */
-  transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
-  padding: 2em;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  border-radius: 0.5em;
+  border: 0.1em #dadce0 solid;
+  padding: 2em 2em 1.5em;
 }
 
-th,
-td {
-  padding: 1em;
-}
-tr {
-  border-bottom: 0.1em#0000005e solid;
-}
-#games td {
-  text-align: center;
-}
-#games tbody > tr:hover {
-  background-color: #00000010;
-}
-#games tbody > tr {
+.button{
+  font: inherit;
+  font-size: 0.9em;
+  padding: 0.8em 1.5em;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.02em;
+  background-color: #1a73e8;
+  border-radius: 0.25em;
   cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
 }
-table {
-  border-collapse: collapse;
-}
-
-input {
-  border-bottom: 0.1em #000 solid;
-  padding: 0.5em;
-  background-color: #0000;
+.button:hover{
+  box-shadow: 0 1px 1px 0 rgba(66,133,244,0.45),0 1px 3px 1px rgba(66,133,244,0.3)
 }
 
-#games {
-  margin: 1em 0
-}
-button,
-input[type='submit'] {
-  background-color: #00000013;
-  padding: 0.5em;
-  border: none;
+.button.light{
+  color: #1a73e8;
+  background-color: transparent;
+  box-shadow: none;
 }
 
-.configTable tr{
-  border: none;
+.button.light:hover{
+  background-color: #1b74e80d;
 }
-.configTable td{
-  padding: 0.25em 0.5em;
+.button.light:focus{
+  background-color: #1b74e81a;
 }
-.configTable tr:first-child{
-  text-align: right;
 
+
+
+
+
+
+.champMono {
+  font: inherit;
+  border: 0.1em #dadce0 solid;
+  padding: 0.5em 0.7em;
+  border-radius: 0.25em;
+  color: inherit;
+}
+
+.champMono.fillLine {
+  width: 100%;
+}
+
+.champMono:focus {
+  border-color: #1a73e8;
+}
+.champMono:invalid {
+  border-color: #e8321a;
+  box-shadow: none;
+}
+
+.champMono::placeholder {
+  font-size: 0.9em;
+  color: #5f6368;
+  opacity: 1;
+}
+
+
+
+
+
+
+.vSpacer {
+  height: 1em;
+}
+
+.hSpacer {
+  width: 1.5em;
+  display: inline-block;
 }
