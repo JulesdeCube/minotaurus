@@ -109,8 +109,8 @@ function clientError(message, senderSocket, sendedRequest){
  console.error(clientLogHeader(senderSocket) + message , sendedRequest, '\n');
 }
 
-function refreshSpawn(){}/*
- configFile.players.forEach(player => {
+function refreshSpawn(){
+ /* configFile.players.forEach(player => {
   if (!player.hasOwnProperty('caracters')) {
      player.caracters = [];
      player.spawns.forEach(spawn => {
@@ -129,3 +129,4 @@ function refreshSpawn(){}/*
   
  }); */
  console.log('test', configFile);
+}

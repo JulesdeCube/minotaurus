@@ -1,6 +1,11 @@
 var socket = io('/minotaurus/game/a1');
 
-var config ={
+
+//----------------------------------------------------//
+//                         CONFIG                     //
+//----------------------------------------------------//
+
+var config = {
  "version": 1.0,
  "name": "default Map",
  "caracterPerPlayer":3,
@@ -117,9 +122,14 @@ var config ={
 
 var caseWidth = 25;
 
+
+
+//----------------------------------------------------//
+//                        P5                          //
+//----------------------------------------------------//
+
 function setup() {
-  socket.on('post', function(msg){
-  
+ socket.on('post', function(msg){
    switch (msg.header) {
      case 'config':
      config = msg.contenent;
@@ -131,75 +141,35 @@ function setup() {
      break;
    }
  });
-  socket.emit('get','config');
+ socket.emit('get','config');
+  config.map = ConvertMap(config.map);
   createCanvas(0, 0);
+ posiblemoove = generatePossibleMoove(20, {x:3,y:3}, config.map);
+ 
 }
-
 
 function draw() {
  if (config) {
   
    clear();
-   drawMap(config.map);
+   drawMap(mapNb);
    drawSpawns(config.players);
    drawArrives(config.players);
    //drawCaracters(config.players)
    drawCursor();
   
-   drawPossibleMoove(20, {x:3,y:3}, config.map)
+   //drawPossibleMoove(posiblemoove);
+
+   test()
  }
 }
 
 
-function autoResize(map) {
- let mapDimention = maxDimentionMap(map);
- resizeCanvas(mapDimention.x * caseWidth, mapDimention.y * caseWidth);
-}
-
-function maxDimentionMap (map) {
- let maxY = 0;
- for (let l = 0; l < map.length; l++) {
-   if (map[l].length > maxY) {
-     maxY = map[l].length;
-   }
- }
- return {
-   x: map.length,
-   y: maxY
- };
-}
-
-function drawMap (map) {
- 
- for (let l = 0; l < map.length; l++) {
-   for (let c = 0; c < map[l].length; c++) {
-     noStroke();
-     switch (map[l][c]) {
-       case '█':
-       fill('#27ae60');
-       break;
-       case '▓':
-       fill('#2ecc71');
-       break;
-       case '▒':
-       fill('#34495e');
-       break;
-       case 'M':
-       fill('#162029');
-       break;
-       default:
-       stroke(51, 20);
-       strokeWeight(1);
-       fill(0, 0);
-       break;
-     }
-     rect(c * caseWidth, l * caseWidth, caseWidth, caseWidth);
-   }
- }
-}
-
+//----------------------------------------------------//
+//                    Map Operation                   //
+//----------------------------------------------------//
 function ConvertMap (map) {
-  mapNb = new Array(map.length);
+ mapNb = new Array(map.length);
  for (let i = 0; i < mapNb.length; i++) {
    mapNb[i] = new Array(maxDimentionMap(map).y);
  }
@@ -228,22 +198,95 @@ function ConvertMap (map) {
  return mapNb;
 }
 
-function cursorPosition() {
+function autoResize(map) {
+ let mapDimention = maxDimentionMap(map);
+ resizeCanvas(mapDimention.x * caseWidth, mapDimention.y * caseWidth);
+}
+
+function maxDimentionMap (map) {
+ let maxY = 0;
+ for (let l = 0; l < map.length; l++) {
+   if (map[l].length > maxY) {
+     maxY = map[l].length;
+   }
+ }
  return {
-   x: mouseX -(mouseX % caseWidth),
-   y: mouseY -(mouseY % caseWidth)
+   x: map.length,
+   y: maxY
  };
 }
 
-function drawCursor () {
+
+
+//----------------------------------------------------//
+//                      Genrate                       //
+//----------------------------------------------------//
+function cursorPosition() {
+ return {
+   x: (mouseX - (mouseX % caseWidth)) / caseWidth,
+   y: (  mouseY - (mouseY % caseWidth)) / caseWidth
+ };
+}
+
+function generatePossibleMoove(nbMoove, playerPos, map) {
+return [];
+}
+
+
+
+//----------------------------------------------------//
+//                        Draw                        //
+//----------------------------------------------------//
+function drawCase (x, y, color) {
  noStroke();
+ fill(color);
+ rect(caseWidth * x , caseWidth * y, caseWidth, caseWidth);
+}
+
+function drawCaracter (x, y, color) {
+ noStroke();
+ fill(color);
+ circle(caseWidth * x + caseWidth / 2, caseWidth * y + caseWidth / 2, caseWidth / 2);
+}
+
+
+
+function drawMap (map) {
+ for (let l = 0; l < map.length; l++) {
+   for (let c = 0; c < map[l].length; c++) {
+     noStroke();
+     switch (map[l][c]) {
+       case 1:
+       fill('#27ae60');
+       break;
+       case 2:
+       fill('#2ecc71');
+       break;
+       case 3:
+       fill('#34495e');
+       break;
+       case 4:
+       fill('#162029');
+       break;
+       default:
+       stroke(51, 20);
+       strokeWeight(1);
+       fill(0, 0);
+       break;
+     }
+     rect(c * caseWidth, l * caseWidth, caseWidth, caseWidth);
+   }
+ }
+}
+
+function drawCursor () {
+  noStroke();
  fill(0, 25);
- rect(cursorPosition().x, cursorPosition().y, caseWidth, caseWidth);
+ drawCase(cursorPosition().x, cursorPosition().y, "#0003");
 }
 
 function drawCaracters (playerList) {
- console.log(config);
-  playerList.forEach(player => {
+ playerList.forEach(player => {
    player.caracters.forEach(caracter => {
      drawCase(caracter.x, caracter.y, "#000");
    });
@@ -266,103 +309,82 @@ function drawArrives (playerList) {
  });
 }
 
-function drawCase (x, y, color) {
- noStroke();
- fill(color);
- rect(caseWidth * x , caseWidth * y, caseWidth, caseWidth);
-}
-
-function drawCaracter (x, y, color) {
- noStroke();
- fill(color);
- circle(caseWidth * x + caseWidth / 2, caseWidth * y + caseWidth / 2, caseWidth / 2);
+function drawPossibleMoove(moove) {
+ for (let k = 0; k < moove.length; k++) {
+   drawCase(moove[k].x, moove[k].y, '#162029');
+ }
 }
 
 
 
+//----------------------------------------------------//
+//                  Game Operation                    //
+//----------------------------------------------------//
+function mooveWall(){
+  if (mouseIsPressed) {
+   let selecting = 0;
+   if(mapNb[cursorPosition().x][cursorPosition().y]=== 3 && selecting===0 ){
+    
+     selecting = 1;
+    
+     drawCase(cursorPosition().x, cursorPosition().y, '#ffffff');
+     mapNb[cursorPosition().x][cursorPosition().y]=0;
+    
+    
+     if(mapNb[cursorPosition().x][cursorPosition().y+1]=== 3){
+       drawCase(cursorPosition().x, cursorPosition().y+1, '#ffffff');
+       mapNb[cursorPosition().x][cursorPosition().y+1]=0;
+     }
+     if(mapNb[cursorPosition().x][cursorPosition().y-1]=== 3){
+       drawCase(cursorPosition().x, cursorPosition().y-1, '#ffffff');
+       mapNb[cursorPosition().x][cursorPosition().y-1]=0;
+     }
+     if(mapNb[cursorPosition().x+1][cursorPosition().y]=== 3){
+       drawCase(cursorPosition().x+1, cursorPosition().y, '#ffffff');
+       mapNb[cursorPosition().x+1][cursorPosition().y]=0;
+     }
+     if(mapNb[cursorPosition().x-1][cursorPosition().y]=== 3){
+       drawCase(cursorPosition().x-1, cursorPosition().y, '#ffffff');
+       mapNb[cursorPosition().x-1][cursorPosition().y]=0;
+     }
+    
+   }
+ }
+}
 
-function drawPossibleMoove(nbMoove, playerPos, map) {
- let mooveMap = ConvertMap(map);
- let currentGen = [playerPos];
- let nextGen = [];
- 
-  for (let nMoove = 0; nMoove < nbMoove; nMoove++) {
+//----------------------------------------------------//
+//                        Basic                       //
+//----------------------------------------------------//
+
+function test(){
+ let selecting = 0;
+ if(mapNb[cursorPosition().x][cursorPosition().y]=== 3 && selecting===0 ){
+   drawCase(cursorPosition().x, cursorPosition().y, '#ffffff');
   
-   currentGen.forEach(mapCase => {
-     if (mapNb[mapCase.x + 1][mapCase.y] === 0 && mooveMap[mapCase.x + 1][mapCase.y] !== 1) {
-       nextGen.push({
-         x: mapCase.x + 1,
-         y: mapCase.y
-       });
-       mooveMap[mapCase.x + 1][mapCase.y] = 1;
-     }
-    
-     if (mapNb[mapCase.x - 1][mapCase.y] === 0 && mooveMap[mapCase.x - 1][mapCase.y] !== 1 ) {
-       nextGen.push({
-         x: mapCase.x - 1,
-         y: mapCase.y
-       });
-       mooveMap[mapCase.x - 1][mapCase.y] = 1;
-     }
-    
-     if (mapNb[mapCase.x][mapCase.y+1] === 0 && mooveMap[mapCase.x][mapCase.y +1] !== 1) {
-       nextGen.push({
-         x: mapCase.x,
-         y: mapCase.y+1
-       });
-       mooveMap[mapCase.x][mapCase.y +1] = 1 ;
-     }
-    
-     if (mapNb[mapCase.x][mapCase.y -1] === 0 && mooveMap[mapCase.x ][mapCase.y -1] !== 1) {
-       nextGen.push({
-         x: mapCase.x,
-         y: mapCase.y -1
-       });
-       mooveMap[mapCase.x ][mapCase.y -1] = 1;
-     }
-    
-   });
-   currentGen = nextGen;
-   nextGen = [];
- }
-  fill('#162029');
- for (let k = 0; k < currentGen.length; k++) {
-   rect(currentGen[k].y * caseWidth, currentGen[k].x * caseWidth, caseWidth, caseWidth);
- }
+}}
 
+
+function create2dArray(x, y, fill) {
+ array = new Array(x);
+ for (let i = 0; i < x; i++) {
+   array[i] = new Array(y);
+   if (typeof fill !== 'undefined') {
+     for (let j = 0; j < y; j++) {
+       array[i][j] = fill;
+     }
+   }
  }
-/*
-"████████████████████████████████",
-"█BB                          YY█",
-"█B                            Y█",
-"█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █",
-"█       ▓   ▓      ▓   ▓       █",
-"█       ▓   ▓      ▓   ▓       █",
-"█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █",
-"█  ▓                        ▓  █",
-"█  ▓                        ▓  █",
-"█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █",
-"█     ▓  ▒  ▓      ▓  ▒  ▓     █",
-"█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █",
-"█  ▓        ▓  ▓▓  ▓        ▓  █",
-"█  ▓     ▓            ▓     ▓  █",
-"█  ▓   ▓▓▓    bbyy    ▓▓▓   ▓  █",
-"█           ▓ bMMy ▓           █",
-"█           ▓ rMMg ▓           █",
-"█  ▓   ▓▓▓    rrgg    ▓▓▓   ▓  █",
-"█  ▓     ▓            ▓     ▓  █",
-"█  ▓        ▓  ▓▓  ▓        ▓  █",
-"█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █",
-"█     ▓  ▒  ▓      ▓  ▒  ▓     █",
-"█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █",
-"█  ▓                        ▓  █",
-"█  ▓                        ▓  █",
-"█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █",
-"█       ▓   ▓      ▓   ▓       █",
-"█       ▓   ▓      ▓   ▓       █",
-"█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █",
-"█R                            G█",
-"█RR                          GG█",
-"████████████████████████████████"
-*/
+ return array;
+}
+
+function logArray(array) {
+ let line = '';;
+ for (let i = 0; i < array.length; i++) {
+   line = '';
+   for (let j = 0; j < array[i].length; j++) {
+     line = line + array[i][j];
+   }  
+   console.log(line);
+ }
+}
 
