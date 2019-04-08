@@ -79,7 +79,8 @@ body {
 .champMono:focus {
   border-color: #1a73e8;
 }
-.champMono:invalid {
+.champMono:invalid,
+.champMono.invalid{
   border-color: #e8321a;
   box-shadow: none;
 }
@@ -91,12 +92,17 @@ body {
 }
 
 
-
+.inputInvalidMessage {
+  display: inline-block;
+  color: #e8321a;
+  font-size: 0.8em;
+  padding-bottom: 0.5em;
+}
 
 
 
 .vSpacer {
-  height: 1em;
+  min-height: 1.5em;
 }
 
 .hSpacer {
