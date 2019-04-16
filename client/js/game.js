@@ -42,10 +42,17 @@ try {
   var config = convertMapV1(input);
   
 } catch (error) {
-  console.error(1,error);
+  console.error(1, error);
   
 }
 
+var placeModeWall = true;
+
+var isFirstWallCase = true;
+var firstWall= {
+  x:0,
+  y:0
+};
 
 var caseWidth = 25;
 
@@ -79,6 +86,8 @@ function setup() {
   socket.emit('get', 'config');
   createCanvas(0, 0);
   //posiblemoove = generatePossibleMoove(20, {x:3,y:3}, config.map);
+  
+  
 }
 
 function draw() {
@@ -92,6 +101,9 @@ function draw() {
     drawCaracters(config.players)
     drawCursor();
     
+    placeWall();
+    test();
+    //deleteWall()
     //drawPossibleMoove(posiblemoove);
   }
 }
@@ -358,6 +370,14 @@ function drawPossibleMoove(moove) {
 //----------------------------------------------------//
 
 
+
+
+
+
+
+
+
+
 function generatePossibleMoove(nbMoove, depart, map) {
   possibleMoove = copyArray(map);
   possibleMoove = fillArray(map, undefined);
@@ -413,3 +433,149 @@ function copyArray(array) {
   return newArray;
 }
 
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+
+function mooveWall(){
+  var placeModeWall = true;
+
+  var isFirstWallCase = true;
+
+  var firstWall= {
+    x:0,
+    y:0
+  };
+
+
+  deleteWall();
+  placeWall();
+}
+
+function deleteWall() {
+  if (mouseIsPressed) {
+    
+    let selecting = 0;
+    
+    console.log(config.walls); 
+    
+    
+    if (config.map[cursorPosition.y][cursorPosition.x].type === 'wall') {
+      
+      
+      wallGroup = config.map[cursorPosition.y][cursorPosition.x].group;
+      
+      selecting = 1;
+      
+      config.map[wallGroup[0].y][wallGroup[0].x] = {
+        type: 'void'
+        
+      };
+      
+      
+      config.map[wallGroup[1].y][wallGroup[1].x] = {
+        type: 'void'
+      };
+      
+      for (let k = 0; k < config.walls.length; k++) {
+        
+        if (config.walls[k] === wallGroup){
+          config.walls.splice(k,1);
+          console.log(k);
+        }
+        
+        
+        
+      }
+      
+    }
+    
+    //if(config.map[cursorPosition.y][cursorPosition.x].type==='void'){
+    
+    // drawCase(cursorPosition.y, cursorPosition.x, '#34495e');
+    
+    //}
+    
+  }
+}
+
+function placeWall() {
+  
+  if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void'&& ) {
+    
+    firstWall = {
+      x : cursorPosition.x,
+      y : cursorPosition.y
+    }
+    
+    /* output.map[rowId][columId] = {
+      type: 'wall',
+      group: output.walls[output.walls.length - 1]
+    }; */
+    
+    
+    if (Math.abs(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY) < Math.abs(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX)) {
+      if (cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX < 0) {
+        if(config.map[cursorPosition.y][cursorPosition.x+1].type === 'void'){
+          console.log(1);
+        }
+      } 
+      
+      else {
+        if(config.map[cursorPosition.y][cursorPosition.x-1].type === 'void'){
+          console.log(2);
+        }
+      } 
+      
+
+      
+    }
+    else {
+      
+      if (cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY < 0) {
+        if(config.map[cursorPosition.y+1][cursorPosition.x].type === 'void'){
+          console.log(3);
+        }
+      } 
+      
+      else {
+        if(config.map[cursorPosition.y-1][cursorPosition.x].type === 'void'){
+          console.log(4);
+        }
+      }
+    } 
+    
+    
+    
+  }
+  
+}
+
+
+
+
+
+
+function test() {
+  if (mouseIsPressed) {
+    
+    /* console.log(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY);
+    console.log(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX); */
+    //console.log(Math.abs(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY) - Math.abs(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX))
+
+
+
+    //console.log(mouseX)
+    //console.log(cursorPosition.x * caseWidth + 0, 5)
+  }
+}
