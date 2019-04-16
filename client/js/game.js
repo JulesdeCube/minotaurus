@@ -67,6 +67,9 @@ var cursorPosition = {
 /**
 * TODO verifier que le server nous renvoi bien la map
 */
+var nbmoove = 1
+
+var posiblemoove = generatePossibleMoove(nbmoove,[{x:3,y:3}, {x:28,y:28}], config.map);
 function setup() {
   socket.on('post', function (msg) {
     switch (msg.header) {
@@ -87,7 +90,6 @@ function setup() {
   createCanvas(0, 0);
   //posiblemoove = generatePossibleMoove(20, {x:3,y:3}, config.map);
   
-  
 }
 
 function draw() {
@@ -105,10 +107,17 @@ function draw() {
     test();
     //deleteWall()
     //drawPossibleMoove(posiblemoove);
+    drawPossibleMoove(posiblemoove, nbmoove*2);
   }
 }
 
-
+var test = setInterval(()=> {
+  nbmoove++;
+  posiblemoove = generatePossibleMoove(nbmoove,[{x:3,y:3}, {x:15,y:29}], config.map);
+  if (nbmoove > 20) {
+    clearInterval(test);
+  }
+},1000);
 //----------------------------------------------------//
 //                    Map Operation                   //
 //----------------------------------------------------//
@@ -357,9 +366,13 @@ function drawArrives(playerList) {
   });
 }
 
-function drawPossibleMoove(moove) {
-  for (let k = 0; k < moove.length; k++) {
-    drawCase(moove[k].x, moove[k].y, '#162029');
+function drawPossibleMoove(moove, max) {
+  for (let l = 0; l < moove.length; l++) {
+    for (let c = 0; c < moove[l].length; c++) {
+      if (moove[l][c] !== undefined) {
+        drawCase(c, l, 'rgba(0, 0, 0, ' + (1- (moove[l][c]/ max)) + ')');
+      }
+    }
   }
 }
 
@@ -370,18 +383,40 @@ function drawPossibleMoove(moove) {
 //----------------------------------------------------//
 
 
+function generatePossibleMoove(nbMoove, departs, map) {
+  
+  let possibleMoove = copyArray(map);
+  fillArray(possibleMoove, undefined);
+  let currentGen = [...departs];
+  let nextGen = [];
 
-
-
-
-
-
-
-
-function generatePossibleMoove(nbMoove, depart, map) {
-  possibleMoove = copyArray(map);
-  possibleMoove = fillArray(map, undefined);
-  return [];
+  for (let departId = 0; departId < currentGen.length; departId++) {
+    possibleMoove[currentGen[departId].x][currentGen[departId].y] = 0;
+  }
+  
+  for (let moove = 1; moove <= nbMoove; moove++) {
+    currentGen.forEach(position => {
+      if (map[position.x + 1][position.y].type === 'void' && possibleMoove[position.x + 1][position.y] === undefined) {
+        possibleMoove[position.x + 1][position.y] = moove;
+        nextGen.push({x:position.x + 1, y:position.y});
+      }
+      if (map[position.x - 1][position.y].type === 'void' && possibleMoove[position.x - 1][position.y] === undefined) {
+        possibleMoove[position.x - 1][position.y] = moove;
+        nextGen.push({x:position.x - 1, y:position.y});
+      }
+      if (map[position.x][position.y + 1].type === 'void' && possibleMoove[position.x][position.y + 1] === undefined) {
+        possibleMoove[position.x][position.y + 1] = moove;
+        nextGen.push({x:position.x, y:position.y + 1});
+      }
+      if (map[position.x][position.y - 1].type === 'void' && possibleMoove[position.x][position.y - 1] === undefined) {
+        possibleMoove[position.x][position.y - 1] = moove;
+        nextGen.push({x:position.x, y:position.y - 1});
+      }
+    }); 
+    currentGen = nextGen;
+    nextGen = [];
+  }
+  return possibleMoove;
 }
 
 //----------------------------------------------------//
