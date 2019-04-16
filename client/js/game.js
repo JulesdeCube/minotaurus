@@ -49,6 +49,7 @@ try {
 var placeModeWall = true;
 
 var isFirstWallCase = true;
+
 var firstWall= {
   x:0,
   y:0
@@ -104,10 +105,10 @@ function draw() {
     drawCursor();
     
     placeWall();
-    test();
+    //test();
     //deleteWall()
     //drawPossibleMoove(posiblemoove);
-    drawPossibleMoove(posiblemoove, nbmoove*2);
+    //drawPossibleMoove(posiblemoove, nbmoove*2);
   }
 }
 
@@ -482,7 +483,7 @@ function copyArray(array) {
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 
-function mooveWall(){
+/* function mooveWall(){
   var placeModeWall = true;
 
   var isFirstWallCase = true;
@@ -495,7 +496,7 @@ function mooveWall(){
 
   deleteWall();
   placeWall();
-}
+} */
 
 function deleteWall() {
   if (mouseIsPressed) {
@@ -546,28 +547,34 @@ function deleteWall() {
 
 function placeWall() {
   
-  if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void'&& ) {
+  if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void'&& isFirstWallCase === true) {
     
+  isFirstWallCase = false;
+
     firstWall = {
       x : cursorPosition.x,
       y : cursorPosition.y
-    }
+    };
+
+    console.log(firstWall);
     
+  }
     /* output.map[rowId][columId] = {
       type: 'wall',
       group: output.walls[output.walls.length - 1]
     }; */
     
-    
-    if (Math.abs(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY) < Math.abs(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX)) {
-      if (cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX < 0) {
-        if(config.map[cursorPosition.y][cursorPosition.x+1].type === 'void'){
+  if (mouseIsPressed && isFirstWallCase === false) { 
+
+    if (Math.abs(firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY) < Math.abs(firstWall.x * caseWidth + 0, 5 * caseWidth - mouseX)) {
+      if (firstWall.x * caseWidth + 0, 5 * caseWidth < mouseX  ) {
+        if(config.map[firstWall.y][firstWall.x+1].type === 'void'){
           console.log(1);
         }
       } 
       
       else {
-        if(config.map[cursorPosition.y][cursorPosition.x-1].type === 'void'){
+        if(config.map[firstWall.y][firstWall.x-1].type === 'void'){
           console.log(2);
         }
       } 
@@ -577,14 +584,14 @@ function placeWall() {
     }
     else {
       
-      if (cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY < 0) {
-        if(config.map[cursorPosition.y+1][cursorPosition.x].type === 'void'){
+      if (firstWall.y * caseWidth + 0, 5 * caseWidth < mouseY ) {
+        if(config.map[firstWall.y+1][firstWall.x].type === 'void'){
           console.log(3);
         }
       } 
       
       else {
-        if(config.map[cursorPosition.y-1][cursorPosition.x].type === 'void'){
+        if(config.map[firstWall.y-1][firstWall.x].type === 'void'){
           console.log(4);
         }
       }
@@ -593,6 +600,7 @@ function placeWall() {
     
     
   }
+
   
 }
 
