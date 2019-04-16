@@ -36,7 +36,7 @@ const socketsGame = sockets.of('/minotaurus/game/a1');
 
 //parameter
 const serverPort = 8080;
-const configFilePath = './server/map/defautMap.json';
+const configFilePath = './server/map/defautMap.conf';
 var configFile;
 //express config
 application.use('/', express.static(__dirname + '/client'));
@@ -45,7 +45,6 @@ application.use('/', express.static(__dirname + '/client'));
 fs.readFile(configFilePath,(error, configFile) => {
 if(!error){
   configFile = configFile.toString();
-  console.log(configFile);
    refreshSpawn();
   socketsGame.on('connection', function(socket){
     console.log(clientLogHeader(socket) + 'connected');

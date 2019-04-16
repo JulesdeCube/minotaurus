@@ -67,6 +67,7 @@ function setup() {
       console.log(msg.contenent);
       
       config = convertMapV1(msg.contenent);
+      
       autoResize(config.map);
       break;
       
@@ -357,7 +358,9 @@ function drawPossibleMoove(moove) {
 //----------------------------------------------------//
 
 
-function generatePossibleMoove(nbMoove, playerPos, map) {
+function generatePossibleMoove(nbMoove, depart, map) {
+  possibleMoove = copyArray(map);
+  possibleMoove = fillArray(map, undefined);
   return [];
 }
 
