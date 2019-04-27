@@ -28,7 +28,7 @@ shoot from the eponime game of [LEGO®](https://shop.lego.com/fr-FR/Minotaurus-3
 
 Minautorus is a board game turn per turn. Wich is played with a dice.
 
-the aim of the game is to be the first th have take all is heros in the center of the bord inthis color case without be eated by the minotaurus . [see the rule](/RULE.md)
+the aim of the game is to be the first th have take all is heros in the center of the bord inthis color case without be eated by the minotaurus . [see the rule](doc/RULE.md)
 <p align="center">
   <img alt="VS Code in action" width="750" src="https://sh-s7-live-s.legocdn.com/is/image/LEGO/3841?fit=constrain,1&wid=1000&hei=2000&fmt=png">
 </p>
