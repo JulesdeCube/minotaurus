@@ -46,6 +46,13 @@ try {
   
 }
 
+
+var tempWall= {
+  x:1,
+  y:3
+};
+
+
 var placeModeWall = true;
 
 var isFirstWallCase = true;
@@ -105,7 +112,8 @@ function draw() {
     drawCursor();
     
     placeWall();
-    //test();
+    stopPlaceWall();
+    //test_2();
     //deleteWall()
     //drawPossibleMoove(posiblemoove);
     //drawPossibleMoove(posiblemoove, nbmoove*2);
@@ -531,7 +539,6 @@ function deleteWall() {
         }
         
         
-        
       }
       
     }
@@ -547,54 +554,99 @@ function deleteWall() {
 
 function placeWall() {
   
-  if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void'&& isFirstWallCase === true) {
-    
-  isFirstWallCase = false;
+  if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void'&& isFirstWallCase === true && placeModeWall === true) {
+
+    console.log(placeModeWall);
 
     firstWall = {
       x : cursorPosition.x,
       y : cursorPosition.y
     };
 
+    config.map[firstWall.y][firstWall.x].type='wall';
+
     console.log(firstWall);
-    
+    isFirstWallCase = false;
   }
     /* output.map[rowId][columId] = {
       type: 'wall',
       group: output.walls[output.walls.length - 1]
     }; */
     
-  if (mouseIsPressed && isFirstWallCase === false) { 
+  if (mouseIsPressed && isFirstWallCase === false) {    
 
-    if (Math.abs(firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY) < Math.abs(firstWall.x * caseWidth + 0, 5 * caseWidth - mouseX)) {
-      if (firstWall.x * caseWidth + 0, 5 * caseWidth < mouseX  ) {
+    let diffY= (firstWall.y * caseWidth + 0.5 * caseWidth - mouseY);
+
+    let diffX= (firstWall.x * caseWidth + 0.5 * caseWidth - mouseX);
+
+    if (Math.abs(diffY) < Math.abs(diffX)) {
+
+
+       if (diffX < 0 ) {     // a droite
+
         if(config.map[firstWall.y][firstWall.x+1].type === 'void'){
-          console.log(1);
-        }
-      } 
-      
-      else {
-        if(config.map[firstWall.y][firstWall.x-1].type === 'void'){
-          console.log(2);
-        }
-      } 
-      
 
-      
-    }
-    else {
-      
-      if (firstWall.y * caseWidth + 0, 5 * caseWidth < mouseY ) {
-        if(config.map[firstWall.y+1][firstWall.x].type === 'void'){
-          console.log(3);
+          config.map[tempWall.y][tempWall.x].type='void';
+
+          config.map[firstWall.y][firstWall.x+1].type='wall';
+
+          tempWall= {
+            x:firstWall.x+1,
+            y:firstWall.y
+          };
         }
       } 
       
-      else {
-        if(config.map[firstWall.y-1][firstWall.x].type === 'void'){
-          console.log(4);
+      else { // a gauche
+
+        if(config.map[firstWall.y][firstWall.x-1].type === 'void'){
+          config.map[tempWall.y][tempWall.x].type='void';
+
+          config.map[firstWall.y][firstWall.x-1].type='wall';
+
+          tempWall= {
+            x:firstWall.x-1,
+            y:firstWall.y
+          };
         }
-      }
+      }  
+     
+    }
+
+
+    else { 
+      
+       if (diffY < 0) { // en bas
+
+        if(config.map[firstWall.y+1][firstWall.x].type === 'void'){
+
+          config.map[tempWall.y][tempWall.x].type='void';
+
+          config.map[firstWall.y+1][firstWall.x].type='wall';
+
+          tempWall= {
+            x:firstWall.x,
+            y:firstWall.y+1
+          };
+
+        }
+      } 
+      
+      else { // en haut
+        if(config.map[firstWall.y-1][firstWall.x].type === 'void'){
+
+          config.map[tempWall.y][tempWall.x].type='void';
+
+          config.map[firstWall.y-1][firstWall.x].type='wall';
+
+          tempWall= {
+            x:firstWall.x,
+            y:firstWall.y-1
+          };
+
+        }
+       }
+       
     } 
     
     
@@ -606,19 +658,47 @@ function placeWall() {
 
 
 
+function stopPlaceWall(){
+  if(!mouseIsPressed && isFirstWallCase === false){//&& isFirstWallCase === false
+    placeModeWall = false;
+    //console.log(placeModeWall);
+  }
+}
 
 
 
-function test() {
+
+
+function rollDice(diceValue){
+
+  
+}
+
+function display3(){
+  fill()
+
+}
+
+
+
+function test_2() {
   if (mouseIsPressed) {
     
     /* console.log(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY);
     console.log(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX); */
     //console.log(Math.abs(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY) - Math.abs(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX))
 
+//console.log(Math.abs(firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY) > Math.abs(firstWall.x * caseWidth + 0, 5 * caseWidth - mouseX))
+let diffY= (firstWall.y * caseWidth + 0,5 * caseWidth - mouseY);
+    //console.log(Math.abs(diffY) )
 
+    console.log( (firstWall.y * caseWidth+ ((0.5) * caseWidth) ) );
+   
 
     //console.log(mouseX)
     //console.log(cursorPosition.x * caseWidth + 0, 5)
   }
 }
+
+
+
