@@ -30,8 +30,9 @@ class User{
               }
             );
             socket.emit('signUp', {type: 'validate', message:'account created'});
+            user = database.content.length - 1;
+            socket.emit('signIn', {type: 'validate', message:'authentication success'});
           }
-          
         } else { socket.emit('signUp', {type: 'error', message: 'enter false'}); }
       });
 
@@ -42,8 +43,8 @@ class User{
           typeof msg.username === 'string' && user !== -1 &&
           typeof msg.password === 'string' && this.passwordHash(msg.password) === database.content[user].password
         ) {
-          socket.emit('signUp', {type: 'validate', message:'authentication success'});
-        } else { socket.emit('signUp', {type: 'error', message:'enter false'}); }
+          socket.emit('signIn', {type: 'validate', message:'authentication success'});
+        } else { socket.emit('signIn', {type: 'error', message:'enter false'}); }
       });
 
       // Sign Token
@@ -52,6 +53,12 @@ class User{
         if (typeof msg.token === 'string' && user !== -1) {
           socket.emit('signToken', {type: 'validate', message:'authentication success'});
         } else { socket.emit('signToken', {type: 'error', message:'token false'}); }
+      });
+
+      socket.on('get', (msg) => {
+        if (user !== -1) {
+          socket.emit('post', {request: msg.request, content: database.content[user][msg.request]});
+        } else { socket.emit('signToken', {request: 'error', message:'token false'}); }
       });
 
     });

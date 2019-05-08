@@ -19,10 +19,10 @@ class User {
     this.socket.on('signUp', (msg) => {
       switch (msg.type) {
         case 'validate':
-          this.on.SignUp(msg.content);
+          this.on.SignUp(msg.message);
         break;
         case 'error':
-          this.on.SignUpError(msg.content);
+          this.on.SignUpError(msg.message);
         break;
       }
     });
@@ -31,10 +31,11 @@ class User {
     this.socket.on('signIn', (msg) => {
       switch (msg.type) {
         case 'validate':
-          this.on.SignIn(msg.content);
+          if (this.autoConnection) { this.get('token'); }
+          this.on.SignIn(msg.message);
         break;
         case 'error':
-          this.on.SignInError(msg.content);
+          this.on.SignInError(msg.message);
         break;
       }
     });
@@ -43,17 +44,28 @@ class User {
     this.socket.on('signToken', (msg) => {
       switch (msg.type) {
         case 'validate':
-          this.on.SignToken(msg.content);
+          this.on.SignToken(msg.message);
         break;
         case 'error':
-          this.on.SignTokenError(msg.content);
+          this.on.SignTokenError(msg.message);
         break;
       }
     });
     
     //information geter
     this.socket.on('post', (msg) => {
-      if (this.socket.list.hasOwnProperty(msg.request)) {
+      // auto connection get token
+      if (this.autoConnection && msg.request === 'token') {
+        let cookie = {};
+        try {
+          cookie = JSON.parse(document.cookie);
+        } catch {}
+        cookie.token = msg.content;
+        document.cookie = JSON.stringify(cookie);
+      }
+
+
+      if (this.geterList.hasOwnProperty(msg.request)) {
         this.geterList[msg.request](msg.content);
       }
     });
@@ -106,9 +118,21 @@ class User {
       });
     }
   }
+
+  disconnect() {
+    let cookie = {};
+    try {
+      cookie = JSON.parse(document.cookie);
+    } catch {}
+    cookie.token = undefined;
+    document.cookie = JSON.stringify(cookie);
+    document.location.reload(true);
+  }
   
   get(information, callback) {
-    this.geterList[information] = callback;
+    if (typeof callback === 'function') {
+      this.geterList[information] = callback;
+    }
     this.socket.emit('get',{
       request: information,
       content: undefined
