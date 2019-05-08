@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minautorus</title>
   <!-- CSS -->
+  <!-- Font Awsome -->
+  <link rel="stylesheet" href="/font/FontAwesome/css/all.css">
+  <!-- Roboto -->
+  <link rel="stylesheet" href="/font/Roboto/css/all.css">
+  <!-- perso -->
   <link rel="stylesheet" href="style.css">
   
   <!-- JS -->
@@ -21,18 +26,28 @@
 </head>
 <body>
   <header>
-    
+    <div id="profil">
+      <div class="userIcon">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="userMenu" id="userMenu">
+        <span class="username-value">Anonymous</span>
+        <div class="vSpacer"></div>      
+        <button type="button" class="button disconnect">Disconnect</button>
+      </div>
+    </div>   
   </header>
   
   <main>
+    <div id="game"></div>
     <div id="signIn">
       <form name="signIn" id="signIn-form">
         <h1>Sign in</h1>
         <div class="vSpacer"></div>
         <input type="text" name="username" id="signIn-username" class="champMono fillLine" placeholder="Username"><br>
-        <div class="vSpacer"><span class="inputInvalidMessage" id="signIn-username-Message"></span></div>
+        <div class="vSpacer"><span class="inputMessage" id="signIn-username-Message"></span></div>
         <input type="password" name="password" id="signIn-password" class="champMono fillLine" placeholder="Password"><br>
-        <div class="vSpacer"><span class="inputInvalidMessage" id="signIn-password-Message"></span></div>
+        <div class="vSpacer"><span class="inputMessage" id="signIn-password-Message"></span></div>
         <button type="button" class="button light display-SignUp">Create a accout</button>
         <div class="hSpacer"></div>
         <button type="submit" name="submit" id="signIn-submit" class="button">Sign in</button>
@@ -44,13 +59,13 @@
         <h1>Sign up</h1>
         <div class="vSpacer"></div>
         <input type="text" name="username" id="signUp-username" class="champMono fillLine" placeholder="Username"><br>
-        <div class="vSpacer"><span class="inputInvalidMessage" id="signUp-username-Message"></span></div>
-        <input type="email" name="email" id="signUp-email" class="champMono fillLine" placeholder="E-mail"><br>
-        <div class="vSpacer"><span class="inputInvalidMessage" id="signUp-email-Message"></span></div>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-username-Message"></span></div>
+        <input type="text" name="email" id="signUp-email" class="champMono fillLine" placeholder="E-mail"><br>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-email-Message"></span></div>
         <input type="password" name="password" id="signUp-password" class="champMono fillLine" placeholder="Password"><br>
-        <div class="vSpacer"><span class="inputInvalidMessage" id="signUp-password-Message"></span></div>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-password-Message"></span></div>
         <input type="password" name="passwordRepeat" id="signUp-passwordRepeat" class="champMono fillLine" placeholder="Repeat password"><br>
-        <div class="vSpacer"><span class="inputInvalidMessage" id="signUp-passwordRepeat-Message"></span></div>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-passwordRepeat-Message"></span></div>
         <button type="button" class="button light display-SignIn">Sign in instead</button>
         <div class="hSpacer"></div>
         <button type="submit" name="submit" id="signUp-submit" class="button">Sign up</button>

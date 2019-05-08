@@ -1,102 +1,64 @@
 window.addEventListener('load',() => {
-  
-  let socket = io.connect('/user',{'path': '/lib/socket.io'});
-  //document.cookie = '{"token":"texaple"}';  
-  let user = new User(socket);
-
+  // Init
   var tabs = {
     signIn: document.getElementById('signIn'),
-    signUp: document.getElementById('signUp')
+    signUp: document.getElementById('signUp'),
+    game: document.getElementById('game')
+  };
+  Tabshidden();
+  tabs.signIn.hidden = false;
+  
+  //----------------------------------------------------//
+  //                        User                        //
+  //----------------------------------------------------//
+  
+  // Init
+  let user = new User(io.connect('/user',{'path': '/lib/socket.io'}) , true);
+  
+  
+  // Callback to request
+  user.on.SignIn = (msg) => {
+    profilMenu.hidden = false;
+    clearFormInput('signIn-form');
+    user.get('username', (username) => {
+      fillClass('username-value', username);
+    });
+    Tabshidden();
+    tabs.game.hidden = false;
   }
 
-  socket.on('signIn', (msg) => {
-    switch (msg.type) {
-      case 'error':
-      switch (msg.detail) {
-        case 'wong entry':
-        document.getElementById('signIn-username').classList.add('invalid');
-        document.getElementById('signIn-password').classList.add('invalid');
-        document.getElementById('signIn-password-Message').innerText = 'wong password or username';
-        break;
-      }
+  user.on.SignToken = (msg) => {
+    profilMenu.hidden = false;
+    Tabshidden();
+    tabs.game.hidden = false;
+  }
+
+  user.on.SignInError = (msg) => {
+    inputMessage('signIn-username', false);
+    inputMessage('signIn-password', false, 'username and password did\'nt correspond');
+  }
+
+  user.on.SignUp = (msg) => {
+    clearFormInput('signUp-form');
+  }
+
+  user.on.SignUpError = (msg) => {
+    switch (msg) {
+      case 'username already taken':
+        inputMessage('signUp-username', false, 'username already taken');            
       break;
-      
-      case 'correct':
-      
-      cookie.token = msg.detail;
-      document.cookie = JSON.stringify(cookie);
-      break;
-    }
-  });
-  
-  socket.on('SignUp', (msg) => {
-    switch (msg.type) {
-      case 'error':
-      switch (msg.detail) {
-        case 'usernameDouble':
-        document.getElementById('signUp-username').classList.add('invalid');
-        document.getElementById('signUp-username-Message').innerText = 'please choose an other username';
-        break;
-        
-        case 'emailDouble':
-        document.getElementById('signUp-email').classList.add('invalid');
-        document.getElementById('signUp-email-Message').innerText = 'please choose an other email';
-        break;
-      }
-      break;
-      
-      case 'correct':
-      socket.emit('post',{
-        header:'signIn',
-        content: {
-          username: document.getElementById('signUp-username').value,
-          password: document.getElementById('signUp-password').value
-        }
-      });
-      clearFormInput('signUp-form');
-      Tabshidden();
-      tabs.signIn.hidden = false;
+      case 'email already taken':
+        inputMessage('signUp-email', false, 'email already taken');            
       break;
     }
-  });
-  
-  function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    document.getElementById('signUp-password').value = '';
+    document.getElementById('signUp-passwordRepeat').value = '';
   }
   
-  function Tabshidden(){
-    for (const tabsName in tabs) {
-      tabs[tabsName].hidden = true;
-    }
-  }
+
   
-  function addEventToClass(className, event, callBack){
-    balises = document.getElementsByClassName(className);
-    
-    for (const balise in balises) {
-      if (typeof balises[balise] === 'object') {
-        balises[balise].addEventListener(event, callBack); 
-      }
-      
-    }
-  }
   
-  function socketFormSend(formId, socket, isCorrect){
-    let form = document.getElementById(formId);
-    form.onsubmit = (event) => {
-      event.preventDefault();
-      let output = getFormInput(formId);
-      
-      if(isCorrect(output)){
-        socket.emit('post',{
-          header:event.originalTarget.name,
-          content:output
-        });
-      }
-    };  
-  }
-  
+  // Forum send
   function getFormInput(formId){
     let inputs = document.getElementById(formId).querySelectorAll('input');
     let inputValue = {};
@@ -108,82 +70,153 @@ window.addEventListener('load',() => {
   
   function clearFormInput(formId){
     let inputs = document.getElementById(formId).querySelectorAll('input');
-    for (const input of inputs) {
-      input.value = '';
+    for (const key in inputs) {
+      if (inputs.hasOwnProperty(key)) {
+        inputs[key].value = '';
+      }
+    }
+  }
+
+  function clearFormError(formId){
+    let inputs = document.getElementById(formId).querySelectorAll('input');
+    for (const key in inputs) {
+      if (inputs.hasOwnProperty(key)) {
+        inputMessage(inputs[key].id, true, '');
+      }
+    }
+  }
+  
+  function formSend(formId, callBack){
+    document.getElementById(formId).onsubmit =
+    (event) => {
+      event.preventDefault();
+      callBack(getFormInput(formId));
+    };  
+  }
+  
+  function inputMessage(inputId, valid, message){
+    let input = document.getElementById(inputId);
+    let inputMessage = document.getElementById(inputId + '-Message');
+    
+    if (valid) {
+      input.classList.remove('invalid');
+      inputMessage.classList.remove('invalid');
+    } else {
+      input.classList.add('invalid');
+      inputMessage.classList.add('invalid');
+    }
+    if (message !== undefined) {
+      inputMessage.innerText = message;
+    }
+  }
+  
+
+  formSend('signIn-form', (inputs) => {
+    clearFormError('signIn-form');
+    let valide = true;
+
+    // cheek if entry are empty
+    for (const key in inputs) {
+      if (inputs[key] === '') {
+        inputMessage('signIn-' + key, false, 'you must fill this field');
+        valide = false;
+      }
+    }
+
+    // chose if we need to send (if there is no error)
+    if (valide) {
+      user.signIn(inputs.username, inputs.password);
+    } else {
+      document.getElementById('signIn-password').value = '';
+    }
+  });
+  
+  formSend('signUp-form', (inputs) => {
+    clearFormError('signUp-form');
+    let valide = true;
+
+    // cheek if entry are empty
+    for (const key in inputs) {
+      if (inputs[key] === '') {
+        inputMessage('signUp-' + key, false, 'you must fill this field');
+        valide = false;
+      }
+    }
+
+    //cheek if email is reel
+    if (!user.validateEmail(inputs.email) && inputs.email !== '') {
+      inputMessage('signUp-email', false, 'it\'s not a correct email');
+      valide = false;
+    }
+
+    //cheek if the password and the reaped are the same
+    if (inputs.password !== inputs.passwordRepeat) {
+      inputMessage('signUp-password', false);
+      inputMessage('signUp-passwordRepeat', false, 'password are not the same');
+      valide = false;
+    }
+
+    // chose if we need to send (if there is no error)
+    if (valide) {
+      user.signUp(inputs.username, inputs.email ,inputs.password);
+    } else {
+      document.getElementById('signUp-password').value = '';
+      document.getElementById('signUp-passwordRepeat').value = '';
+    }
+  });
+  
+  // profil menu
+  function fillClass(className, value){
+    let balises = document.getElementsByClassName(className);
+    
+    for (const balise in balises) {
+      if (typeof balises[balise] === 'object') {
+        balises[balise].innerHTML = value; 
+      }
+    }
+  }
+
+
+  let profilMenu = document.getElementById('profil');
+  profilMenu.hidden = true;
+
+
+
+  //----------------------------------------------------//
+  //                        Tabs                        //
+  //----------------------------------------------------//
+  function addEventToClass(className, event, callBack){
+    let balises = document.getElementsByClassName(className);
+    for (const balise in balises) {
+      if (typeof balises[balise] === 'object') {
+        balises[balise].addEventListener(event, callBack); 
+      }
+    }
+  }
+
+  function Tabshidden(){
+    for (const tabsName in tabs) {
+      tabs[tabsName].hidden = true;
     }
   }
   
   
+
   
   
-  Tabshidden();
-  tabs.signIn.hidden = false;
-  
-  
-  
+  // Change pannel
   addEventToClass('display-SignUp','click',() => {
     Tabshidden();
     tabs.signUp.hidden = false;
-  })
+  });
   addEventToClass('display-SignIn','click',() => {
     Tabshidden();
     tabs.signIn.hidden = false;
-  })
-  
-  
-  document.getElementById('signUp-passwordRepeat').oninput = (Event) => {
-    document.getElementById('signUp-passwordRepeat').classList.remove('invalid');
-    document.getElementById('signUp-password').classList.remove('invalid');
-  }
-  document.getElementById('signUp-password').oninput = (Event) => {
-    document.getElementById('signUp-passwordRepeat').classList.remove('invalid');
-    document.getElementById('signUp-password').classList.remove('invalid');
-  }
-  document.getElementById('signUp-email').oninput = (Event) => {
-    document.getElementById('signUp-email').classList.remove('invalid');
-  }
-  
-  
-  socketFormSend('signIn-form', socket, (input) => {
-    let isGood = true;
-    for (const key in input) {
-      document.getElementById('signIn-' + key + '-Message').innerHTML = '';
-      document.getElementById('signIn-' + key).classList.remove('invalid');
-      if (input[key] === '') {
-        document.getElementById('signIn-' + key + '-Message').innerHTML = 'you need to enter a ' + key + '.';
-        document.getElementById('signIn-' + key).classList.add('invalid');
-        isGood = false;
-      }
-    }
-    
-    return isGood;
-  });
-  socketFormSend('signUp-form', socket, (input) => {
-    
-    let isGood = true;
-    for (const key in input) {
-      document.getElementById('signUp-' + key + '-Message').innerHTML = '';
-      document.getElementById('signUp-' + key).classList.remove('invalid');
-      if (input[key] === '' && key !== 'passwordRepeat') {
-        document.getElementById('signUp-' + key + '-Message').innerHTML = 'you need to enter a ' + key + '.';
-        document.getElementById('signUp-' + key).classList.add('invalid');
-        isGood = false;
-      }
-    }
-    if (!validateEmail(input.email)) {
-      document.getElementById('signUp-email').classList.add('invalid');
-      isGood = false;
-    }
-    if (input.password !== input.passwordRepeat) {
-      document.getElementById('signUp-passwordRepeat-Message').innerHTML = 'passworld are not the same';
-      document.getElementById('signUp-passwordRepeat').classList.add('invalid');
-      document.getElementById('signUp-passwordRepeat').value = '';
-      isGood = false;
-    }
-    console.log(input);
-    
-    return isGood;
   });
   
-  
+  // disconnect
+  addEventToClass('disconnect','click',() => {
+    user.disconnect();
+  });
+
 });

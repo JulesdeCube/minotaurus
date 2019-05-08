@@ -9,10 +9,13 @@
 body {
   background: #fff;
   min-height: 100vh;
-  font-family: roboto;
+  font-family: roboto, sans-serif;
   font-size: 16px;
   color: #202124; 
 }
+
+
+
 
 
 #signIn,
@@ -29,6 +32,10 @@ body {
   border: 0.1em #dadce0 solid;
   padding: 2em 2em 1.5em;
 }
+
+
+
+
 
 .button{
   font: inherit;
@@ -55,10 +62,14 @@ body {
 .button.light:hover{
   background-color: #43c0431f;
 }
+
 .button.light:focus{
   background-color: #43c04344;
 }
 
+.button:disabled{
+  background-color: #a7eea7;
+}
 
 
 
@@ -79,6 +90,7 @@ body {
 .champMono:focus {
   border-color: #43c043;
 }
+
 .champMono:invalid,
 .champMono.invalid{
   border-color: #e8321a;
@@ -92,12 +104,103 @@ body {
 }
 
 
-.inputInvalidMessage {
+
+
+
+.inputMessage {
   display: inline-block;
-  color: #e8321a;
+  color: #5f6368;
   font-size: 0.8em;
   padding-bottom: 0.5em;
 }
+
+.inputMessage.invalid {
+  color: #e8321a;
+}
+
+
+
+
+
+#profil {
+  position: absolute;
+  top: 1em;
+  right: 2em;
+}
+
+#profil .userIcon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2em;
+  height: 2em;
+
+  background-color: #fff;
+  border-radius: 5em;
+  border: 0.1em #dadce0 solid;
+  font-size: 1em;
+  
+  cursor: pointer;
+}
+
+#profil:hover .userIcon {
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+#profil:hover .userMenu {
+  display: block;
+  opacity: 1;
+
+  transition: all 0.3s ease;
+}
+
+#profil .userMenu {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  right: -1em;
+  top: 2.75em;
+
+
+  background-color: #fff;
+  border-radius: 0.5em;
+  border: 0.1em #dadce0 solid;
+  padding: 1em 1em 0.75em;
+
+  transition: all 0.3s ease
+}
+
+#profil .userMenu::after {
+  position: absolute;
+  right: 1em;
+  top: 0em;
+
+  content: '';
+  width: 1em;
+  height:1em;
+  transform: translate(-40%, -55%) rotate(45deg);
+  background-color: #fff;
+  border-top-left-radius: 0.2em;
+  border-top: 0.1em #dadce0 solid;
+  border-left: 0.1em #dadce0 solid;
+}
+
+#profil .userMenu::before {
+  position: absolute;
+  right: 0em;
+  top: -1em;
+  left: 0em;
+
+  content: '';
+  height:1em;
+}
+
+#profil .vSpacer{
+  min-height: 0.75em;
+}
+
+
 
 
 
