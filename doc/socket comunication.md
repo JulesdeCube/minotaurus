@@ -141,3 +141,21 @@ predefinit information:
   content: 'the infornation value'
 }
 ```
+
+### Minotaurus
+
+#### make an action
+1. server: `get`: the action
+```js
+{
+  request: 'action',
+  content: {
+    type: 'the action',
+    information: 'complementar information'
+  }
+}
+```
+possible action:
+- `mooveCharacter` : moove a character specifie the number of moove (`int`)
+- `mooveMinotaurus` : moove the minotaurusby `8` case
+- `mooveWall` : moove 1 wall
