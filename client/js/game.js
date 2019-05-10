@@ -593,7 +593,7 @@ function actionMooveCharacter() {
   selectedCase = config.map[cursorPosition.y][cursorPosition.x]
 
   
-  if (mouseIsPressed && modeSelectArrives === true && possiblemoove[cursorPosition.y][cursorPosition.x] !== undefined ) {
+  if (mouseIsPressed && modeSelectArrives === true && possiblemoove[cursorPosition.y][cursorPosition.x] !== undefined && selectedCase.content === undefined ) {
 
     selectedCase.content = config.map[selectedCaseP[0].y][selectedCaseP[0].x].content
 
