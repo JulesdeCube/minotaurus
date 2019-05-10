@@ -5,38 +5,38 @@ var socket = io('/minotaurus/game/a1');
 //                         CONFIG                     //
 //----------------------------------------------------//
 var input =
-  "████████████████████████████████" + '\n' +
-  "█bb                          yy█" + '\n' +
-  "█b                            y█" + '\n' +
-  "█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
-  "█       ▓   ▓      ▓   ▓       █" + '\n' +
-  "█       ▓   ▓      ▓   ▓       █" + '\n' +
-  "█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
-  "█  ▓                        ▓  █" + '\n' +
-  "█  ▓                        ▓  █" + '\n' +
-  "█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
-  "█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
-  "█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
-  "█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
-  "█  ▓     ▓            ▓     ▓  █" + '\n' +
-  "█  ▓   ▓▓▓    BBYY    ▓▓▓   ▓  █" + '\n' +
-  "█           ▓ B@@Y ▓           █" + '\n' +
-  "█           ▓ R@@G ▓           █" + '\n' +
-  "█  ▓   ▓▓▓    RRGG    ▓▓▓   ▓  █" + '\n' +
-  "█  ▓     ▓            ▓     ▓  █" + '\n' +
-  "█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
-  "█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
-  "█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
-  "█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
-  "█  ▓                        ▓  █" + '\n' +
-  "█  ▓                        ▓  █" + '\n' +
-  "█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
-  "█       ▓   ▓      ▓   ▓       █" + '\n' +
-  "█       ▓   ▓      ▓   ▓       █" + '\n' +
-  "█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
-  "█r                            g█" + '\n' +
-  "█rr                          gg█" + '\n' +
-  "████████████████████████████████";
+"████████████████████████████████" + '\n' +
+"█bb                          yy█" + '\n' +
+"█b                            y█" + '\n' +
+"█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
+"█       ▓   ▓      ▓   ▓       █" + '\n' +
+"█       ▓   ▓      ▓   ▓       █" + '\n' +
+"█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
+"█  ▓                        ▓  █" + '\n' +
+"█  ▓                        ▓  █" + '\n' +
+"█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
+"█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
+"█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
+"█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
+"█  ▓     ▓            ▓     ▓  █" + '\n' +
+"█  ▓   ▓▓▓    BBYY    ▓▓▓   ▓  █" + '\n' +
+"█           ▓ B@@Y ▓           █" + '\n' +
+"█           ▓ R@@G ▓           █" + '\n' +
+"█  ▓   ▓▓▓    RRGG    ▓▓▓   ▓  █" + '\n' +
+"█  ▓     ▓            ▓     ▓  █" + '\n' +
+"█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
+"█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
+"█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
+"█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
+"█  ▓                        ▓  █" + '\n' +
+"█  ▓                        ▓  █" + '\n' +
+"█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
+"█       ▓   ▓      ▓   ▓       █" + '\n' +
+"█       ▓   ▓      ▓   ▓       █" + '\n' +
+"█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
+"█r                            g█" + '\n' +
+"█rr                          gg█" + '\n' +
+"████████████████████████████████";
 
 //draw
 var caseWidth = 25;
@@ -80,79 +80,98 @@ var minotaurusOut = false;
 //                        P5                          //
 //----------------------------------------------------//
 /**
- * TODO verifier que le server nous renvoi bien la map
- */
+* TODO verifier que le server nous renvoi bien la map
+*/
 function setup() {
-   /* socket.on('post', function (msg) {
+  /* socket.on('post', function (msg) {
     switch (msg.header) {
       case 'config':
-        console.log(msg.contenent);
-
-        config = convertMapV1(msg.contenent);
-
-        console.log(config);
-        autoResize(config.map);
-        break;
-
+      console.log(msg.contenent);
+      
+      config = convertMapV1(msg.contenent);
+      
+      console.log(config);
+      autoResize(config.map);
+      break;
+      
       default:
-        console.log(msg);
-        break;
+      console.log(msg);
+      break;
     }
   });  */
   socket.emit('get', 'config');
   createCanvas(0, 0);
   config = convertMapV1(input);
   autoResize(config.map);
-
+  
   player = config.players[1];
 }
 
 function draw() {
   if (config) {
-
+    
     clear();
     updateCursorPosition();
     drawMap(config.map);
     drawSpawns(config.players);
     drawArrives(config.players);
     drawCharacters(config.players)
+    drawMinotauruss(config.minotaurus.characters);
     drawCursor();
-
+    
+    
     switch (action) {
       case 'rollDice':
-        drawDice();
+      drawDice();
       break;
-
+      
       case 'mooveCharacter':
-        actionMooveCharacter();
-
-        if (possibleMooveIsGenerate === false) { //selectedCaseP !==  [ {x: 0, y:0} ]
+      
+      actionMooveCharacter();
+      
+      if (possibleMooveIsGenerate === false) { 
         
-          possiblemoove = generatePossibleMoove(actionInformation, selectedCaseP, config.map);
-          
-          possibleMooveIsGenerate = true;
-
-          setTimeout(() => {
-            modeSelectArrives = true
-          }, 1000)
-        }
-        if (possiblemoove !== [[]]) {
-          drawPossibleMoove(possiblemoove,8);
-          // selectedCaseP = [{ x: 0,y: 0}];
-        }
+        possiblemoove = generatePossibleMoove(actionInformation, selectedCaseP, config.map, true);
+        
+        possibleMooveIsGenerate = true;
+        
+        setTimeout(() => {
+          modeSelectArrives = true
+        }, 500)
+      }
+      if (possiblemoove !== [[]]) {
+        drawPossibleMoove(possiblemoove,2*actionInformation);
+        
+      }
       break;
-
+      
       case 'mooveMinotaurus':
-        actionMooveMinotaurus();
-
-        break;
-
-      case 'mooveWall':
-        deleteWall()
-        placeWall();
-        stopPlaceWall();
+      
+      actionMooveMinotaurus();
+      
+      if (possibleMooveIsGenerate === false) { 
+        
+        possiblemoove = generatePossibleMoove(8, config.minotaurus.characters, config.map, false);
+        
+        possibleMooveIsGenerate = true;
+        
+        setTimeout(() => {
+          minotaurusOut = true
+        }, 500)
+      }
+      
+      if (possiblemoove !== [[]]) {
+        drawPossibleMoove(possiblemoove,14);
+      }
+      
       break;
-
+      
+      case 'mooveWall':
+      deleteWall()
+      placeWall();
+      stopPlaceWall();
+      break;
+      
       default:
       break;
     }
@@ -162,9 +181,9 @@ function draw() {
     //stopPlaceWall();
     //test_2();
     //deleteWall()
-
+    
     //drawPossibleMoove(possiblemoove, nbmoove*2);
-
+    
     //displayDice()
   }
 }
@@ -189,14 +208,15 @@ function convertMapV1(rawFile) {
     players: {},
     walls: [],
     minotaurus: {
-      spawns: []
+      spawns: [],
+      characters: []
     }
   };
   //translate the string table
   for (let rowId = 0; rowId < splitFile.length; rowId++) {
     for (let columId = 0; columId < splitFile[rowId].length; columId++) {
       const place = splitFile[rowId][columId];
-
+      
       if (place === '█') { // borderWall
         output.map[rowId][columId] = {
           type: 'borderWall'
@@ -233,7 +253,7 @@ function convertMapV1(rawFile) {
             type: 'wall',
             group: output.walls[output.walls.length - 1]
           };
-
+          
         }
       } else if (place === '@') { // minotaurusSpawn
         output.minotaurus.spawns.push({
@@ -380,22 +400,22 @@ function drawMap(map) {
       noStroke();
       switch (map[l][c].type) {
         case 'borderWall':
-          fill('#27ae60');
-          break;
+        fill('#27ae60');
+        break;
         case 'staticWall':
-          fill('#2ecc71');
-          break;
+        fill('#2ecc71');
+        break;
         case 'wall':
-          fill('#34495e');
-          break;
+        fill('#34495e');
+        break;
         case 'minotaurusSpawn':
-          fill('#162029');
-          break;
+        fill('#162029');
+        break;
         default:
-          stroke(51, 20);
-          strokeWeight(1);
-          fill(0, 0);
-          break;
+        stroke(51, 20);
+        strokeWeight(1);
+        fill(0, 0);
+        break;
       }
       rect(c * caseWidth, l * caseWidth, caseWidth, caseWidth);
     }
@@ -441,6 +461,19 @@ function drawPossibleMoove(moove, max) {
     }
   }
 }
+
+function drawMinotaurus(x, y) {
+  noStroke();
+  fill('#111111');
+  circle(caseWidth * x + caseWidth / 2, caseWidth * y + caseWidth / 2, caseWidth / 2);
+}
+
+function drawMinotauruss(minotaurusList) {
+  minotaurusList.forEach(minotaurus => {
+    drawMinotaurus(minotaurus.x, minotaurus.y);
+  });
+}
+
 //matheo
 function drawDice() {
   anim[animiD]();
@@ -498,9 +531,9 @@ function drawFace5() {
   drawDiceFacePatern('x x x x x', '#000000');
 }
 //matheo
+
 function drawFace6() {
   drawDiceFace('#4286f4');
-
   drawDiceFacePatern('x xx xx x', '#000000');
 }
 //matheo
@@ -515,41 +548,42 @@ function drawFaceMinotaurus() {
 //----------------------------------------------------//
 //                      generation                    //
 //----------------------------------------------------//
-function generatePossibleMoove(nbMoove, departs, map) {
+function generatePossibleMoove(nbMoove, departs, map, contentColision) {
   let possibleMoove = copyArray(map);
   fillArray(possibleMoove, undefined);
   let currentGen = [...departs];
   let nextGen = [];
-
+  
+  
   for (let departId = 0; departId < currentGen.length; departId++) {
     possibleMoove[currentGen[departId].y][currentGen[departId].x] = 0;
   }
-
+  
   for (let moove = 1; moove <= nbMoove; moove++) {
     currentGen.forEach(position => {
-      if (map[position.y + 1][position.x].type === 'void' && possibleMoove[position.y + 1][position.x] === undefined) {
+      if (map[position.y + 1][position.x].type === 'void' && possibleMoove[position.y + 1][position.x] === undefined && (map[position.y + 1][position.x].content=== undefined || !contentColision) ) {
         possibleMoove[position.y + 1][position.x] = moove;
         nextGen.push({
           x: position.x ,
           y: position.y + 1
         });
       }
-
-      if (map[position.y - 1][position.x].type === 'void' && possibleMoove[position.y - 1][position.x] === undefined) {
+      
+      if (map[position.y - 1][position.x].type === 'void' && possibleMoove[position.y - 1][position.x] === undefined && (map[position.y - 1][position.x].content=== undefined || !contentColision)) {
         possibleMoove[position.y - 1][position.x] = moove;
         nextGen.push({
           x: position.x ,
           y: position.y - 1
         });
       }
-      if (map[position.y][position.x + 1].type === 'void' && possibleMoove[position.y][position.x + 1] === undefined) {
+      if (map[position.y][position.x + 1].type === 'void' && possibleMoove[position.y][position.x + 1] === undefined && (map[position.y][position.x + 1].content=== undefined || !contentColision)) {
         possibleMoove[position.y][position.x + 1] = moove;
         nextGen.push({
           x: position.x + 1,
           y: position.y 
         });
       }
-      if (map[position.y][position.x - 1].type === 'void' && possibleMoove[position.y][position.x - 1] === undefined) {
+      if (map[position.y][position.x - 1].type === 'void' && possibleMoove[position.y][position.x - 1] === undefined && (map[position.y][position.x - 1].content=== undefined || !contentColision)) {
         possibleMoove[position.y][position.x - 1] = moove;
         nextGen.push({
           x: position.x - 1,
@@ -569,11 +603,11 @@ function generatePossibleMoove(nbMoove, departs, map) {
 //                        action                      //
 //----------------------------------------------------//
 function actionMooveCharacter() {
-
+  
   let selectedCase = config.map[cursorPosition.y][cursorPosition.x]
   var actionSelectedCaseP = undefined
   
-
+  
   if (mouseIsPressed && selectedCase.content !== undefined && selectedCase.content.type === 'character' &&  selectedCase.content.player.id === player.id  && mode2 === false) {
     
     console.log(mode2);
@@ -584,43 +618,153 @@ function actionMooveCharacter() {
     }];
     
     
-
+    
     possibleMooveIsGenerate = false;
     mode2 = true;
-        
+    
   }
-
+  
   selectedCase = config.map[cursorPosition.y][cursorPosition.x]
-
+  
   
   if (mouseIsPressed && modeSelectArrives === true && possiblemoove[cursorPosition.y][cursorPosition.x] !== undefined && selectedCase.content === undefined ) {
-
+    
     selectedCase.content = config.map[selectedCaseP[0].y][selectedCaseP[0].x].content
-
-       
-for (let k = 0; k < player.characters.length; k++) {
-  if(player.characters[k].x===selectedCaseP[0].x &&player.characters[k].y===selectedCaseP[0].y){
-
-    player.characters[k]={
-      x:cursorPosition.x,
-      y:cursorPosition.y
+    
+    
+    for (let k = 0; k < player.characters.length; k++) {
+      if(player.characters[k].x===selectedCaseP[0].x &&player.characters[k].y===selectedCaseP[0].y){
+        
+        player.characters[k]={
+          x:cursorPosition.x,
+          y:cursorPosition.y
+        }
+        
+      }
+      
     }
-    console.log(config);
+    
+    
+    config.map[selectedCaseP[0].y][selectedCaseP[0].x].content = undefined
+    
+    action = 'none';
+    
     
   }
   
 }
- 
-  
-    config.map[selectedCaseP[0].y][selectedCaseP[0].x].content = undefined
-
-    action = 'none';
-
-  }
-
-}
 //matheo
-function actionMooveMinotaurus (){}
+function actionMooveMinotaurus (){
+  
+  let selectedCase = config.map[cursorPosition.y][cursorPosition.x]
+  
+  
+  
+  if (config.minotaurus.characters.length === 0 ){
+    
+    
+    
+    if (mouseIsPressed && selectedCase.type==='void' && selectedCase.content === undefined){
+      
+      console.log(cursorPosition.y,cursorPosition.x)
+      console.log(config)
+      
+      if (config.map[cursorPosition.y][cursorPosition.x+1].type === 'arrive'){
+        console.log('1');
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'};       
+        possibleMooveIsGenerate = false;
+        config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
+      }
+      
+      if (config.map[cursorPosition.y][cursorPosition.x-1].type === 'arrive'){
+        console.log('2');
+        
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'};        
+        possibleMooveIsGenerate = false;
+        config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
+      }
+      
+      if (config.map[cursorPosition.y+1][cursorPosition.x].type === 'arrive'){
+        console.log('3');
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'}        
+        possibleMooveIsGenerate = false;
+        config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
+      }
+      
+      if (config.map[cursorPosition.y-1][cursorPosition.x].type === 'arrive'){
+        console.log('4');
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'}        
+        possibleMooveIsGenerate = false;
+        config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
+      }
+      console.log(config);
+    }
+    
+  }
+  
+  
+  if (mouseIsPressed && minotaurusOut === true && possiblemoove[cursorPosition.y][cursorPosition.x] !== undefined  ) {
+    
+      
+     if ( selectedCase.content!== undefined && selectedCase.content.type === 'character'){
+      
+      console.log(cursorPosition.y,cursorPosition.x);
+
+      let playerEaten = selectedCase.content.player
+
+        for (let k = 0; k <playerEaten.characters.length; k++) {
+
+          console.log(cursorPosition.y,cursorPosition.x);
+
+          if(playerEaten.characters[k].x===cursorPosition.x &&playerEaten.characters[k].y===cursorPosition.y){
+                    
+            console.log(playerEaten.characters[k]);
+
+            for (let a = 0; a < playerEaten.spawns.length; a++) {
+              
+              if (config.map[playerEaten.spawns[a].y][playerEaten.spawns[a].x].content=== undefined){
+
+                playerEaten.characters[k]={
+                  x:playerEaten.spawns[a].x,
+                  y:playerEaten.spawns[a].y
+                }
+                config.map[playerEaten.spawns[a].y][playerEaten.spawns[a].x].content = config.map[cursorPosition.y][cursorPosition.x].content
+
+                
+               
+                
+                
+
+              }
+              
+            }
+            
+          }
+        }
+        
+      
+        selectedCase.content = undefined
+        config.minotaurus.characters=[]
+        action = 'none';
+        minotaurusOut = false
+    }  
+    
+    
+    else{
+    
+    selectedCase.content = config.map[config.minotaurus.characters[config.minotaurus.characters.length-1].y][config.minotaurus.characters[config.minotaurus.characters.length-1].x].content
+    config.minotaurus.characters=[{x: cursorPosition.x, y: cursorPosition.y}];
+    action = 'none';
+    minotaurusOut = false
+
+    }
+    
+    
+  }
+  
+  
+  
+}
 //----------------------------------------------------//
 //                        Basic                       //
 //----------------------------------------------------//
@@ -698,109 +842,100 @@ function mooveWall() {
 
   isFirstWallCase = true;
 
-  firstWall = {
-    x: 0,
-    y: 0
-  };
-
-
- tempWall = {
-    x: 1,
-    y: 3
-  };
-
+  firstWall = {x: 0, y: 0};
+  tempWall = undefined;
+  
   deleteWall();
-
+  
   placeWall();
 }
 //matheo
 function deleteWall() {
   if (mouseIsPressed && mode2 === false) {
-
-
-
+    
+    
+    
     if (config.map[cursorPosition.y][cursorPosition.x].type === 'wall') {
-
-
+      
+      
       let wallGroup = config.map[cursorPosition.y][cursorPosition.x].group;
-
-
+      
+      
       config.map[wallGroup[0].y][wallGroup[0].x] = {
         type: 'void'
-
+        
       };
-
-
+      
+      
       config.map[wallGroup[1].y][wallGroup[1].x] = {
         type: 'void'
       };
-
+      
       for (let k = 0; k < config.walls.length; k++) {
-
+        
         if (config.walls[k] === wallGroup) {
           config.walls.splice(k, 1);
-
+          
         }
-
-
+        
+        
       }
-
-
+      
+      
       setTimeout(() => {
         mode2 = true
       }, 500)
-
+      
     }
-
-
+    
+    
   }
 }
 //matheo
 function placeWall() {
   if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void' && isFirstWallCase === true && mode2 === true && config.map[cursorPosition.y][cursorPosition.x].content === undefined) {
-
-   
-
+    
+    
     firstWall = {
       x: cursorPosition.x,
       y: cursorPosition.y
     };
-
+    
     config.walls.push([{
       x: firstWall.x,
       y: firstWall.y
     }]);
-
-
+    
+    
     config.map[firstWall.y][firstWall.x] = {
       type: 'wall',
       group: config.walls[config.walls.length - 1]
     };
-
+    
     isFirstWallCase = false;
   }
-
-
+  
+  
   if (mouseIsPressed && isFirstWallCase === false) {
-
+    
     let diffY = (firstWall.y * caseWidth + 0.5 * caseWidth - mouseY);
-
+    
     let diffX = (firstWall.x * caseWidth + 0.5 * caseWidth - mouseX);
-
+    
     if (Math.abs(diffY) < Math.abs(diffX)) {
-
-
+      
+      
       if (diffX < 0) { // a droite
-
+        
         if (config.map[firstWall.y][firstWall.x + 1].type === 'void' &&config.map[firstWall.y][firstWall.x + 1].content === undefined ) {
           config.map[tempWall.y][tempWall.x].type = 'void';
-
+          
           if (config.map[firstWall.y][firstWall.x].group.length > 1) {
             config.map[firstWall.y][firstWall.x].group[1] = {
               x: firstWall.x + 1,
               y: firstWall.y
             };
-
+            
             config.map[firstWall.y][firstWall.x + 1] = {
               type: 'wall',
               group: config.map[firstWall.y][firstWall.x].group
@@ -815,25 +950,25 @@ function placeWall() {
               group: config.map[firstWall.y][firstWall.x].group
             };
           }
-
+          
           tempWall = {
             x: firstWall.x + 1,
             y: firstWall.y
           };
         }
       } else { // a gauche
-
+        
         if (config.map[firstWall.y][firstWall.x - 1].type === 'void'&&config.map[firstWall.y][firstWall.x - 1].content === undefined) {
-
+          
           config.map[tempWall.y][tempWall.x].type = 'void'
-
-
+          
+          
           if (config.map[firstWall.y][firstWall.x].group.length > 1) {
             config.map[firstWall.y][firstWall.x].group[1] = {
               x: firstWall.x - 1,
               y: firstWall.y
             };
-
+            
             config.map[firstWall.y][firstWall.x - 1] = {
               type: 'wall',
               group: config.map[firstWall.y][firstWall.x].group
@@ -848,29 +983,29 @@ function placeWall() {
               group: config.map[firstWall.y][firstWall.x].group
             };
           }
-
+          
           tempWall = {
             x: firstWall.x - 1,
             y: firstWall.y
           };
         }
       }
-
+      
     } else {
-
+      
       if (diffY < 0) { // en bas
-
+        
         if (config.map[firstWall.y + 1][firstWall.x].type === 'void'&&config.map[firstWall.y+ 1][firstWall.x ].content === undefined) {
-
+          
           config.map[tempWall.y][tempWall.x].type = 'void';
-
+          
           if (config.map[firstWall.y][firstWall.x].group.length > 1) {
-
+            
             config.map[firstWall.y][firstWall.x].group[1] = {
               x: firstWall.x,
               y: firstWall.y + 1
             };
-
+            
             config.map[firstWall.y + 1][firstWall.x] = {
               type: 'wall',
               group: config.map[firstWall.y][firstWall.x].group
@@ -885,24 +1020,24 @@ function placeWall() {
               group: config.map[firstWall.y][firstWall.x].group
             };
           }
-
+          
           tempWall = {
             x: firstWall.x,
             y: firstWall.y + 1
           };
-
+          
         }
       } else { // en haut
         if (config.map[firstWall.y - 1][firstWall.x].type === 'void'&&config.map[firstWall.y- 1][firstWall.x ].content === undefined) {
-
+          
           config.map[tempWall.y][tempWall.x].type = 'void';
-
+          
           if (config.map[firstWall.y][firstWall.x].group.length > 1) {
             config.map[firstWall.y][firstWall.x].group[1] = {
               x: firstWall.x,
               y: firstWall.y - 1
             };
-
+            
             config.map[firstWall.y - 1][firstWall.x] = {
               type: 'wall',
               group: config.map[firstWall.y][firstWall.x].group
@@ -917,56 +1052,56 @@ function placeWall() {
               group: config.map[firstWall.y][firstWall.x].group
             };
           }
-
+          
           tempWall = {
             x: firstWall.x,
             y: firstWall.y - 1
           };
-
+          
         }
       }
-
+      
     }
-
-
-
+    
+    
+    
   }
-
+  
 }
 
 //matheo
 function stopPlaceWall() {
   if (!mouseIsPressed && isFirstWallCase === false) {
-
+    
     mode2 = false;
-
+    
     isFirstWallCase = true;
     
     tempWall = {
       x: 1,
       y: 3
     };
-
+    
     action = 'none';
-
+    
   }
 }
 
 //matheo
 function test_2() {
   if (mouseIsPressed) {
-
+    
     /* console.log(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY);
     console.log(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX); */
     //console.log(Math.abs(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY) - Math.abs(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX))
-
+    
     //console.log(Math.abs(firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY) > Math.abs(firstWall.x * caseWidth + 0, 5 * caseWidth - mouseX))
     let diffY = (firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY);
     //console.log(Math.abs(diffY) )
-
+    
     console.log((firstWall.y * caseWidth + ((0.5) * caseWidth)));
-
-
+    
+    
     //console.log(mouseX)
     //console.log(cursorPosition.x * caseWidth + 0, 5)
   }
@@ -974,60 +1109,60 @@ function test_2() {
 
 //matheo
 function rollDice(diceValue, information) {
-
+  
   alreadyDone = true
-
+  
   selectedCaseP = [{
-   x: 0,
-   y: 0
- }];
- 
- 
+    x: 0,
+    y: 0
+  }];
+  
+  
   animiD = 0;
- 
+  
   mode2 = false;
- 
+  
   modeSelectArrives = false;
- 
+  
   isFirstWallCase = true;
- 
+  
   firstWall = {
-   x: 0,
-   y: 0
- };
- 
+    x: 0,
+    y: 0
+  };
+  
   tempWall = {
-   x: 1,
-   y: 3
- };
- 
+    x: 1,
+    y: 3
+  };
+  
   possiblemoove = [
-   []
- ];
-
-
-
-
+    []
+  ];
+  
+  
+  
+  
   let time = 0;
   let k = 500;
-
+  
   while (k >= 50) {
     time += k;
     k /= 1.1;
-
+    
     setTimeout(() => {
       animiD++
       if (animiD > anim.length - 1) { animiD = 0;}
     }, time);
   }
-
+  
   setTimeout(() => {
     switch (diceValue) {
       case 'mooveMinotaurus':
-        animiD = 3;
+      animiD = 3;
       break;
       case 'mooveWall':
-        animiD = 4;
+      animiD = 4;
       break;
       case 'mooveCharacter':
         switch (information) {
@@ -1042,29 +1177,35 @@ function rollDice(diceValue, information) {
           break;
         }
         break;
+      }
+      break;
     }
   }, time + 1);
-
   setTimeout(() => {
     action = diceValue
     actionInformation = information;
+    
+    if (action === 'mooveMinotaurus'&& config.minotaurus.characters.length !== 0){
+      possibleMooveIsGenerate = false
+    }
+    
   }, time + 1000)
 }
 
 function test_2() {
   if (mouseIsPressed) {
-
+    
     /* console.log(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY);
     console.log(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX); */
     //console.log(Math.abs(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY) - Math.abs(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX))
-
+    
     //console.log(Math.abs(firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY) > Math.abs(firstWall.x * caseWidth + 0, 5 * caseWidth - mouseX))
     let diffY = (firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY);
     //console.log(Math.abs(diffY) )
-
+    
     console.log((firstWall.y * caseWidth + ((0.5) * caseWidth)));
-
-
+    
+    
     //console.log(mouseX)
     //console.log(cursorPosition.x * caseWidth + 0, 5)
   }
