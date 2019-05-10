@@ -13,24 +13,21 @@ window.addEventListener('load',() => {
   //----------------------------------------------------//
   
   // Init
-  let user = new User(io.connect('/user',{'path': '/lib/socket.io'}) , true);
+  let user = new User(socketConnect('/user') , true);
   
   
   // Callback to request
   user.on.SignIn = (msg) => {
     profilMenu.hidden = false;
-    clearFormInput('signIn-form');
     user.get('username', (username) => {
       fillClass('username-value', username);
     });
-    Tabshidden();
-    tabs.game.hidden = false;
+    startGame(socketConnect('/minotaurus/01'));
   }
 
   user.on.SignToken = (msg) => {
     profilMenu.hidden = false;
-    Tabshidden();
-    tabs.game.hidden = false;
+    startGame(socketConnect('/minotaurus/01'));
   }
 
   user.on.SignInError = (msg) => {
@@ -55,7 +52,14 @@ window.addEventListener('load',() => {
     document.getElementById('signUp-passwordRepeat').value = '';
   }
   
-
+  function socketConnect(namespace) {
+    return io.connect(namespace,{'path': '/lib/socket.io'});
+  }
+  
+  function startGame(socket) {
+    Tabshidden();
+    tabs.game.hidden = false;
+  }
   
   
   // Forum send
