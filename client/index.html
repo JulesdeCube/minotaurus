@@ -34,11 +34,18 @@
                 action = 'rollDice';
                 console.log('mooveCharacter');
             }
+
+            function lauchmooveCharacter5() {
+                rollDice('mooveCharacter',  5);
+                action = 'rollDice';
+                console.log('mooveCharacter');
+            }
         </script>
   </head>
   <body>
     <button onclick="lauchMooveWall()">moove Wall</button>
     <button onclick="lauchMooveMinotaurus()">moove mimotaurus</button>
-    <button onclick="lauchmooveCharacter()">moove Character</button>
+    <button onclick="lauchmooveCharacter()">moove Character 6</button>
+    <button onclick="lauchmooveCharacter5()">moove Character 5</button>
   </body>
 </html>

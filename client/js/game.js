@@ -88,6 +88,9 @@ var cursorPosition = {
   y: 0
 };
 
+var minotaurusOut = false;
+
+
 //----------------------------------------------------//
 //                        P5                          //
 //----------------------------------------------------//
@@ -151,7 +154,7 @@ function draw() {
 
         if (alreadyDone === false) { //selectedCaseP !==  [ {x: 0, y:0} ]
          
-          possiblemoove = generatePossibleMoove(4, selectedCaseP, config.map)
+          possiblemoove = generatePossibleMoove(actionInformation, selectedCaseP, config.map)
           
           alreadyDone = true;
 
@@ -173,7 +176,8 @@ function draw() {
         break;
 
       case 'mooveMinotaurus':
-        drawMooveCharacter(4);
+        actionMooveMinotaurus();
+
         break;
 
       case 'mooveWall':
@@ -335,7 +339,7 @@ function convertMapV1(rawFile) {
     }
     // generate color
     output.players[playerKey[i]].color = Math.floor(360 * i / playerKey.length);
-    output.players[playerKey[i]].characters = output.players[playerKey[i]].spawns;
+    output.players[playerKey[i]].characters = [...output.players[playerKey[i]].spawns];
     output.players[playerKey[i]].characters.forEach(character => {
       output.map[character.y][character.x].content = {
         type: 'character',
@@ -537,7 +541,7 @@ function generatePossibleMoove(nbMoove, departs, map) {
   
   
 }
-
+//matheo
 function actionMooveCharacter() {
 
   let selectedCase = config.map[cursorPosition.y][cursorPosition.x]
@@ -567,10 +571,7 @@ function actionMooveCharacter() {
 
     selectedCase.content = config.map[selectedCaseP[0].y][selectedCaseP[0].x].content
 
-   
-    
-
-
+       
 for (let k = 0; k < player.characters.length; k++) {
   if(player.characters[k].x===selectedCaseP[0].x &&player.characters[k].y===selectedCaseP[0].y){
 
@@ -578,17 +579,12 @@ for (let k = 0; k < player.characters.length; k++) {
       x:cursorPosition.x,
       y:cursorPosition.y
     }
+    console.log(config);
+    
   }
-  else { console.log('player',player.characters[k]);
-    console.log({
-      x:selectedCaseP[0].x,
-      y:selectedCaseP[0].y
-    })
-  }
-
-}
-
   
+}
+ 
   
     config.map[selectedCaseP[0].y][selectedCaseP[0].x].content = undefined
 
@@ -597,6 +593,8 @@ for (let k = 0; k < player.characters.length; k++) {
   }
 
 }
+//matheo
+function actionMooveMinotaurus (){}
 //----------------------------------------------------//
 //                        Basic                       //
 //----------------------------------------------------//
@@ -666,7 +664,7 @@ function createToken(length) {
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
-
+//matheo
 function mooveWall() {
 
   var placeModeWall = false;
@@ -688,7 +686,7 @@ function mooveWall() {
 
   placeWall();
 }
-
+//matheo
 function deleteWall() {
   if (mouseIsPressed && mode2 === false) {
 
@@ -730,9 +728,9 @@ function deleteWall() {
 
   }
 }
-
+//matheo
 function placeWall() {
-  if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void' && isFirstWallCase === true && mode2 === true) {
+  if (mouseIsPressed && config.map[cursorPosition.y][cursorPosition.x].type === 'void' && isFirstWallCase === true && mode2 === true && config.map[cursorPosition.y][cursorPosition.x].content === undefined) {
 
    
 
@@ -767,7 +765,7 @@ function placeWall() {
 
       if (diffX < 0) { // a droite
 
-        if (config.map[firstWall.y][firstWall.x + 1].type === 'void') {
+        if (config.map[firstWall.y][firstWall.x + 1].type === 'void' &&config.map[firstWall.y][firstWall.x + 1].content === undefined ) {
 
           config.map[tempWall.y][tempWall.x].type = 'void';
 
@@ -799,7 +797,7 @@ function placeWall() {
         }
       } else { // a gauche
 
-        if (config.map[firstWall.y][firstWall.x - 1].type === 'void') {
+        if (config.map[firstWall.y][firstWall.x - 1].type === 'void'&&config.map[firstWall.y][firstWall.x - 1].content === undefined) {
 
           config.map[tempWall.y][tempWall.x].type = 'void'
 
@@ -836,7 +834,7 @@ function placeWall() {
 
       if (diffY < 0) { // en bas
 
-        if (config.map[firstWall.y + 1][firstWall.x].type === 'void') {
+        if (config.map[firstWall.y + 1][firstWall.x].type === 'void'&&config.map[firstWall.y+ 1][firstWall.x ].content === undefined) {
 
           config.map[tempWall.y][tempWall.x].type = 'void';
 
@@ -869,7 +867,7 @@ function placeWall() {
 
         }
       } else { // en haut
-        if (config.map[firstWall.y - 1][firstWall.x].type === 'void') {
+        if (config.map[firstWall.y - 1][firstWall.x].type === 'void'&&config.map[firstWall.y- 1][firstWall.x ].content === undefined) {
 
           config.map[tempWall.y][tempWall.x].type = 'void';
 
@@ -910,7 +908,7 @@ function placeWall() {
 
 }
 
-
+//matheo
 function stopPlaceWall() {
   if (!mouseIsPressed && isFirstWallCase === false) {
 
@@ -955,7 +953,35 @@ function test_2() {
 //matheo
 function rollDice(diceValue, information) {
 
+  alreadyDone = true
 
+  selectedCaseP = [{
+   x: 0,
+   y: 0
+ }];
+ 
+ 
+  animiD = 0;
+ 
+  mode2 = false;
+ 
+  modeSelectArrives = false;
+ 
+  isFirstWallCase = true;
+ 
+  firstWall = {
+   x: 0,
+   y: 0
+ };
+ 
+  tempWall = {
+   x: 1,
+   y: 3
+ };
+ 
+  possiblemoove = [
+   []
+ ];
 
 
 
@@ -990,13 +1016,13 @@ function rollDice(diceValue, information) {
       default:
 
         switch (information) {
-          case '4':
+          case 4:
             animiD = 0;
             break;
-          case '5':
+          case 5:
             animiD = 1;
             break;
-          case '6':
+          case 6:
             animiD = 2;
             break;
         }
@@ -1089,11 +1115,6 @@ function displayMinautorus() {
   fill('#000000')
   rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
 }
-
-
-
-
-
 
 function test_2() {
   if (mouseIsPressed) {
