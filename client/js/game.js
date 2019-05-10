@@ -56,13 +56,14 @@ var actionInformation = undefined;
 var isFirstWallCase = true;
 
 var firstWall = {x: 0, y: 0};
-var tempWall = {x: 1, y: 3};
+var tempWall = undefined;
 
 
 //dice
 var animiD = 0;
-var anim = [drawFace4, drawFace5, drawFace7, drawFaceMinotaurus, drawFaceWall];
-
+var anim = [drawFace4, drawFace5, drawFace6, drawFaceMinotaurus, drawFaceWall];
+var diceSize = 6;
+var dicePosition = {x: 13, y: 13};
 
 //moove character
 var possibleMooveIsGenerate = true;
@@ -344,12 +345,16 @@ function maxDimentionMap(map) {
 function updateCursorPosition() {
   let x = (mouseX - (mouseX % caseWidth)) / caseWidth;
   let y = (mouseY - (mouseY % caseWidth)) / caseWidth;
-  if (x !== undefined) {
-    cursorPosition.x = x;
-  }
-  if (y !== undefined) {
-    cursorPosition.y = y;
-  }
+
+  if (x < 0) { x = 0; }
+  if (y < 0) { y = 0; }
+
+  if(x > config.map.length - 1) { x = config.map.length - 1; }
+  if(y > config.map[x].length - 1) { y = config.map[x].length - 1; }
+
+  
+  if (x !== undefined) { cursorPosition.x = x; }
+  if (y !== undefined) { cursorPosition.y = y; }
 }
 
 
@@ -440,52 +445,71 @@ function drawPossibleMoove(moove, max) {
 function drawDice() {
   anim[animiD]();
 }
+
+function drawDiceFace(color) {
+  fill(color);
+  rect(caseWidth * dicePosition.x, caseWidth * dicePosition.y, diceSize * caseWidth, diceSize * caseWidth, caseWidth * diceSize / 8);
+}
+
+function drawDiceFacePatern(patern, color) {
+  fill(color);
+  let roundSize = diceSize * caseWidth*0.1;
+  if (!(patern[0] === undefined || patern[0] === ' ')) {// top left
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.2 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.2 , roundSize);    
+  }
+  if (!(patern[1] === undefined || patern[1] === ' ')) {// top middel
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.5 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.2 , roundSize);    
+  }
+  if (!(patern[2] === undefined || patern[2] === ' ')) {// top right
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.8 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.2 , roundSize);    
+  }
+
+  if (!(patern[3] === undefined || patern[3] === ' ')) {// middle left
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.2 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.5 , roundSize);    
+  }
+  if (!(patern[4] === undefined || patern[4] === ' ')) {// middle middel
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.5 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.5 , roundSize);    
+  }
+  if (!(patern[5] === undefined || patern[5] === ' ')) {// middle right
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.8 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.5 , roundSize);    
+  }
+
+  if (!(patern[6] === undefined || patern[6] === ' ')) {// bottom left
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.2 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.8 , roundSize);    
+  }
+  if (!(patern[7] === undefined || patern[7] === ' ')) {// bottom middel
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.5 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.8 , roundSize);    
+  }
+  if (!(patern[8] === undefined || patern[8] === ' ')) {// bottom right
+    circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.8 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.8 , roundSize);    
+  }
+  
+}
+
 //matheo
 function drawFace4() {
-  fill('#4286f4')
-  rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
-  fill('#000000')
-  circle(caseWidth * 14, caseWidth * 14, 15);
-  circle(caseWidth * 14, caseWidth * 18, 15);
-  circle(caseWidth * 18, caseWidth * 14, 15);
-  circle(caseWidth * 18, caseWidth * 18, 15);
+  drawDiceFace('#4286f4');
+  drawDiceFacePatern('x x   x x', '#000000');
+
 }
 //matheo
 function drawFace5() {
-  fill('#4286f4')
-  rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
-  fill('#000000')
-  circle(caseWidth * 14, caseWidth * 14, 15);
-  circle(caseWidth * 14, caseWidth * 18, 15);
-  circle(caseWidth * 18, caseWidth * 14, 15);
-  circle(caseWidth * 18, caseWidth * 18, 15);
-  circle(caseWidth * 16, caseWidth * 16, 15);
+  drawDiceFace('#4286f4');
+  drawDiceFacePatern('x x x x x', '#000000');
 }
 //matheo
-function drawFace7() {
-  let diceSize = 6;
+function drawFace6() {
+  drawDiceFace('#4286f4');
 
-  fill('#4286f4')
-  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
-  fill('#000000')
-  circle(caseWidth * 14, caseWidth * 14, 15);
-  circle(caseWidth * 14, caseWidth * 18, 15);
-  circle(caseWidth * 18, caseWidth * 14, 15);
-  circle(caseWidth * 18, caseWidth * 18, 15);
-  circle(caseWidth * 14, caseWidth * 16, 15);
-  circle(caseWidth * 18, caseWidth * 16, 15);
+  drawDiceFacePatern('x xx xx x', '#000000');
 }
 //matheo
 function drawFaceWall() {
-  let diceSize = 6;
-  fill('#34495e')
-  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
+  drawDiceFace('#34495e');
 }
 //matheo
 function drawFaceMinotaurus() {
-  let diceSize = 6;
-  fill('#000000')
-  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
+  drawDiceFace('#000000');
 }
 
 //----------------------------------------------------//
@@ -670,17 +694,17 @@ function createToken(length) {
 //matheo
 function mooveWall() {
 
-  var placeModeWall = false;
+  placeModeWall = false;
 
-  var isFirstWallCase = true;
+  isFirstWallCase = true;
 
-  var firstWall = {
+  firstWall = {
     x: 0,
     y: 0
   };
 
 
-  var tempWall = {
+ tempWall = {
     x: 1,
     y: 3
   };
@@ -769,7 +793,6 @@ function placeWall() {
       if (diffX < 0) { // a droite
 
         if (config.map[firstWall.y][firstWall.x + 1].type === 'void' &&config.map[firstWall.y][firstWall.x + 1].content === undefined ) {
-
           config.map[tempWall.y][tempWall.x].type = 'void';
 
           if (config.map[firstWall.y][firstWall.x].group.length > 1) {
@@ -1006,7 +1029,7 @@ function rollDice(diceValue, information) {
       case 'mooveWall':
         animiD = 4;
       break;
-      default:
+      case 'mooveCharacter':
         switch (information) {
           case 4:
             animiD = 0;
@@ -1020,7 +1043,7 @@ function rollDice(diceValue, information) {
         }
         break;
     }
-  }, 5100);
+  }, time + 1);
 
   setTimeout(() => {
     action = diceValue
