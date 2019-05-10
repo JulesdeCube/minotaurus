@@ -38,55 +38,39 @@ var input =
   "█rr                          gg█" + '\n' +
   "████████████████████████████████";
 
-
-  var config = undefined
-
-
-
-var alreadyDone = true
-
-var selectedCaseP = [{
-  x: 0,
-  y: 0
-}];
-
-
-
-var player = undefined
-
-var action = 'none';
-
-// var dice
-var animiD = 0;
-
-var anim = [display4, display5, display6, displayMinautorus, displayWall];
-//
-
-var mode2 = false;
-
-var modeSelectArrives = false;
-
-var isFirstWallCase = true;
-
-var firstWall = {
-  x: 0,
-  y: 0
-};
-
-
-var tempWall = {
-  x: 1,
-  y: 3
-};
-
-var actionInformation = 0;
-
+//draw
 var caseWidth = 25;
 
-var cursorPosition = {
-  x: 0,
-  y: 0
-};
+
+//config
+var config = undefined;
+var player = undefined;
+
+var cursorPosition = {x: 0, y: 0};
+
+var action = 'none';
+var actionInformation = undefined;
+
+
+// wall
+var isFirstWallCase = true;
+
+var firstWall = {x: 0, y: 0};
+var tempWall = {x: 1, y: 3};
+
+
+//dice
+var animiD = 0;
+var anim = [drawFace4, drawFace5, drawFace7, drawFaceMinotaurus, drawFaceWall];
+
+
+//moove character
+var possibleMooveIsGenerate = true;
+var modeSelectArrives = false;
+var mode2 = false;
+var possiblemoove = [[]];
+var selectedCaseP = [{x: 0, y: 0}];
+
 
 var minotaurusOut = false;
 
@@ -97,12 +81,6 @@ var minotaurusOut = false;
 /**
  * TODO verifier que le server nous renvoi bien la map
  */
-var nbmoove = 1
-
-var possiblemoove = [
-  []
-];
-
 function setup() {
    /* socket.on('post', function (msg) {
     switch (msg.header) {
@@ -125,10 +103,7 @@ function setup() {
   config = convertMapV1(input);
   autoResize(config.map);
 
-  player = config.players[1]
-
-
-
+  player = config.players[1];
 }
 
 function draw() {
@@ -144,36 +119,27 @@ function draw() {
 
     switch (action) {
       case 'rollDice':
-        displayDice();
-        break;
+        drawDice();
+      break;
 
       case 'mooveCharacter':
-
         actionMooveCharacter();
 
-
-        if (alreadyDone === false) { //selectedCaseP !==  [ {x: 0, y:0} ]
-         
-          possiblemoove = generatePossibleMoove(actionInformation, selectedCaseP, config.map)
+        if (possibleMooveIsGenerate === false) { //selectedCaseP !==  [ {x: 0, y:0} ]
+        
+          possiblemoove = generatePossibleMoove(actionInformation, selectedCaseP, config.map);
           
-          alreadyDone = true;
+          possibleMooveIsGenerate = true;
 
           setTimeout(() => {
             modeSelectArrives = true
           }, 1000)
-          
-    
         }
-
         if (possiblemoove !== [[]]) {
-          
           drawPossibleMoove(possiblemoove,8);
-          /* selectedCaseP = [{
-            x: 0,
-            y: 0
-          }]; */
+          // selectedCaseP = [{ x: 0,y: 0}];
         }
-        break;
+      break;
 
       case 'mooveMinotaurus':
         actionMooveMinotaurus();
@@ -184,17 +150,11 @@ function draw() {
         deleteWall()
         placeWall();
         stopPlaceWall();
-
+      break;
 
       default:
-        break;
+      break;
     }
-
-
-
-
-
-
     //mooveWall();
     //deleteWall()
     //placeWall();
@@ -476,17 +436,62 @@ function drawPossibleMoove(moove, max) {
     }
   }
 }
+//matheo
+function drawDice() {
+  anim[animiD]();
+}
+//matheo
+function drawFace4() {
+  fill('#4286f4')
+  rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
+  fill('#000000')
+  circle(caseWidth * 14, caseWidth * 14, 15);
+  circle(caseWidth * 14, caseWidth * 18, 15);
+  circle(caseWidth * 18, caseWidth * 14, 15);
+  circle(caseWidth * 18, caseWidth * 18, 15);
+}
+//matheo
+function drawFace5() {
+  fill('#4286f4')
+  rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
+  fill('#000000')
+  circle(caseWidth * 14, caseWidth * 14, 15);
+  circle(caseWidth * 14, caseWidth * 18, 15);
+  circle(caseWidth * 18, caseWidth * 14, 15);
+  circle(caseWidth * 18, caseWidth * 18, 15);
+  circle(caseWidth * 16, caseWidth * 16, 15);
+}
+//matheo
+function drawFace7() {
+  let diceSize = 6;
 
-
+  fill('#4286f4')
+  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
+  fill('#000000')
+  circle(caseWidth * 14, caseWidth * 14, 15);
+  circle(caseWidth * 14, caseWidth * 18, 15);
+  circle(caseWidth * 18, caseWidth * 14, 15);
+  circle(caseWidth * 18, caseWidth * 18, 15);
+  circle(caseWidth * 14, caseWidth * 16, 15);
+  circle(caseWidth * 18, caseWidth * 16, 15);
+}
+//matheo
+function drawFaceWall() {
+  let diceSize = 6;
+  fill('#34495e')
+  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
+}
+//matheo
+function drawFaceMinotaurus() {
+  let diceSize = 6;
+  fill('#000000')
+  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
+}
 
 //----------------------------------------------------//
-//                  Game Operation                    //
+//                      generation                    //
 //----------------------------------------------------//
-
-
 function generatePossibleMoove(nbMoove, departs, map) {
-
-
   let possibleMoove = copyArray(map);
   fillArray(possibleMoove, undefined);
   let currentGen = [...departs];
@@ -502,29 +507,28 @@ function generatePossibleMoove(nbMoove, departs, map) {
         possibleMoove[position.y + 1][position.x] = moove;
         nextGen.push({
           x: position.x ,
-          y: position.y+ 1
+          y: position.y + 1
         });
       }
-      
 
       if (map[position.y - 1][position.x].type === 'void' && possibleMoove[position.y - 1][position.x] === undefined) {
         possibleMoove[position.y - 1][position.x] = moove;
         nextGen.push({
           x: position.x ,
-          y: position.y- 1
+          y: position.y - 1
         });
       }
       if (map[position.y][position.x + 1].type === 'void' && possibleMoove[position.y][position.x + 1] === undefined) {
         possibleMoove[position.y][position.x + 1] = moove;
         nextGen.push({
-          x: position.x+ 1,
+          x: position.x + 1,
           y: position.y 
         });
       }
       if (map[position.y][position.x - 1].type === 'void' && possibleMoove[position.y][position.x - 1] === undefined) {
         possibleMoove[position.y][position.x - 1] = moove;
         nextGen.push({
-          x: position.x- 1,
+          x: position.x - 1,
           y: position.y 
         });
       }
@@ -532,16 +536,14 @@ function generatePossibleMoove(nbMoove, departs, map) {
     currentGen = nextGen;
     nextGen = [];
   }
-
- 
-
-  
   return possibleMoove;
-  
-  
-  
 }
-//matheo
+
+
+
+//----------------------------------------------------//
+//                        action                      //
+//----------------------------------------------------//
 function actionMooveCharacter() {
 
   let selectedCase = config.map[cursorPosition.y][cursorPosition.x]
@@ -559,7 +561,7 @@ function actionMooveCharacter() {
     
     
 
-    alreadyDone = false;
+    possibleMooveIsGenerate = false;
     mode2 = true;
         
   }
@@ -598,8 +600,6 @@ function actionMooveMinotaurus (){}
 //----------------------------------------------------//
 //                        Basic                       //
 //----------------------------------------------------//
-
-
 function create2dArray(x, y, fill) {
   array = new Array(x);
   for (let i = 0; i < x; i++) {
@@ -651,6 +651,9 @@ function createToken(length) {
   }
   return output.substring(0, length);
 }
+
+
+
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
@@ -926,9 +929,7 @@ function stopPlaceWall() {
   }
 }
 
-
-
-
+//matheo
 function test_2() {
   if (mouseIsPressed) {
 
@@ -947,8 +948,6 @@ function test_2() {
     //console.log(cursorPosition.x * caseWidth + 0, 5)
   }
 }
-
-
 
 //matheo
 function rollDice(diceValue, information) {
@@ -987,34 +986,27 @@ function rollDice(diceValue, information) {
 
 
   let time = 0;
-
   let k = 500;
 
   while (k >= 50) {
-
     time += k;
     k /= 1.1;
 
     setTimeout(() => {
       animiD++
-
-      if (animiD > anim.length - 1) {
-        animiD = 0;
-      }
+      if (animiD > anim.length - 1) { animiD = 0;}
     }, time);
   }
 
   setTimeout(() => {
-
     switch (diceValue) {
       case 'mooveMinotaurus':
         animiD = 3;
-        break;
+      break;
       case 'mooveWall':
         animiD = 4;
-        break;
+      break;
       default:
-
         switch (information) {
           case 4:
             animiD = 0;
@@ -1024,96 +1016,16 @@ function rollDice(diceValue, information) {
             break;
           case 6:
             animiD = 2;
-            break;
+          break;
         }
         break;
     }
   }, 5100);
 
-
-
-
-
-
-
-
-
-
   setTimeout(() => {
     action = diceValue
+    actionInformation = information;
   }, time + 1000)
-
-  actionInformation = information;
-  /* switch(diceValue){     // lancement des init
-    case 'mooveMinautorus':
-    generatePossibleMoove(8,selectedCaseP)
-    break;
-    case 'mooveWall':
-    break;
-    case 'mooveCharacter':   
-    
-    break;
-  } */
-
-}
-
-function displayDice() {
-  anim[animiD]();
-}
-
-
-//matheo
-function display4() {
-  fill('#4286f4')
-  rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
-  fill('#000000')
-  circle(caseWidth * 14, caseWidth * 14, 15);
-  circle(caseWidth * 14, caseWidth * 18, 15);
-  circle(caseWidth * 18, caseWidth * 14, 15);
-  circle(caseWidth * 18, caseWidth * 18, 15);
-
-
-}
-//matheo
-function display5() {
-  fill('#4286f4')
-  rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
-  fill('#000000')
-  circle(caseWidth * 14, caseWidth * 14, 15);
-  circle(caseWidth * 14, caseWidth * 18, 15);
-  circle(caseWidth * 18, caseWidth * 14, 15);
-  circle(caseWidth * 18, caseWidth * 18, 15);
-  circle(caseWidth * 16, caseWidth * 16, 15);
-
-
-}
-//matheo
-function display6() {
-  let diceSize = 6;
-
-  fill('#4286f4')
-  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
-  fill('#000000')
-  circle(caseWidth * 14, caseWidth * 14, 15);
-  circle(caseWidth * 14, caseWidth * 18, 15);
-  circle(caseWidth * 18, caseWidth * 14, 15);
-  circle(caseWidth * 18, caseWidth * 18, 15);
-  circle(caseWidth * 14, caseWidth * 16, 15);
-  circle(caseWidth * 18, caseWidth * 16, 15);
-
-}
-//matheo
-function displayWall() {
-  let diceSize = 6;
-  fill('#34495e')
-  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
-}
-
-//matheo
-function displayMinautorus() {
-  let diceSize = 6;
-  fill('#000000')
-  rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
 }
 
 function test_2() {
