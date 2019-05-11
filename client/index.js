@@ -27,6 +27,9 @@ window.addEventListener('load',() => {
 
   user.on.SignToken = (msg) => {
     profilMenu.hidden = false;
+    user.get('username', (username) => {
+      fillClass('username-value', username);
+    });
     startGame(socketConnect('/minotaurus/01'));
   }
 
