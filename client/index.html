@@ -5,47 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minautorus The Game</title>
     <!-- CSS -->
-      <link rel="stylesheet" href="css/style.css">
-
-    <!-- JS -->
-      <!-- socket.io -->
-        <script src="/socket.io/socket.io.js"></script>
-      <!-- p5 -->
-        <script src="/js/lib/p5/p5.js"></script>
-        <script src="/js/lib/p5/addons/p5.dom.js"></script>
-        <script src="/js/lib/p5/addons/p5.sound.js"></script>
-      <!-- game -->
-        <script src="/js/game.js"></script>
-        <script>
-            function lauchMooveWall() {
-                rollDice('mooveWall', undefined);
-                action = 'rollDice';
-                console.log('mooveWall');
-            }
-
-            function lauchMooveMinotaurus() {
-                rollDice('mooveMinotaurus', undefined);
-                action = 'rollDice';
-                console.log('mooveMinotaurus');
-            }
-
-            function lauchmooveCharacter() {
-                rollDice('mooveCharacter', 6);
-                action = 'rollDice';
-                console.log('mooveCharacter');
-            }
-
-            function lauchmooveCharacter5() {
-                rollDice('mooveCharacter',  5);
-                action = 'rollDice';
-                console.log('mooveCharacter');
-            }
-        </script>
+    <link rel="stylesheet" href="css/style.css">  
+    <!-- JS -->  
+    <!-- socket.io -->
+    <script src="/socket.io/socket.io.js"></script>  
+    <!-- canvasDraw -->
+    <script src="/js/lib/canvasDraw/canvasDraw.js"></script>   
+    <!-- game -->
+    <script src="/js/game.js"></script>  
   </head>
   <body>
-    <button onclick="lauchMooveWall()">moove Wall</button>
-    <button onclick="lauchMooveMinotaurus()">moove Minotaurus</button>
-    <button onclick="lauchmooveCharacter()">moove Character 6</button>
-    <button onclick="lauchmooveCharacter5()">moove Character 5</button>
+    <button id="mooveWall">moove Wall</button>
+    <button id="mooveMinotaurus">moove Minotaurus</button>
+    <button id="mooveCharacter6">moove Character 6</button>
+    <button id="mooveCharacter5">moove Character 5</button>  
   </body>
 </html>
