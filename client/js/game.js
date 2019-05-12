@@ -43,13 +43,6 @@ window.addEventListener('load',() => {
   "████████████████████████████████";
   
   
-  
-  
-
- 
-    
-
-
   //draw
   var caseWidth = 25;
   
@@ -59,7 +52,7 @@ window.addEventListener('load',() => {
   var myPlayer = undefined;
   var playerId =undefined;
   
-   
+  
   var cursorPosition = {x: 0, y: 0};
   
   var action = 'none';
@@ -92,19 +85,19 @@ window.addEventListener('load',() => {
   var minotaurusOut = false;
   
   var viewport = new CanvasDraw(document.body )
-
+  
   viewport.setup = () => {
     socket.emit('get', 'config');
     config = convertMapV1(input);
     autoResize(config.map);
     myPlayer = config.players[3];
     playerId = config.players.length-1;
-  console.log(config.players.length-1);
+    console.log(config.players.length-1);
   }    
-
+  
   viewport.draw = () => {
     if (config) {
-      
+      doANewturn(); 
       
       
       viewport.clear();
@@ -117,83 +110,55 @@ window.addEventListener('load',() => {
       drawCursor();
       
       
-      
-    doANewturn(); 
-      
       switch (action) {
         case 'rollDice':
-        drawDice();
+          drawDice();
         break;
         
         case 'mooveCharacter':
-        
-        actionMooveCharacter();
-        
-        if (possibleMooveIsGenerate === false) { 
-          
-          
-          if(selectedPIsInSpawn === true){
-            possiblemoove = generatePossibleMoove(actionInformation, myPlayer.spawns, config.map, true);
+          actionMooveCharacter();
+          if (possibleMooveIsGenerate === false) { 
+            if (selectedPIsInSpawn === true) { possiblemoove = generatePossibleMoove(actionInformation, myPlayer.spawns, config.map, true); }
+            else                             { possiblemoove = generatePossibleMoove(actionInformation,   selectedCaseP, config.map, true); }
+
+            possibleMooveIsGenerate = true;
+            
+            setTimeout(() => { modeSelectArrives = true }, 500)
           }
-          else{
-            possiblemoove = generatePossibleMoove(actionInformation, selectedCaseP, config.map, true);
-          }
-          possibleMooveIsGenerate = true;
-          
-          setTimeout(() => {
-            modeSelectArrives = true
-          }, 500)
-        }
-        if (possiblemoove !== [[]]) {
-          drawPossibleMoove(possiblemoove,2*actionInformation);
-          
-        }
+          if (possiblemoove !== [[]]) { drawPossibleMoove(possiblemoove,2*actionInformation, myPlayer.color, '50%', '53%' ); }
         break;
         
         case 'mooveMinotaurus':
-        
-        actionMooveMinotaurus();
-        
-        if (possibleMooveIsGenerate === false) { 
+          actionMooveMinotaurus();
+          if (possibleMooveIsGenerate === false) {
+            possiblemoove = generatePossibleMoove(8, config.minotaurus.characters, config.map, false);
+            possibleMooveIsGenerate = true;
+            
+            setTimeout(() => { minotaurusOut = true }, 500);
+          }
           
-          possiblemoove = generatePossibleMoove(8, config.minotaurus.characters, config.map, false);
-          
-          possibleMooveIsGenerate = true;
-          
-          
-          
-          
-          setTimeout(() => {
-            minotaurusOut = true
-          }, 500)
-        }
-        
-        if (possiblemoove !== [[]]) {
-          drawPossibleMoove(possiblemoove,10);
-        }
-        
+          if (possiblemoove !== [[]]) { drawPossibleMoove(possiblemoove,10, '0', '0%', '0%'); }
         break;
         
         case 'mooveWall':
-        deleteWall()
-        placeWall();
-        stopPlaceWall();
+          deleteWall()
+          placeWall();
+          stopPlaceWall();
         break;
-
+        
         case 'win':
-        drawWin();
+          drawWin('Player ' + (playerId) + 1);
         break;
         
         default:
         break;
       }
-      
-      drawWin()
+
     }
     
-  } 
-  
+  }
   viewport.start()
+  
   
   //----------------------------------------------------//
   //                    Map Operation                   //
@@ -378,17 +343,29 @@ window.addEventListener('load',() => {
     if (x !== undefined) { cursorPosition.x = x; }
     if (y !== undefined) { cursorPosition.y = y; }
   }
-    
+  
   //----------------------------------------------------//
   //                        Draw                        //
   //----------------------------------------------------//
   
-  function drawWin() {
-    viewport.fill('hsl(' + myPlayer.color + ', 70%, 37%)');
-    viewport.rect(caseWidth * 6, caseWidth * 6, caseWidth*20, caseWidth*20)
-    viewport.fill('#000');
-    viewport.textSize(50);
-    viewport.text('Un joueur a gagné', caseWidth*6, caseWidth*16);
+  function drawWin(playerName) {
+    let message = ' à gagné!';
+    let length = viewport.textWidth(playerName + message);
+    let height = 75;
+
+    viewport.shadow(0, 0, 10, '#000a');
+    
+    viewport.textSize(height);
+    viewport.textFamily('Roboto');
+    viewport.textStyle('600');
+    
+    viewport.fill('hsl(' + myPlayer.color + ', 80%, 53%)');
+    viewport.text(playerName, (viewport.canvas.width - length) / 2, (viewport.canvas.width + height / 2) / 2);
+
+    viewport.fill('#fff');
+    viewport.text(message,  (viewport.canvas.width - length) / 2 +  viewport.textWidth(playerName), (viewport.canvas.width + height / 2) / 2);
+    viewport.noShadow();
+
   }
   
   function drawCase(x, y, color) {
@@ -461,11 +438,11 @@ window.addEventListener('load',() => {
     });
   }
   
-  function drawPossibleMoove(moove, max) {
+  function drawPossibleMoove(moove, max, h, s, v) {
     for (let l = 0; l < moove.length; l++) {
       for (let c = 0; c < moove[l].length; c++) {
         if (moove[l][c] !== undefined) {
-          drawCase(c, l, 'rgba(0, 0, 0, ' + (1 - (moove[l][c] / max)) + ')');
+          drawCase(c, l, 'hsla('+ h +', ' + s + ', ' + v + ', ' + (0.8 - ((moove[l][c] / max)*0.8)) + ')');
         }
       }
     }
@@ -487,6 +464,7 @@ window.addEventListener('load',() => {
   function drawDice() {
     anim[animiD]('hsl(' + myPlayer.color  + ', 70%, 53%)');
   }
+  
   function drawDiceFace(color) {
     viewport.fill(color);
     viewport.rect(caseWidth * dicePosition.x, caseWidth * dicePosition.y, diceSize * caseWidth, diceSize * caseWidth, caseWidth * diceSize / 8);
@@ -526,7 +504,6 @@ window.addEventListener('load',() => {
     }
     
   }
-  
   //matheo
   function drawFace4(color) {
     drawDiceFace(color);
@@ -539,7 +516,6 @@ window.addEventListener('load',() => {
     drawDiceFacePatern('x x x x x', '#000000');
   }
   //matheo
-  
   function drawFace6(color) {
     drawDiceFace(color);
     drawDiceFacePatern('x xx xx x', '#000000');
@@ -551,10 +527,6 @@ window.addEventListener('load',() => {
   //matheo
   function drawFaceMinotaurus() {
     drawDiceFace('#000000');
-  }
-  
-  function drawTurnPlayer() {
-    
   }
   
   //----------------------------------------------------//
@@ -615,7 +587,7 @@ window.addEventListener('load',() => {
         nextGen = [];
       }
       return possibleMoove;
-    }    
+    }
     
     //----------------------------------------------------//
     //                        action                      //
@@ -854,12 +826,12 @@ window.addEventListener('load',() => {
       }
       return output.substring(0, length);
     }
-
+    
     function getRandomIntInclusive(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min +1)) + min;
-    }   
+    }
     
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -1200,30 +1172,30 @@ window.addEventListener('load',() => {
         
       }, time + 1000)
     }
-
-
+    
+    
     function doANewturn(){
       if (action==='none' ){
-
+        
         if(config.map[myPlayer.arrives[0].y][myPlayer.arrives[0].x].content !==undefined && config.map[myPlayer.arrives[1].y][myPlayer.arrives[1].x].content !==undefined && config.map[myPlayer.arrives[2].y][myPlayer.arrives[2].x].content !==undefined ){
           action = 'win';
         }
-
+        
         else{
-
-            playerId++
-
+          
+          playerId++
+          
           if (playerId > config.players.length - 1) { playerId = 0;}  
-
+          
           myPlayer= config.players[playerId];
-
+          
           let pickedFace = getRandomIntInclusive(0, 4)
-
-console.log(myPlayer.arrives);
-console.log(myPlayer.characters);
-
-
-
+          
+          console.log(myPlayer.arrives);
+          console.log(myPlayer.characters);
+          
+          
+          
           switch (pickedFace){
             case 0:
             rollDice('mooveWall', undefined);
@@ -1232,18 +1204,18 @@ console.log(myPlayer.characters);
             rollDice('mooveMinotaurus', undefined);;
             break;
             case 2:
-            rollDice('mooveCharacter', 32);
+            rollDice('mooveCharacter', 4);
             break;
             case 3:
-            rollDice('mooveCharacter', 32);
+            rollDice('mooveCharacter', 5);
             break;
             case 4:
-            rollDice('mooveCharacter', 32);
+            rollDice('mooveCharacter', 6);
             break;
           }
           action = 'rollDice';
         }
-
+        
       }
     }
     

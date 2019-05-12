@@ -56,6 +56,7 @@ class CanvasDraw {
     this.frameRate(this.config.frameRate);
   }
 
+
   frameRate(fps) {
     this.config.frameRate = fps;
     clearInterval(this.drawCaller);
@@ -70,6 +71,8 @@ class CanvasDraw {
     this.canvas.height = h;
   }
 
+
+
   noFill() {
     this.ctx.fillStyle = '#0000';
   }
@@ -77,6 +80,8 @@ class CanvasDraw {
   fill(v1, v2, v3, v4) {
     this.ctx.fillStyle = this.colorToStr(v1, v2, v3, v4);
   }
+
+
 
   noStroke() {
     this.ctx.strokeStyle = '#0000';
@@ -97,6 +102,21 @@ class CanvasDraw {
   strokeJoin(join) {
     this.ctx.lineJoin = join;
   }
+
+
+
+  noShadow(){
+    this.ctx.shadowColor = '#0000';
+  }
+
+  shadow(x, y, blur, v1, v2, v3, v4){
+    this.ctx.shadowOffsetX = x;
+    this.ctx.shadowOffsetY = y;
+    this.ctx.shadowBlur = blur;
+    this.ctx.shadowColor = this.colorToStr(v1, v2, v3, v4);
+  }
+
+  
 
   clear() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -148,7 +168,7 @@ class CanvasDraw {
     this.ctx.stroke();
   }
 
-  
+
 
   textAlign(align){
     this.ctx.textAlign = align;
@@ -184,6 +204,11 @@ class CanvasDraw {
     this.updateFont();
   }
 
+  textFamily(family) {
+    this.config.text.family = family;
+    this.updateFont();
+  }
+
   textWidth(text) {
     return this.ctx.measureText(text).width;
   }
@@ -193,6 +218,13 @@ class CanvasDraw {
     this.ctx.fillText(text, x, y);
     this.ctx.strokeText(text, x, y);
   }
+
+  updateFont(){
+    let textConf = this.config.text;
+    this.ctx.font = textConf.style + ' ' + textConf.variant + ' ' + textConf.weight + ' ' + textConf.stretch + ' ' + textConf.size + 'px/' + textConf.lineHeight + ' ' + textConf.family;
+  }
+
+
 
   colorToStr(v1, v2, v3, v4) {
     let r = 0;
@@ -230,13 +262,5 @@ class CanvasDraw {
       }
     }
   }
-
-  updateFont(){
-    let textConf = this.config.text;
-    this.ctx.font = textConf.style + ' ' + textConf.variant + ' ' + textConf.weight + ' ' + textConf.stretch + ' ' + textConf.size + 'px/' + textConf.lineHeight + ' ' + textConf.family;
-  
-  
-  }
-
 
 }
