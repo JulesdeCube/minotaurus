@@ -44,16 +44,19 @@ window.addEventListener('load',() => {
   
   var viewport = new CanvasDraw(document.body )
   
+  
+
   viewport.setup = () => {
     socket.emit('get', 'config');
     config = convertMapV1(input);
     autoResize(config.map);
-    myPlayer = config.players[1];
+    myPlayer = config.players[3];
+    playerId = config.players.length-1;
+  console.log(playerId);
   }
-  
-  
-  
-  
+    
+
+
   //draw
   var caseWidth = 25;
   
@@ -61,7 +64,9 @@ window.addEventListener('load',() => {
   //config
   var config = undefined;
   var myPlayer = undefined;
+  var playerId =undefined;
   
+   
   var cursorPosition = {x: 0, y: 0};
   
   var action = 'none';
@@ -86,8 +91,8 @@ window.addEventListener('load',() => {
   var mode2 = false;
   var possiblemoove = [[]];
   var selectedCaseP = [{x: 0, y: 0}];
-  var cornerCase = [{x: 0, y: 0}];
-  var selectedPIsInSpawn = true;
+  
+  var selectedPIsInSpawn = false;
   
   var minotaurusOut = false;
   
@@ -126,6 +131,8 @@ window.addEventListener('load',() => {
   viewport.draw = () => {
     if (config) {
       
+      console.log('Id:' + playerId);
+      
       viewport.clear();
       updateCursorPosition();
       drawMap(config.map);
@@ -136,6 +143,9 @@ window.addEventListener('load',() => {
       drawCursor();
       
       
+      
+    doANewturn(); 
+      
       switch (action) {
         case 'rollDice':
         drawDice();
@@ -145,9 +155,6 @@ window.addEventListener('load',() => {
         
         actionMooveCharacter();
         
-console.log('mlsdmsqd');
-
-
         if (possibleMooveIsGenerate === false) { 
           
           
@@ -197,6 +204,10 @@ console.log('mlsdmsqd');
         deleteWall()
         placeWall();
         stopPlaceWall();
+        break;
+
+        case 'win':
+        drawWin();
         break;
         
         default:
@@ -393,7 +404,6 @@ console.log('mlsdmsqd');
       if (x !== undefined) { cursorPosition.x = x; }
       if (y !== undefined) { cursorPosition.y = y; }
     }
-  
   
   
   //----------------------------------------------------//
@@ -624,7 +634,7 @@ console.log('mlsdmsqd');
         }];
         
         if(selectedCase.type=== 'spawn'){
-          selectedPIsInSpawn =true
+          selectedPIsInSpawn = true;
         }
         
         possibleMooveIsGenerate = false;
@@ -725,7 +735,7 @@ console.log('mlsdmsqd');
       }
       
       
-      if (viewport.mouse.press && minotaurusOut === true && possiblemoove[cursorPosition.y][cursorPosition.x] !== undefined  ) {
+      if (viewport.mouse.press && minotaurusOut === true && possiblemoove[cursorPosition.y][cursorPosition.x] !== undefined && config.map[cursorPosition.y][cursorPosition.x].type !== 'arrive' ) {
         
         
         if ( selectedCase.content!== undefined && selectedCase.content.type === 'character'){
@@ -764,7 +774,7 @@ console.log('mlsdmsqd');
             }
           }
           
-          
+          config.map[config.minotaurus.characters[config.minotaurus.characters.length-1].y][config.minotaurus.characters[config.minotaurus.characters.length-1].x].content= undefined
           selectedCase.content = undefined
           config.minotaurus.characters=[]
           action = 'none';
@@ -775,6 +785,7 @@ console.log('mlsdmsqd');
         else{
           
           selectedCase.content = config.map[config.minotaurus.characters[config.minotaurus.characters.length-1].y][config.minotaurus.characters[config.minotaurus.characters.length-1].x].content
+          config.map[config.minotaurus.characters[config.minotaurus.characters.length-1].y][config.minotaurus.characters[config.minotaurus.characters.length-1].x].content= undefined
           config.minotaurus.characters=[{x: cursorPosition.x, y: cursorPosition.y}];
           action = 'none';
           minotaurusOut = false
@@ -841,7 +852,12 @@ console.log('mlsdmsqd');
       }
       return output.substring(0, length);
     }
-    
+
+    function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min +1)) + min;
+    }
     
     
     //------------------------------------------------------------------------------------------------------------------
@@ -1098,25 +1114,6 @@ console.log('mlsdmsqd');
       }
     }
     
-    //matheo
-    function test_2() {
-      if (viewport.mouse.press) {
-        
-        /* console.log(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY);
-        console.log(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX); */
-        //console.log(Math.abs(cursorPosition.y * caseWidth + 0, 5 * caseWidth - mouseY) - Math.abs(cursorPosition.x * caseWidth + 0, 5 * caseWidth - mouseX))
-        
-        //console.log(Math.abs(firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY) > Math.abs(firstWall.x * caseWidth + 0, 5 * caseWidth - mouseX))
-        let diffY = (firstWall.y * caseWidth + 0, 5 * caseWidth - mouseY);
-        //console.log(Math.abs(diffY) )
-        
-        console.log((firstWall.y * caseWidth + ((0.5) * caseWidth)));
-        
-        
-        //console.log(mouseX)
-        //console.log(cursorPosition.x * caseWidth + 0, 5)
-      }
-    }
     
     //matheo
 
@@ -1129,6 +1126,7 @@ console.log('mlsdmsqd');
         y: 0
       }];
       
+      selectedPIsInSpawn = false;
       
       animiD = 0;
       
@@ -1203,6 +1201,49 @@ console.log('mlsdmsqd');
       }, time + 1000)
     }
 
+
+    function doANewturn(){
+      if (action==='none' ){
+        if(config.map[myPlayer.arrives[0].x][myPlayer.arrives[0].y].content !==undefined && config.map[myPlayer.arrives[1].x][myPlayer.arrives[1].y].content !==undefined && config.map[myPlayer.arrives[2].x][myPlayer.arrives[2].y].content !==undefined ){
+          action = 'win'
+        }
+
+        else{
+
+           /* playerId++
+
+          if (playerId > config.players.length - 1) { playerId = 0;}  */
+          myPlayer= config.players[0];
+
+          let pickedFace = getRandomIntInclusive(0, 4)
+
+console.log(myPlayer.arrives);
+console.log(myPlayer.characters);
+
+
+
+          switch (pickedFace){
+            case 0:
+            rollDice('mooveWall', undefined);
+            break;
+            case 1:
+            rollDice('mooveMinotaurus', undefined);;
+            break;
+            case 2:
+            rollDice('mooveCharacter', 32);
+            break;
+            case 3:
+            rollDice('mooveCharacter', 32);
+            break;
+            case 4:
+            rollDice('mooveCharacter', 32);
+            break;
+          }
+          action = 'rollDice';
+        }
+
+      }
+    }
     
     
     
