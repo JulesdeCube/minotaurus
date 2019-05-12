@@ -1082,7 +1082,7 @@ console.log('mlsdmsqd');
     
     //matheo
     function stopPlaceWall() {
-      if (!viewport.mouse.press && isFirstWallCase === false) {
+      if (!viewport.mouse.press && isFirstWallCase === false && config.map[firstWall.y][firstWall.x].group[1] !== undefined) {
         
         mode2 = false;
         
