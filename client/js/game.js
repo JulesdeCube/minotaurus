@@ -48,7 +48,6 @@ window.addEventListener('load',() => {
     socket.emit('get', 'config');
     config = convertMapV1(input);
     autoResize(config.map);
-    viewport.resizeCanvas(1000,1000);    
     myPlayer = config.players[1];
   }
   
@@ -364,15 +363,15 @@ console.log('mlsdmsqd');
   }
   
   function maxDimentionMap(map) {
-    let maxY = 0;
+    let maxX = 0;
     for (let l = 0; l < map.length; l++) {
-      if (map[l].length > maxY) {
-        maxY = map[l].length;
+      if (map[l].length > maxX) {
+        maxX = map[l].length;
       }
     }
     return {
-      x: map.length,
-      y: maxY
+      x: maxX,
+      y: map.length
     };
   }
   
@@ -382,15 +381,18 @@ console.log('mlsdmsqd');
   //                       Update                       //
   //----------------------------------------------------//
   function updateCursorPosition() {
-    let x = (viewport.mouse.x - (viewport.mouse.x % caseWidth)) / caseWidth;
-    let y = (viewport.mouse.y - (viewport.mouse.y % caseWidth)) / caseWidth;
-    if (x !== undefined) {
-      cursorPosition.x = x;
+      let x = (viewport.mouse.x - (viewport.mouse.x % caseWidth)) / caseWidth;
+      let y = (viewport.mouse.y - (viewport.mouse.y % caseWidth)) / caseWidth;
+      
+      if (x < 0) { x = 0; }
+      if (y < 0) { y = 0; }
+
+      if(y > config.map.length - 1) { y = config.map.length - 1; }
+      if(x > config.map[y].length - 1) { x = config.map[y].length - 1; }
+      
+      if (x !== undefined) { cursorPosition.x = x; }
+      if (y !== undefined) { cursorPosition.y = y; }
     }
-    if (y !== undefined) {
-      cursorPosition.y = y;
-    }
-  }
   
   
   
