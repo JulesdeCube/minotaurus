@@ -42,18 +42,11 @@ window.addEventListener('load',() => {
   "█rr                          gg█" + '\n' +
   "████████████████████████████████";
   
-  var viewport = new CanvasDraw(document.body )
+  
   
   
 
-  viewport.setup = () => {
-    socket.emit('get', 'config');
-    config = convertMapV1(input);
-    autoResize(config.map);
-    myPlayer = config.players[3];
-    playerId = config.players.length-1;
-  console.log(playerId);
-  }
+ 
     
 
 
@@ -77,13 +70,14 @@ window.addEventListener('load',() => {
   var isFirstWallCase = true;
   
   var firstWall = {x: 0, y: 0};
-  var tempWall = {x: 1, y: 3};
+  var tempWall = undefined;
   
   
   //dice
   var animiD = 0;
-  var anim = [drawFace4, drawFace5, drawFace7, drawFaceMinotaurus, drawFaceWall];
-  
+  var anim = [drawFace4, drawFace5, drawFace6, drawFaceMinotaurus, drawFaceWall];
+  var diceSize = 6;
+  var dicePosition = {x: 13, y: 13};
   
   //moove character
   var possibleMooveIsGenerate = true;
@@ -94,44 +88,24 @@ window.addEventListener('load',() => {
   
   var selectedPIsInSpawn = false;
   
+  
   var minotaurusOut = false;
   
-  
-  //----------------------------------------------------//
-  //                        P5                          //
-  //----------------------------------------------------//
-  /**
-  * TODO verifier que le server nous renvoi bien la map
-  */
-  /* function setup() {
-    /* socket.on('post', function (msg) {
-      switch (msg.header) {
-        case 'config':
-        console.log(msg.contenent);
-        
-        config = convertMapV1(msg.contenent);
-        
-        console.log(config);
-        autoResize(config.map);
-        break;
-        
-        default:
-        console.log(msg);
-        break;
-      }
-    });  
+  var viewport = new CanvasDraw(document.body )
+
+  viewport.setup = () => {
     socket.emit('get', 'config');
-    createCanvas(0, 0);
     config = convertMapV1(input);
     autoResize(config.map);
-    
-    myPlayer = config.players[1];
-  } */
-  
+    myPlayer = config.players[3];
+    playerId = config.players.length-1;
+  console.log(config.players.length-1);
+  }    
+
   viewport.draw = () => {
     if (config) {
       
-      console.log('Id:' + playerId);
+      
       
       viewport.clear();
       updateCursorPosition();
@@ -195,7 +169,7 @@ window.addEventListener('load',() => {
         }
         
         if (possiblemoove !== [[]]) {
-          drawPossibleMoove(possiblemoove,14);
+          drawPossibleMoove(possiblemoove,10);
         }
         
         break;
@@ -214,7 +188,9 @@ window.addEventListener('load',() => {
         break;
       }
       
+      drawWin()
     }
+    
   } 
   
   viewport.start()
@@ -386,29 +362,35 @@ window.addEventListener('load',() => {
     };
   }
   
-  
-  
   //----------------------------------------------------//
   //                       Update                       //
   //----------------------------------------------------//
   function updateCursorPosition() {
-      let x = (viewport.mouse.x - (viewport.mouse.x % caseWidth)) / caseWidth;
-      let y = (viewport.mouse.y - (viewport.mouse.y % caseWidth)) / caseWidth;
-      
-      if (x < 0) { x = 0; }
-      if (y < 0) { y = 0; }
-
-      if(y > config.map.length - 1) { y = config.map.length - 1; }
-      if(x > config.map[y].length - 1) { x = config.map[y].length - 1; }
-      
-      if (x !== undefined) { cursorPosition.x = x; }
-      if (y !== undefined) { cursorPosition.y = y; }
-    }
-  
-  
+    let x = (viewport.mouse.x - (viewport.mouse.x % caseWidth)) / caseWidth;
+    let y = (viewport.mouse.y - (viewport.mouse.y % caseWidth)) / caseWidth;
+    
+    if (x < 0) { x = 0; }
+    if (y < 0) { y = 0; }
+    
+    if(y > config.map.length - 1) { y = config.map.length - 1; }
+    if(x > config.map[y].length - 1) { x = config.map[y].length - 1; }
+    
+    if (x !== undefined) { cursorPosition.x = x; }
+    if (y !== undefined) { cursorPosition.y = y; }
+  }
+    
   //----------------------------------------------------//
   //                        Draw                        //
   //----------------------------------------------------//
+  
+  function drawWin() {
+    viewport.fill('hsl(' + myPlayer.color + ', 70%, 37%)');
+    viewport.rect(caseWidth * 6, caseWidth * 6, caseWidth*20, caseWidth*20)
+    viewport.fill('#000');
+    viewport.textSize(50);
+    viewport.text('Un joueur a gagné', caseWidth*6, caseWidth*16);
+  }
+  
   function drawCase(x, y, color) {
     viewport.noStroke();
     viewport.fill(color);
@@ -503,54 +485,76 @@ window.addEventListener('load',() => {
   
   //matheo
   function drawDice() {
-    anim[animiD]();
+    anim[animiD]('hsl(' + myPlayer.color  + ', 70%, 53%)');
   }
-  //matheo
-  function drawFace4() {
-    viewport.fill('#4286f4')
-    viewport.rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
-    viewport.fill('#000000')
-    viewport.circle(caseWidth * 14, caseWidth * 14, 15);
-    viewport.circle(caseWidth * 14, caseWidth * 18, 15);
-    viewport.circle(caseWidth * 18, caseWidth * 14, 15);
-    viewport.circle(caseWidth * 18, caseWidth * 18, 15);
+  function drawDiceFace(color) {
+    viewport.fill(color);
+    viewport.rect(caseWidth * dicePosition.x, caseWidth * dicePosition.y, diceSize * caseWidth, diceSize * caseWidth, caseWidth * diceSize / 8);
   }
-  //matheo
-  function drawFace5() {
-    viewport.fill('#4286f4')
-    viewport.rect(caseWidth * 13, caseWidth * 13, 6 * caseWidth, 6 * caseWidth, 15);
-    viewport.fill('#000000')
-    viewport.circle(caseWidth * 14, caseWidth * 14, 15);
-    viewport.circle(caseWidth * 14, caseWidth * 18, 15);
-    viewport.circle(caseWidth * 18, caseWidth * 14, 15);
-    viewport.circle(caseWidth * 18, caseWidth * 18, 15);
-    viewport.circle(caseWidth * 16, caseWidth * 16, 15);
-  }
-  //matheo
-  function drawFace7() {
-    let diceSize = 6;
+  
+  function drawDiceFacePatern(patern, color) {
+    viewport.fill(color);
+    let roundSize = diceSize * caseWidth*0.1;
+    if (!(patern[0] === undefined || patern[0] === ' ')) {// top left
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.2 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.2 , roundSize);    
+    }
+    if (!(patern[1] === undefined || patern[1] === ' ')) {// top middel
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.5 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.2 , roundSize);    
+    }
+    if (!(patern[2] === undefined || patern[2] === ' ')) {// top right
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.8 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.2 , roundSize);    
+    }
     
-    viewport.fill('#4286f4')
-    viewport.rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
-    viewport.fill('#000000')
-    viewport.circle(caseWidth * 14, caseWidth * 14, 15);
-    viewport.circle(caseWidth * 14, caseWidth * 18, 15);
-    viewport.circle(caseWidth * 18, caseWidth * 14, 15);
-    viewport.circle(caseWidth * 18, caseWidth * 18, 15);
-    viewport.circle(caseWidth * 14, caseWidth * 16, 15);
-    viewport.circle(caseWidth * 18, caseWidth * 16, 15);
+    if (!(patern[3] === undefined || patern[3] === ' ')) {// middle left
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.2 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.5 , roundSize);    
+    }
+    if (!(patern[4] === undefined || patern[4] === ' ')) {// middle middel
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.5 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.5 , roundSize);    
+    }
+    if (!(patern[5] === undefined || patern[5] === ' ')) {// middle right
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.8 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.5 , roundSize);    
+    }
+    
+    if (!(patern[6] === undefined || patern[6] === ' ')) {// bottom left
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.2 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.8 , roundSize);    
+    }
+    if (!(patern[7] === undefined || patern[7] === ' ')) {// bottom middel
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.5 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.8 , roundSize);    
+    }
+    if (!(patern[8] === undefined || patern[8] === ' ')) {// bottom right
+      viewport.circle(caseWidth * dicePosition.x + diceSize * caseWidth * 0.8 , caseWidth * dicePosition.y + diceSize * caseWidth * 0.8 , roundSize);    
+    }
+    
+  }
+  
+  //matheo
+  function drawFace4(color) {
+    drawDiceFace(color);
+    drawDiceFacePatern('x x   x x', '#000000');
+    
+  }
+  //matheo
+  function drawFace5(color) {
+    drawDiceFace(color);
+    drawDiceFacePatern('x x x x x', '#000000');
+  }
+  //matheo
+  
+  function drawFace6(color) {
+    drawDiceFace(color);
+    drawDiceFacePatern('x xx xx x', '#000000');
   }
   //matheo
   function drawFaceWall() {
-    let diceSize = 6;
-    viewport.fill('#34495e')
-    viewport.rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
+    drawDiceFace('#34495e');
   }
   //matheo
   function drawFaceMinotaurus() {
-    let diceSize = 6;
-    viewport.fill('#000000')
-    viewport.rect(caseWidth * 13, caseWidth * 13, diceSize * caseWidth, diceSize * caseWidth, 15);
+    drawDiceFace('#000000');
+  }
+  
+  function drawTurnPlayer() {
+    
   }
   
   //----------------------------------------------------//
@@ -611,9 +615,7 @@ window.addEventListener('load',() => {
         nextGen = [];
       }
       return possibleMoove;
-    }
-    
-    
+    }    
     
     //----------------------------------------------------//
     //                        action                      //
@@ -857,8 +859,7 @@ window.addEventListener('load',() => {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min +1)) + min;
-    }
-    
+    }   
     
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -1112,11 +1113,10 @@ window.addEventListener('load',() => {
         action = 'none';
         
       }
-    }
-    
+    }    
     
     //matheo
-
+    
     function rollDice(diceValue, information) {
       
       alreadyDone = true
@@ -1204,16 +1204,18 @@ window.addEventListener('load',() => {
 
     function doANewturn(){
       if (action==='none' ){
-        if(config.map[myPlayer.arrives[0].x][myPlayer.arrives[0].y].content !==undefined && config.map[myPlayer.arrives[1].x][myPlayer.arrives[1].y].content !==undefined && config.map[myPlayer.arrives[2].x][myPlayer.arrives[2].y].content !==undefined ){
-          action = 'win'
+
+        if(config.map[myPlayer.arrives[0].y][myPlayer.arrives[0].x].content !==undefined && config.map[myPlayer.arrives[1].y][myPlayer.arrives[1].x].content !==undefined && config.map[myPlayer.arrives[2].y][myPlayer.arrives[2].x].content !==undefined ){
+          action = 'win';
         }
 
         else{
 
-           /* playerId++
+            playerId++
 
-          if (playerId > config.players.length - 1) { playerId = 0;}  */
-          myPlayer= config.players[0];
+          if (playerId > config.players.length - 1) { playerId = 0;}  
+
+          myPlayer= config.players[playerId];
 
           let pickedFace = getRandomIntInclusive(0, 4)
 
@@ -1248,26 +1250,31 @@ console.log(myPlayer.characters);
     
     
     
-
-            document.getElementById('mooveWall').onclick = () => {
-              rollDice('mooveWall', undefined);
-                action = 'rollDice';
-                console.log('mooveWall');
-              }
-              document.getElementById('mooveMinotaurus').onclick = () => {
-                rollDice('mooveMinotaurus', undefined);
-                  action = 'rollDice';
-                  console.log('mooveMinotaurus');
-                }
-                document.getElementById('mooveCharacter6').onclick = () => {
-                  rollDice('mooveCharacter', 32);
-                    action = 'rollDice';
-                    console.log('mooveCharacter6');
-                  }
-                  document.getElementById('mooveCharacter5').onclick = () => {
-                    rollDice('mooveCharacter', 5);
-                      action = 'rollDice';
-                      console.log('mooveCharacter5');
-                    }
-
+    
+    
+    document.getElementById('mooveWall').onclick = () => {
+      rollDice('mooveWall', undefined);
+      action = 'rollDice';
+      console.log('mooveWall');
+    }
+    document.getElementById('mooveMinotaurus').onclick = () => {
+      rollDice('mooveMinotaurus', undefined);
+      action = 'rollDice';
+      console.log('mooveMinotaurus');
+    }
+    document.getElementById('mooveCharacter6').onclick = () => {
+      rollDice('mooveCharacter', 32);
+      action = 'rollDice';
+      console.log('mooveCharacter6');
+    }
+    document.getElementById('mooveCharacter5').onclick = () => {
+      rollDice('mooveCharacter', 5);
+      action = 'rollDice';
+      console.log('mooveCharacter5');
+    }
+    document.getElementById('playerTurn').onclick = () => {
+      drawTurnPlayer(myPlayer);
+      console.log('mooveCharacter5');
+    }
+    
   });
