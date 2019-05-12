@@ -1,6 +1,6 @@
 class CanvasDraw {
   
-  constructor(parent){
+  constructor(parent) {
     this.canvas = document.createElement('canvas');
     if (parent !== undefined) {
       parent.appendChild(this.canvas);
@@ -27,31 +27,42 @@ class CanvasDraw {
     this.draw = () => {};
     
 
-    this.frameRate = undefined;
     this.drawCaller = undefined;
-
+    
     this.mouse = {
       x: 0,
       y: 0,
       press: false
     }
-
+    
+    this.config = {
+      frameRate: 60,
+      text: {
+        style: 'inherit',
+        variant: 'inherit',
+        weight: 'inherit',
+        stretch: 'inherit',
+        size: 10,
+        lineHeight: 'inherit',
+        family: 'inherit'
+      }
+    }
  
     
   }
   
   start(){
     this.setup();
-    this.setFrameRate(60);
+    this.frameRate(this.config.frameRate);
   }
 
-  setFrameRate(fps) {
-    this.frameRate = fps;
+  frameRate(fps) {
+    this.config.frameRate = fps;
     clearInterval(this.drawCaller);
 
     this.drawCaller = setInterval(() => {
       this.draw()
-    }, 1000 / this.frameRate);
+    }, 1000 / this.config.frameRate);
   }
 
   resizeCanvas(w, h) {
@@ -137,6 +148,56 @@ class CanvasDraw {
     this.ctx.stroke();
   }
 
+  
+
+  textAlign(align){
+    this.ctx.textAlign = align;
+  }
+  
+  textStyle(style) {
+    this.config.text.style = style;
+    this.updateFont();
+  }
+
+  textVariant(variant) {
+    this.config.text.variant = variant;
+    this.updateFont();
+  }
+
+  textWeight(weight) {
+    this.config.text.weight = weight;
+    this.updateFont();
+  }
+
+  textStretch(stretch) {
+    this.config.text.stretch = stretch;
+    this.updateFont();
+  }
+
+  textSize(size) {
+    this.config.text.size = size;
+    this.updateFont();
+  }
+
+  textlineHeight(lineHeight) {
+    this.config.text.lineHeight = lineHeight;
+    this.updateFont();
+  }
+
+  textWidth(text) {
+    return this.ctx.measureText(text).width;
+  }
+
+  text(text, x, y) {
+    // draw
+    this.ctx.fillText(text, x, y);
+    this.ctx.stroke(text, x, y);
+    
+    // fill and stroke
+    this.ctx.fill();
+    this.ctx.stroke();
+  }
+
   colorToStr(v1, v2, v3, v4) {
     let r = 0;
     let g = 0;
@@ -172,6 +233,11 @@ class CanvasDraw {
         return 'rgb(' + r + ',' + g + ',' + b + ')';
       }
     }
+  }
+
+  updateFont(){
+    let textConf = this.config.text;
+    this.ctx.font = textConf.style + ' ' + textConf.variant + ' ' + textConf.weight + ' ' + textConf.stretch + ' ' + textConf.size + 'px/' + textConf.lineHeight + ' ' + textConf.family;
   }
 
 }

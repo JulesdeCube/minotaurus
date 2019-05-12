@@ -3,7 +3,7 @@ body {
   margin: 0;
 } 
 
-#defaultCanvas0 {
+canvas {
   position: absolute;
   left: 50%;
   top: 50%;
