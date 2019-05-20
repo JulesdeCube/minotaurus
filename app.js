@@ -4,7 +4,6 @@ const http = require('http');
 const socketIo = require('socket.io');
 const dataBase = require('./server/lib/dataBase');
 const user = require('./server/lib/user');
-const minotaurus = require('./server/lib/minotaurus');
 
 //parameter
 const SERVERPORT = 8080;
