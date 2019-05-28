@@ -1,4 +1,3 @@
-
 window.addEventListener('load',() => {
   
   
@@ -84,7 +83,7 @@ window.addEventListener('load',() => {
   
   var minotaurusOut = false;
   
-  var viewport = new CanvasDraw(document.body )
+  var viewport = new CanvasDraw(document.body);
   
   viewport.setup = () => {
     socket.emit('get', 'config');
@@ -349,7 +348,7 @@ window.addEventListener('load',() => {
   //----------------------------------------------------//
   
   function drawWin(playerName) {
-    let message = ' à gagné!';
+    let message = ' a gagner!';
     let length = viewport.textWidth(playerName + message);
     let height = 75;
 
@@ -1179,38 +1178,27 @@ window.addEventListener('load',() => {
         
         if(config.map[myPlayer.arrives[0].y][myPlayer.arrives[0].x].content !==undefined && config.map[myPlayer.arrives[1].y][myPlayer.arrives[1].x].content !==undefined && config.map[myPlayer.arrives[2].y][myPlayer.arrives[2].x].content !==undefined ){
           action = 'win';
-        }
-        
-        else{
+        } else {
+          playerId++;
+          if (playerId > config.players.length - 1) { playerId = 0;}
+          myPlayer = config.players[playerId];
           
-          playerId++
-          
-          if (playerId > config.players.length - 1) { playerId = 0;}  
-          
-          myPlayer= config.players[playerId];
-          
-          let pickedFace = getRandomIntInclusive(0, 4)
-          
-          console.log(myPlayer.arrives);
-          console.log(myPlayer.characters);
-          
-          
-          
+          let pickedFace = getRandomIntInclusive(0, 4);
           switch (pickedFace){
             case 0:
-            rollDice('mooveWall', undefined);
+              rollDice('mooveWall', undefined);
             break;
             case 1:
-            rollDice('mooveMinotaurus', undefined);;
+              rollDice('mooveMinotaurus', undefined);;
             break;
             case 2:
-            rollDice('mooveCharacter', 4);
+              rollDice('mooveCharacter', 4);
             break;
             case 3:
-            rollDice('mooveCharacter', 5);
+              rollDice('mooveCharacter', 5);
             break;
             case 4:
-            rollDice('mooveCharacter', 6);
+              rollDice('mooveCharacter', 6);
             break;
           }
           action = 'rollDice';
