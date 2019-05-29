@@ -4,7 +4,11 @@
   "description": "ISN Project 2018/2019",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js"
+    "launch": "node app.js",
+    "install": "npm install",
+    "docs": "npm run doc-server && npm run doc-client",
+    "doc-server": "jsdoc server app.js -r -d doc/server",
+    "doc-client": "jsdoc client -r -d doc/client"
   },
   "repository": {
     "type": "git",

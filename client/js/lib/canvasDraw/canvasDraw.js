@@ -234,7 +234,7 @@ class CanvasDraw {
     
     if (       typeof v1 === 'string') {// stroke(value)
       return v1;
-    } else if (typeof v1 === 'object') {// stroke({r, v, b , [a]}) TODO
+    } else if (typeof v1 === 'object') {// TODO stroke({r, v, b , [a]})
       
     } else {// stroke(v1, v2, v3, [alpha]), stroke(gray, [alpha]), stroke(values)
       if (     typeof v1 === 'number') {// stroke(v1, v2, v3, [alpha]), stroke(gray, [alpha])
