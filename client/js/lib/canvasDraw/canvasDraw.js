@@ -1,5 +1,21 @@
+/**
+ * @file library to draw the game
+ * @author Jules Lefebvre <juleslefebvre.10@outlook.fr>
+ * @copyright Minotaurus Project 2019
+ */
+
+/**
+ * @class
+ * @author Jules Lefebvre <juleslefebvre.10@outlook.fr>
+ * @classdesc create an canvas and draw
+ */
 class CanvasDraw {
   
+  /**
+   * @constructor
+   * @author Jules Lefebvre <juleslefebvre.10@outlook.fr>
+   * @param {HTMLElement} parent parrent of the canvas
+   */
   constructor(parent) {
     this.canvas = document.createElement('canvas');
     if (parent !== undefined) {
@@ -51,12 +67,25 @@ class CanvasDraw {
     
   }
   
+  /**
+   * @method
+   * @author Jules Lefebvre <juleslefebvre.10@outlook.fr>
+   * @description begin the draw
+   * @emits setup() emit firt to setup it
+   * @emits draw() emit every frame rate
+   */
   start(){
     this.setup();
     this.frameRate(this.config.frameRate);
   }
 
-
+  /**
+   * @method
+   * @author Jules Lefebvre <juleslefebvre.10@outlook.fr>
+   * @description change the frame rate of the viewport
+   * 
+   * @param {number} fps the number of frame per second
+   */
   frameRate(fps) {
     this.config.frameRate = fps;
     clearInterval(this.drawCaller);
@@ -66,9 +95,16 @@ class CanvasDraw {
     }, 1000 / this.config.frameRate);
   }
 
-  resizeCanvas(w, h) {
-    this.canvas.width = w;
-    this.canvas.height = h;
+  /**
+   * @method
+   * @author Lefebvre <juleslefebvre.10@outlook.fr>
+   * @description change the dimension of the viewport
+   * @param {number} width the width of the viewport
+   * @param {number} height the height of the viewport
+   */
+  resizeCanvas(width, height) {
+    this.canvas.width = width;
+    this.canvas.height = height;
   }
 
 

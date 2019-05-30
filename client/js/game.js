@@ -1,10 +1,12 @@
 /**
- * @file game.js : main file of the client side of the Minotaurus project ()
+ * @file main file of the client side of the Minotaurus project
  * @author Jules Lefebvre <juleslefebvre.10@outlook.fr> and Matheo Joseph <darkjoseph92@gmail.com>
  * @copyright Minotaurus Project 2019
  */
 
- // type def
+//----------------------------------------------------//
+//                      Type Def                      //
+//----------------------------------------------------//
 /**
  * @typedef {object} Player
  * @description represne t an player and alll this property<br>
@@ -71,38 +73,30 @@
  * @type {string}
  */
 var input =
-"████████████████████████████████" + '\n' +
-"█bb                          yy█" + '\n' +
-"█b                            y█" + '\n' +
-"█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
-"█       ▓   ▓      ▓   ▓       █" + '\n' +
-"█       ▓   ▓      ▓   ▓       █" + '\n' +
-"█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
-"█  ▓                        ▓  █" + '\n' +
-"█  ▓                        ▓  █" + '\n' +
-"█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
-"█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
-"█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
-"█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
-"█  ▓     ▓            ▓     ▓  █" + '\n' +
-"█  ▓   ▓▓▓    BBYY    ▓▓▓   ▓  █" + '\n' +
-"█           ▓ B@@Y ▓           █" + '\n' +
-"█           ▓ R@@G ▓           █" + '\n' +
-"█  ▓   ▓▓▓    RRGG    ▓▓▓   ▓  █" + '\n' +
-"█  ▓     ▓            ▓     ▓  █" + '\n' +
-"█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
-"█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
-"█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
-"█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
-"█  ▓                        ▓  █" + '\n' +
-"█  ▓                        ▓  █" + '\n' +
-"█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
-"█       ▓   ▓      ▓   ▓       █" + '\n' +
-"█       ▓   ▓      ▓   ▓       █" + '\n' +
-"█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
-"█r                            g█" + '\n' +
-"█rr                          gg█" + '\n' +
-"████████████████████████████████";
+"                   ████████████████                   " + '\n' +
+"        ████████████              ████████████        " + '\n' +
+"   ██████  ▓      ▒                ▒      ▓  ██████   " + '\n' +
+"   █       ▓      ▒   ▓▓▓▓  ▓▓▓▓   ▒      ▓       █   " + '\n' +
+"  ██       ▓▓  ▓▓▓▓     ▓    ▓     ▓▓▓▓  ▓▓       ██  " + '\n' +
+"  █   ▓           ▓     ▓    ▓     ▓           ▓   █  " + '\n' +
+"  █  ▓▓           ▓  ▓▓▓▓    ▓▓▓▓  ▓           ▓▓  █  " + '\n' +
+"  █      ▓▓▓▓  ▓  ▓  ▓          ▓  ▓  ▓  ▓▓▓▓      █  " + '\n' +
+"  █      ▓  ▓  ▓     ▓          ▓     ▓  ▓  ▓      █  " + '\n' +
+"███   ▓  ▓     ▓     ▓          ▓     ▓     ▓  ▓   ███" + '\n' +
+"█a    ▓  ▓     ▓   ▓▓▓    AB    ▓▓▓   ▓     ▓  ▓    b█" + '\n' +
+"█a    ▓        ▒   ▓     A@@B     ▓   ▒        ▓    b█" + '\n' +
+"█a    ▓        ▒   ▓     A@@B     ▓   ▒        ▓    b█" + '\n' +
+"█a    ▓  ▓     ▓   ▓▓▓    AB    ▓▓▓   ▓     ▓  ▓    b█" + '\n' +
+"███   ▓  ▓     ▓     ▓          ▓     ▓     ▓  ▓   ███" + '\n' +
+"  █      ▓  ▓  ▓     ▓          ▓     ▓  ▓  ▓      █  " + '\n' +
+"  █      ▓▓▓▓  ▓  ▓  ▓          ▓  ▓  ▓  ▓▓▓▓      █  " + '\n' +
+"  █  ▓▓           ▓  ▓▓▓▓    ▓▓▓▓  ▓           ▓▓  █  " + '\n' +
+"  █   ▓           ▓     ▓    ▓     ▓           ▓   █  " + '\n' +
+"  ██       ▓▓  ▓▓▓▓     ▓    ▓     ▓▓▓▓  ▓▓       ██  " + '\n' +
+"   █       ▓      ▒   ▓▓▓▓  ▓▓▓▓   ▒      ▓       █   " + '\n' +
+"   ██████  ▓      ▒                ▒      ▓  ██████   " + '\n' +
+"        ████████████              ████████████        " + '\n' +
+"                   ████████████████                   ";
 
 
 //----------------------------------------------------//
@@ -194,7 +188,7 @@ var animiD;
 /**
  * @global
  * @description array of all the anim of the dice 
- * @type {[drawFunction]}
+ * @type {drawFunction[]}
  */
 var anim;
 /**
@@ -228,9 +222,8 @@ var possibleMoveIsGenerate;
 var modeSelectArrives;
 /**
  * @global
- * @description I dont know
+ * @description place wall or arrive of player/character
  * @type {boolean}
- * REVIEW wath is mode2 ?
  */
 var mode2;
 /**
@@ -258,6 +251,12 @@ var selectedPIsInSpawn;
  */
 var minotaurusOut;
 
+/**
+ * @global
+ * @description the view port of the game
+ * @type {CanvasDraw}
+ */
+var viewport;
 
 //--------------------------------------------------------------//
 //                                                              //
@@ -266,76 +265,73 @@ var minotaurusOut;
 //--------------------------------------------------------------//
 window.addEventListener('load',() => {
 
-  var viewport = new CanvasDraw(document.body);
+  viewport = new CanvasDraw(document.body);
   
   viewport.setup = () => {
     resetAll();
     config = convertMapV1(input);
     autoResize(config.map);
-    myPlayer = config.players[3];
     playerId = config.players.length-1;
-    console.log(config.players.length-1);
+    myPlayer = config.players[playerId];
   }
   
   viewport.draw = () => {
-    if (config) {
+    if (action === 'none') {
       doANewturn(); 
+    }
       
+    viewport.clear();
+    updateCursorPosition();
+    drawMap(config.map);
+    drawSpawns(config.players);
+    drawArrives(config.players);
+    drawCharacters(config.players)
+    drawMinotauruss(config.minotaurus.characters);
+    drawCursor();
+    
+    
+    switch (action) {
+      case 'rollDice':
+        drawDice();
+      break;
       
-      viewport.clear();
-      updateCursorPosition();
-      drawMap(config.map);
-      drawSpawns(config.players);
-      drawArrives(config.players);
-      drawCharacters(config.players)
-      drawMinotauruss(config.minotaurus.characters);
-      drawCursor();
-      
-      
-      switch (action) {
-        case 'rollDice':
-          drawDice();
-        break;
-        
-        case 'moveCharacter':
-          actionMoveCharacter();
-          if (possibleMoveIsGenerate === false) {
-            if (selectedPIsInSpawn === true) { possiblemove = generatePossibleMove(actionInformation, myPlayer.spawns, config.map, true); }
-            else                             { possiblemove = generatePossibleMove(actionInformation,   selectedSquareP, config.map, true); }
+      case 'moveCharacter':
+        actionMoveCharacter();
+        if (possibleMoveIsGenerate === false) {
+          if (selectedPIsInSpawn === true) { possiblemove = generatePossibleMove(actionInformation, myPlayer.spawns, config.map, true); }
+          else                             { possiblemove = generatePossibleMove(actionInformation,   selectedSquareP, config.map, true); }
 
-            possibleMoveIsGenerate = true;
-            
-            setTimeout(() => { modeSelectArrives = true }, 500)
-          }
-          if (possiblemove !== [[]]) { drawPossibleMove(possiblemove,2*actionInformation, myPlayer.color, '50%', '53%' ); }
-        break;
-        
-        case 'moveMinotaurus':
-          actionMoveMinotaurus();
-          if (possibleMoveIsGenerate === false) {
-            possiblemove = generatePossibleMove(8, config.minotaurus.characters, config.map, false);
-            possibleMoveIsGenerate = true;
-            
-            setTimeout(() => { minotaurusOut = true }, 500);
-          }
+          possibleMoveIsGenerate = true;
           
-          if (possiblemove !== [[]]) { drawPossibleMove(possiblemove,10, '0', '0%', '0%'); }
-        break;
+          setTimeout(() => { modeSelectArrives = true }, 500)
+        }
+        if (possiblemove !== [[]]) { drawPossibleMove(possiblemove,2*actionInformation, myPlayer.color, '50%', '53%' ); }
+      break;
+      
+      case 'moveMinotaurus':
+        actionMoveMinotaurus();
+        if (possibleMoveIsGenerate === false) {
+          possiblemove = generatePossibleMove(8, config.minotaurus.characters, config.map, false);
+          possibleMoveIsGenerate = true;
+          
+          setTimeout(() => { minotaurusOut = true }, 500);
+        }
         
-        case 'moveWall':
-          deleteWall()
-          placeWall();
-          stopPlaceWall();
-        break;
-        
-        case 'win':
-          drawWin('Player ' + (playerId) + 1);
-        break;
-        
-        default:
-        break;
-      }
-
+        if (possiblemove !== [[]]) { drawPossibleMove(possiblemove,10, '0', '0%', '0%'); }
+      break;
+      
+      case 'moveWall':
+        deleteWall()
+        placeWall();
+        stopPlaceWall();
+      break;
+      
+      case 'win':
+        drawWin('Player ' + (playerId) + 1);
+      break;
+      
+      default:
+      break;
     }
     
   }
@@ -348,28 +344,23 @@ window.addEventListener('load',() => {
   document.getElementById('moveWall').onclick = () => {
     rollDice('moveWall', undefined);
     action = 'rollDice';
-    console.log('moveWall');
   }
   document.getElementById('moveMinotaurus').onclick = () => {
     rollDice('moveMinotaurus', undefined);
     action = 'rollDice';
-    console.log('moveMinotaurus');
   }
   document.getElementById('moveCharacter6').onclick = () => {
     rollDice('moveCharacter', 32);
     action = 'rollDice';
-    console.log('moveCharacter6');
   }
   document.getElementById('moveCharacter5').onclick = () => {
     rollDice('moveCharacter', 5);
     action = 'rollDice';
-    console.log('moveCharacter5');
   }
   document.getElementById('playerTurn').onclick = () => {
     drawTurnPlayer(myPlayer);
-    console.log('moveCharacter5');
   }
-  
+
 });
 
 
@@ -386,6 +377,7 @@ window.addEventListener('load',() => {
  * @description create the config object of the game
  * 
  * @param {string} rawFile the input map
+ * 
  * @returns {GameConfig} the game object
  */
 function convertMapV1(rawFile) {
@@ -498,8 +490,10 @@ function convertMapV1(rawFile) {
   // converte the players object to array
   let newPlayersArray = [];
   let playerKey = Object.keys(output.players);
+  playerKey.sort();
   for (let i = 0; i < playerKey.length; i++) {
     if (output.players[playerKey[i]].spawns.length !== output.players[playerKey[i]].arrives.length) {
+      console.log(output.players[playerKey[i]]);
       throw 'there is not the same number of spawns and arrives in the ' + playerKey[i] + ' team';
     }
     // generate player 
@@ -534,12 +528,28 @@ function convertMapV1(rawFile) {
   }
   return output;
 }
-
+/**
+ * @function
+ * @name autoResize
+ * @author Jules Lefebvre <juleslefebvre.pro@outlook.fr>
+ * @description re size the map to view all of them
+ * 
+ * @param {map} map the map to get the dimention
+ */
 function autoResize(map) {
   let mapDimention = maxDimentionMap(map);
-  viewport.resizeCanvas(mapDimention.x * squareWidth, mapDimention.y * squareWidth);
+  viewport.resizeCanvas(mapDimention.width * squareWidth, mapDimention.height * squareWidth);
 }
-
+/**
+ * @function
+ * @name autoResize
+ * @author Jules Lefebvre <juleslefebvre.pro@outlook.fr>
+ * @description get the max dimention in square of the input map
+ * 
+ * @param {Map} map the map to get the dimention
+ * 
+ * @returns {{width: number, height:number}} the width and the height
+ */
 function maxDimentionMap(map) {
   let maxX = 0;
   for (let l = 0; l < map.length; l++) {
@@ -548,11 +558,16 @@ function maxDimentionMap(map) {
     }
   }
   return {
-    x: maxX,
-    y: map.length
+    width: maxX,
+    height: map.length
   };
 }
-
+/**
+ * @function
+ * @name resetAll
+ * @author Jules Lefebvre <juleslefebvre.pro@outlook.fr>
+ * @description set/resset all the var
+ */
 function resetAll() {
   //draw
   squareWidth = 25;
@@ -595,7 +610,12 @@ function resetAll() {
 
   resetTurn();
 }
-
+/**
+ * @function
+ * @name resetTurn
+ * @author Jules Lefebvre <juleslefebvre.pro@outlook.fr>
+ * @description set/resset all the var for a new turn
+ */
 function resetTurn() {
   // wall
   isFirstWallSquare = true;
@@ -621,6 +641,12 @@ function resetTurn() {
 //                            Update                            //
 //                                                              //
 //--------------------------------------------------------------//
+/**
+ * @function
+ * @name resetTurn
+ * @author Jules Lefebvre <juleslefebvre.pro@outlook.fr>
+ * @description set/resset all the var for a new turn
+ */
 function updateCursorPosition() {
   let x = (viewport.mouse.x - (viewport.mouse.x % squareWidth)) / squareWidth;
   let y = (viewport.mouse.y - (viewport.mouse.y % squareWidth)) / squareWidth;
@@ -896,13 +922,10 @@ function generatePossibleMove(nbMove, departs, map, contentColision) {
 //                                                              //
 //--------------------------------------------------------------//
 function actionMoveCharacter() {
-  
   let selectedSquare = config.map[cursorPosition.y][cursorPosition.x]
   
   
   if (viewport.mouse.press && selectedSquare.content !== undefined && selectedSquare.content.type === 'character' &&  selectedSquare.content.player === myPlayer && mode2 === false) {
-    
-    console.log(mode2);
     
     selectedSquareP = [{
       x: cursorPosition.x,
@@ -952,7 +975,6 @@ function actionMoveCharacter() {
     
     config.map[selectedSquareP[0].y][selectedSquareP[0].x].content = undefined
     
-    console.log(config);
     
     playerIsCorner = false;
     action = 'none';
@@ -962,7 +984,7 @@ function actionMoveCharacter() {
   
 }
 //matheo
-function actionMoveMinotaurus (){
+function actionMoveMinotaurus () {
   
   let selectedSquare = config.map[cursorPosition.y][cursorPosition.x]
   
@@ -974,38 +996,29 @@ function actionMoveMinotaurus (){
     
     if (viewport.mouse.press && selectedSquare.type==='void' && selectedSquare.content === undefined){
       
-      console.log(cursorPosition.y,cursorPosition.x)
-      console.log(config)
-      
       if (config.map[cursorPosition.y][cursorPosition.x+1].type === 'arrive'){
-        console.log('1');
-        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'};       
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'};
         possibleMoveIsGenerate = false;
         config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
       }
       
       if (config.map[cursorPosition.y][cursorPosition.x-1].type === 'arrive'){
-        console.log('2');
-        
-        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'};        
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'};
         possibleMoveIsGenerate = false;
         config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
       }
       
       if (config.map[cursorPosition.y+1][cursorPosition.x].type === 'arrive'){
-        console.log('3');
-        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'}        
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'}
         possibleMoveIsGenerate = false;
         config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
       }
       
       if (config.map[cursorPosition.y-1][cursorPosition.x].type === 'arrive'){
-        console.log('4');
-        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'}        
+        config.map[cursorPosition.y][cursorPosition.x].content = {type: 'minotaurus'}
         possibleMoveIsGenerate = false;
         config.minotaurus.characters.push( {x: cursorPosition.x, y: cursorPosition.y} );
       }
-      console.log(config);
     }
     
   }
@@ -1016,17 +1029,11 @@ function actionMoveMinotaurus (){
     
     if ( selectedSquare.content!== undefined && selectedSquare.content.type === 'character'){
       
-      console.log(cursorPosition.y,cursorPosition.x);
-      
       let playerEaten = selectedSquare.content.player
       
       for (let k = 0; k <playerEaten.characters.length; k++) {
         
-        console.log(cursorPosition.y,cursorPosition.x);
-        
         if(playerEaten.characters[k].x===cursorPosition.x &&playerEaten.characters[k].y===cursorPosition.y){
-          
-          console.log(playerEaten.characters[k]);
           
           for (let a = 0; a < playerEaten.spawns.length; a++) {
             
@@ -1036,13 +1043,7 @@ function actionMoveMinotaurus (){
                 x:playerEaten.spawns[a].x,
                 y:playerEaten.spawns[a].y
               }
-              config.map[playerEaten.spawns[a].y][playerEaten.spawns[a].x].content = config.map[cursorPosition.y][cursorPosition.x].content
-              
-              
-              
-              
-              
-              
+              config.map[playerEaten.spawns[a].y][playerEaten.spawns[a].x].content = config.map[cursorPosition.y][cursorPosition.x].content;
             }
             
           }
@@ -1372,36 +1373,32 @@ function rollDice(diceValue, information) {
 }
 
 function doANewturn(){
-  if (action==='none' ){
+  if(config.map[myPlayer.arrives[0].y][myPlayer.arrives[0].x].content !==undefined && config.map[myPlayer.arrives[1].y][myPlayer.arrives[1].x].content !==undefined && config.map[myPlayer.arrives[2].y][myPlayer.arrives[2].x].content !==undefined ){
+    action = 'win';
+  } else {
+    playerId++;
+    if (playerId > config.players.length - 1) { playerId = 0;}
+    myPlayer = config.players[playerId];
     
-    if(config.map[myPlayer.arrives[0].y][myPlayer.arrives[0].x].content !==undefined && config.map[myPlayer.arrives[1].y][myPlayer.arrives[1].x].content !==undefined && config.map[myPlayer.arrives[2].y][myPlayer.arrives[2].x].content !==undefined ){
-      action = 'win';
-    } else {
-      playerId++;
-      if (playerId > config.players.length - 1) { playerId = 0;}
-      myPlayer = config.players[playerId];
-      
-      let pickedFace = getRandomIntInclusive(0, 4);
-      switch (pickedFace){
-        case 0:
-          rollDice('moveWall', undefined);
-        break;
-        case 1:
-          rollDice('moveMinotaurus', undefined);;
-        break;
-        case 2:
-          rollDice('moveCharacter', 4);
-        break;
-        case 3:
-          rollDice('moveCharacter', 5);
-        break;
-        case 4:
-          rollDice('moveCharacter', 6);
-        break;
-      }
-      action = 'rollDice';
+    let pickedFace = getRandomIntInclusive(0, 4);
+    switch (pickedFace){
+      case 0:
+        rollDice('moveWall', undefined);
+      break;
+      case 1:
+        rollDice('moveMinotaurus', undefined);;
+      break;
+      case 2:
+        rollDice('moveCharacter', 4);
+      break;
+      case 3:
+        rollDice('moveCharacter', 5);
+      break;
+      case 4:
+        rollDice('moveCharacter', 6);
+      break;
     }
-    
+    action = 'rollDice';
   }
 }
 
