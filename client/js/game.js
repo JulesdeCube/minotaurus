@@ -73,7 +73,39 @@
  * @type {string}
  */
 var input =
-"                   ████████████████                   " + '\n' +
+ "████████████████████████████████" + '\n' +
+ "█aa                          bb█" + '\n' +
+ "█a                            b█" + '\n' +
+ "█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
+ "█       ▓   ▓      ▓   ▓       █" + '\n' +
+ "█       ▓   ▓      ▓   ▓       █" + '\n' +
+ "█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
+ "█  ▓                        ▓  █" + '\n' +
+ "█  ▓                        ▓  █" + '\n' +
+ "█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
+ "█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
+ "█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
+ "█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
+ "█  ▓     ▓            ▓     ▓  █" + '\n' +
+ "█  ▓   ▓▓▓    AABB    ▓▓▓   ▓  █" + '\n' +
+ "█           ▓ A@@B ▓           █" + '\n' +
+ "█           ▓ D@@C ▓           █" + '\n' +
+ "█  ▓   ▓▓▓    DDCC    ▓▓▓   ▓  █" + '\n' +
+ "█  ▓     ▓            ▓     ▓  █" + '\n' +
+ "█  ▓        ▓  ▓▓  ▓        ▓  █" + '\n' +
+ "█  ▓▓▓▓     ▓      ▓     ▓▓▓▓  █" + '\n' +
+ "█     ▓  ▒  ▓      ▓  ▒  ▓     █" + '\n' +
+ "█     ▓  ▒  ▓▓▓  ▓▓▓  ▒  ▓     █" + '\n' +
+ "█  ▓                        ▓  █" + '\n' +
+ "█  ▓                        ▓  █" + '\n' +
+ "█  ▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓▓  ▓▓  █" + '\n' +
+ "█       ▓   ▓      ▓   ▓       █" + '\n' +
+ "█       ▓   ▓      ▓   ▓       █" + '\n' +
+ "█   ▒▒  ▓   ▓▓▓  ▓▓▓   ▓  ▒▒   █" + '\n' +
+ "█d                            c█" + '\n' +
+ "█dd                          cc█" + '\n' +
+ "████████████████████████████████";
+/* "                   ████████████████                   " + '\n' +
 "        ████████████              ████████████        " + '\n' +
 "   ██████  ▓      ▒                ▒      ▓  ██████   " + '\n' +
 "   █       ▓      ▒   ▓▓▓▓  ▓▓▓▓   ▒      ▓       █   " + '\n' +
@@ -96,12 +128,19 @@ var input =
 "   █       ▓      ▒   ▓▓▓▓  ▓▓▓▓   ▒      ▓       █   " + '\n' +
 "   ██████  ▓      ▒                ▒      ▓  ██████   " + '\n' +
 "        ████████████              ████████████        " + '\n' +
-"                   ████████████████                   ";
+"                   ████████████████                   "; */
 
 
 //----------------------------------------------------//
 //                        Draw                        //
 //----------------------------------------------------//
+
+/**
+ * @global
+ * @description the view port of the game
+ * @type {CanvasDraw}
+ */
+var viewport;
 /**
  * @global
  * @type {number}
@@ -244,19 +283,17 @@ var selectedSquareP;
  * @type {boolean}
  */
 var selectedPIsInSpawn;
+
+
+//----------------------------------------------------//
+//                     Minotaurus                     //
+//----------------------------------------------------//
 /**
  * @global
  * @description say if the the minotaurus a in ins spawn or not
  * @type {boolean}
  */
 var minotaurusOut;
-
-/**
- * @global
- * @description the view port of the game
- * @type {CanvasDraw}
- */
-var viewport;
 
 //--------------------------------------------------------------//
 //                                                              //
@@ -273,7 +310,7 @@ window.addEventListener('load',() => {
     autoResize(config.map);
     playerId = config.players.length-1;
     myPlayer = config.players[playerId];
-  }
+  };
   
   viewport.draw = () => {
     if (action === 'none') {
@@ -334,9 +371,9 @@ window.addEventListener('load',() => {
       break;
     }
     
-  }
+  };
   
-  viewport.start()
+  viewport.start();
   
   
   
@@ -344,22 +381,22 @@ window.addEventListener('load',() => {
   document.getElementById('moveWall').onclick = () => {
     rollDice('moveWall', undefined);
     action = 'rollDice';
-  }
+  };
   document.getElementById('moveMinotaurus').onclick = () => {
     rollDice('moveMinotaurus', undefined);
     action = 'rollDice';
-  }
+  };
   document.getElementById('moveCharacter6').onclick = () => {
     rollDice('moveCharacter', 32);
     action = 'rollDice';
-  }
+  };
   document.getElementById('moveCharacter5').onclick = () => {
     rollDice('moveCharacter', 5);
     action = 'rollDice';
-  }
+  };
   document.getElementById('playerTurn').onclick = () => {
     drawTurnPlayer(myPlayer);
-  }
+  };
 
 });
 
@@ -510,6 +547,7 @@ function convertMapV1(rawFile) {
     } */
     // generate color
     output.players[playerKey[i]].color = Math.floor(360 * i / playerKey.length);
+    // generate character
     output.players[playerKey[i]].characters = [...output.players[playerKey[i]].spawns];
     output.players[playerKey[i]].characters.forEach(character => {
       output.map[character.y][character.x].content = {
