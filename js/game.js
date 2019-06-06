@@ -374,29 +374,6 @@ window.addEventListener('load',() => {
   };
   
   viewport.start();
-  
-  
-  
-  
-  document.getElementById('moveWall').onclick = () => {
-    rollDice('moveWall', undefined);
-    action = 'rollDice';
-  };
-  document.getElementById('moveMinotaurus').onclick = () => {
-    rollDice('moveMinotaurus', undefined);
-    action = 'rollDice';
-  };
-  document.getElementById('moveCharacter6').onclick = () => {
-    rollDice('moveCharacter', 32);
-    action = 'rollDice';
-  };
-  document.getElementById('moveCharacter5').onclick = () => {
-    rollDice('moveCharacter', 5);
-    action = 'rollDice';
-  };
-  document.getElementById('playerTurn').onclick = () => {
-    drawTurnPlayer(myPlayer);
-  };
 
 });
 
