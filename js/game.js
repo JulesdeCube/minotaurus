@@ -377,6 +377,10 @@ window.addEventListener('load',() => {
 
 });
 
+window.addEventListener('resize', () => {
+  autoResize(config.map);
+  viewport.draw();
+});
 
 
 //--------------------------------------------------------------//
@@ -399,7 +403,7 @@ function convertMapV1(rawFile) {
     throw 'the input file wasn\'t be a raw string file';
   }
   //split create table since file
-  let splitFile = rawFile.split('\n');
+  let splitFile = rawFile.split(RegExp('\n|\r\n'));
   for (let i = 0; i < splitFile.length; i++) {
     splitFile[i] = splitFile[i].split('');
   }
@@ -553,6 +557,7 @@ function convertMapV1(rawFile) {
  */
 function autoResize(map) {
   let mapDimention = maxDimentionMap(map);
+  squareWidth = Math.floor(Math.min(window.innerWidth / mapDimention.width, window.innerHeight / mapDimention.height));
   viewport.resizeCanvas(mapDimention.width * squareWidth, mapDimention.height * squareWidth);
 }
 /**
