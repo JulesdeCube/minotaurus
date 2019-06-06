@@ -72,7 +72,7 @@ class CanvasDraw {
    * @author Jules Lefebvre <juleslefebvre.10@outlook.fr>
    * @description begin the draw
    * @emits setup() emit firt to setup it
-   * @emits draw() emit every frame rate
+   * @emits draws() emit every frame rate
    */
   start(){
     this.setup();
