@@ -23,6 +23,14 @@ function createWindow () {
     win.setFullScreen(!win.isFullScreen());
   });
 
+  globalShortcut.register('Ctrl+R', () => {
+    win.reload();
+  });
+
+  globalShortcut.register('Ctrl+Q', () => {
+    win.close();
+  });
+
 }
 
 app.on('ready', createWindow)
