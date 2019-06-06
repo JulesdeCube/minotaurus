@@ -7,11 +7,12 @@
     "doc": "doc"
   },
   "dependencies": {
-    "electron": "^5.0.2"
+    "electron": "^5.0.2",
+    "electron-packager": "^13.1.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "compile": "electron-packager . Minotaurus --out=./out --overwrite --icon=./favicon.ico"
   },
   "repository": {
     "type": "git",
