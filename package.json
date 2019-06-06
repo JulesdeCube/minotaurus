@@ -1,0 +1,26 @@
+{
+  "name": "minotaurus",
+  "version": "0.1.0",
+  "description": "ISN Project 2018/2019",
+  "main": "main.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {
+    "electron": "^5.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulesdeCube/minotaurus.git"
+  },
+  "author": "Jules Lefebvre <juleslefebvre.pro@outlook.fr>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/JulesdeCube/minotaurus/issues"
+  },
+  "homepage": "https://github.com/JulesdeCube/minotaurus#readme"
+}
