@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minautorus</title>
+  <!-- CSS -->
+  <!-- Font Awsome -->
+  <link rel="stylesheet" href="/font/FontAwesome/css/all.css">
+  <!-- Roboto -->
+  <link rel="stylesheet" href="/font/Roboto/css/all.css">
+  <!-- perso -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- JS -->
+  <!-- socket.io -->
+  <script src="lib/socket.io/socket.io.js"></script>
+  <!-- user -->
+  <script src="lib/user/user.js"></script>
+  <!-- game -->
+  <script src="/index.js"></script>
+</head>
+<body>
+  <header>
+    <div id="profil">
+      <div class="userIcon">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="userMenu" id="userMenu">
+        <span class="username-value">Anonymous</span>
+        <div class="vSpacer"></div>      
+        <button type="button" class="button disconnect">Disconnect</button>
+      </div>
+    </div>   
+  </header>
+  
+  <main>
+    <div id="game">
+      <div id="browser">
+          <header>
+              <button type="button" class="button broswer-refresh">Refresh</button>
+          </header>
+          <main>
+            <table class="fixed_header">
+              <thead>
+                <tr>
+                  <th>Name</th><th>Type</th><th>PLayer</th><th><!-- join --></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Partie de bernard</td><td>1v1v1v1</td><td>1/4</td><td></td></tr>
+                <tr><td>Partie de Jean paul</td><td>2v2</td><td>2/4</td><td></td></tr>
+                <tr><td>Partie de toto</td><td>1v3</td><td>3/4</td><td></td></tr>
+                <tr><td>Partie de canard</td><td>12v12</td><td>20/24</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>2v2v2v2</td><td>7/8</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>1v1</td><td>4/4</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+                <tr><td>Partie de bernard</td><td>8v8</td><td>1/2</td><td></td></tr>
+              </tbody>
+            </table>
+          </main>
+      </div>
+    </div>
+    <div id="signIn">
+      <form name="signIn" id="signIn-form">
+        <h1>Sign in</h1>
+        <div class="vSpacer"></div>
+        <input type="text" name="username" id="signIn-username" class="champMono fillLine" placeholder="Username"><br>
+        <div class="vSpacer"><span class="inputMessage" id="signIn-username-Message"></span></div>
+        <input type="password" name="password" id="signIn-password" class="champMono fillLine" placeholder="Password"><br>
+        <div class="vSpacer"><span class="inputMessage" id="signIn-password-Message"></span></div>
+        <button type="button" class="button light display-SignUp">Create a accout</button>
+        <div class="hSpacer"></div>
+        <button type="submit" name="submit" id="signIn-submit" class="button">Sign in</button>
+      </form>
+    </div>
+    
+    <div id="signUp">
+      <form name="signUp" id="signUp-form">
+        <h1>Sign up</h1>
+        <div class="vSpacer"></div>
+        <input type="text" name="username" id="signUp-username" class="champMono fillLine" placeholder="Username"><br>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-username-Message"></span></div>
+        <input type="text" name="email" id="signUp-email" class="champMono fillLine" placeholder="E-mail"><br>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-email-Message"></span></div>
+        <input type="password" name="password" id="signUp-password" class="champMono fillLine" placeholder="Password"><br>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-password-Message"></span></div>
+        <input type="password" name="passwordRepeat" id="signUp-passwordRepeat" class="champMono fillLine" placeholder="Repeat password"><br>
+        <div class="vSpacer"><span class="inputMessage" id="signUp-passwordRepeat-Message"></span></div>
+        <button type="button" class="button light display-SignIn">Sign in instead</button>
+        <div class="hSpacer"></div>
+        <button type="submit" name="submit" id="signUp-submit" class="button">Sign up</button>
+      </form>
+    </div>
+  </main>
+  
+  <footer>
+    
+  </footer>
+</body>
+</html>

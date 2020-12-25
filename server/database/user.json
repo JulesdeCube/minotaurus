@@ -1,0 +1,8 @@
+{
+  "header": {"username":"string","email":"string","password":"string","token":"string"},
+  "content": [
+    {"username":"Jules de Cube","email":"juleslefebvre.10@outlook.fr","password":"c82148abcd2e8e6d419f7d878a1b2e61ad9bf9c9fddf4b82a2b1bdd2408dd9e7","token":"oaa5dw2hzyblgkl92noyjnsvxxvwio8vkkbvpokfwq2vg6dwqbh0wrblvnebjf7p"},
+    {"username":"Jules de Cube1","email":"juleslefebvre.101@outlook.fr","password":"c82148abcd2e8e6d419f7d878a1b2e61ad9bf9c9fddf4b82a2b1bdd2408dd9e7","token":"xke1jyvmo5ie900ekkruplz8njeu10h7d39q02krrpteu0s4npcn5bvj776l2d68"},
+    {"username":"Jules de Cube2","email":"juleslefebvre.102@outlook.fr","password":"c82148abcd2e8e6d419f7d878a1b2e61ad9bf9c9fddf4b82a2b1bdd2408dd9e7","token":"jr2h4h31xlad78xrabih5o0o2cmewk4fei5vnysrq0oqysdm0erfpqae8owu6j5d"}
+  ]
+}
